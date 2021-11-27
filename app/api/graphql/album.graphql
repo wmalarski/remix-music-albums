@@ -12,6 +12,13 @@ fragment AlbumWithArtist on album {
   }
 }
 
+fragment AlbumWithArtistAndReviews on album {
+  ...AlbumWithArtist
+  reviews {
+    ...Review
+  }
+}
+
 query GetAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
@@ -20,7 +27,7 @@ query GetAlbums($limit: Int, $offset: Int) {
 
 mutation InsertAlbum($album: album_insert_input!) {
   insert_album_one(object: $album) {
-    ...Album
+    id
   }
 }
 

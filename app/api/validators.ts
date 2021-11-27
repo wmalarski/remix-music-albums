@@ -2,6 +2,7 @@ import invariant from "tiny-invariant";
 import {
   InsertAlbumMutationVariables,
   InsertArtistMutationVariables,
+  InsertReviewMutationVariables,
 } from "./types";
 
 export type ValidateNewArtistResult = {
@@ -18,8 +19,9 @@ export const validateNewArtist = (
   const name = formData.get("name");
   const sid = formData.get("sid");
 
-  const errors = { name: !name, sid: !sid };
-  if (Object.values(errors).includes(true)) return { validationErrors: errors };
+  const validationErrors = { name: !name, sid: !sid };
+  if (Object.values(validationErrors).includes(true))
+    return { validationErrors };
 
   invariant(typeof name === "string");
   invariant(typeof sid === "string");
@@ -44,15 +46,44 @@ export const validateNewAlbum = (
   const sid = formData.get("sid");
   const year = formData.get("year");
 
-  const errors = {
+  const validationErrors = {
     title: !title,
     sid: !sid,
     year: !year || !/^\d+$/.test(year.toString()),
   };
-  if (Object.values(errors).includes(true)) return { validationErrors: errors };
+  if (Object.values(validationErrors).includes(true))
+    return { validationErrors };
 
   invariant(typeof title === "string");
   invariant(typeof sid === "string");
 
   return { variables: { album: { title, artist, year: Number(year), sid } } };
+};
+
+export type ValidateNewReviewResult = {
+  variables?: InsertReviewMutationVariables;
+  validationErrors?: {
+    text?: boolean;
+    rate?: boolean;
+  };
+};
+
+export const validateNewReview = (
+  formData: FormData,
+  album: number,
+  profile: number
+): ValidateNewReviewResult => {
+  const text = formData.get("text");
+  const rate = formData.get("rate");
+
+  const validationErrors = {
+    text: !text,
+    rate: !rate || !/^\d+$/.test(rate.toString()),
+  };
+  if (Object.values(validationErrors).includes(true))
+    return { validationErrors };
+
+  invariant(typeof text === "string");
+
+  return { variables: { review: { album, profile, rate, text } } };
 };

@@ -1,0 +1,12 @@
+fragment Review on review {
+  id
+  rate
+  text
+  createdAt
+}
+
+mutation InsertReview($review: review_insert_input!) {
+  insert_review_one(object: $review) {
+    id
+  }
+}

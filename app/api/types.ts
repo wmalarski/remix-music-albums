@@ -2236,6 +2236,8 @@ export type AlbumFragment = { id: number, sid: string, title: string, year: numb
 
 export type AlbumWithArtistFragment = { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } };
 
+export type AlbumWithArtistAndReviewsFragment = { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid: string, name: string } };
+
 export type GetAlbumsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
@@ -2249,7 +2251,7 @@ export type InsertAlbumMutationVariables = Exact<{
 }>;
 
 
-export type InsertAlbumMutation = { insert_album_one?: { id: number, sid: string, title: string, year: number } | null | undefined };
+export type InsertAlbumMutation = { insert_album_one?: { id: number } | null | undefined };
 
 export type GetAlbumQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -2275,7 +2277,7 @@ export type InsertArtistMutationVariables = Exact<{
 }>;
 
 
-export type InsertArtistMutation = { insert_artist_one?: { id: number, sid: string, name: string } | null | undefined };
+export type InsertArtistMutation = { insert_artist_one?: { id: number } | null | undefined };
 
 export type GetArtistQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -2283,6 +2285,15 @@ export type GetArtistQueryVariables = Exact<{
 
 
 export type GetArtistQuery = { artist_by_pk?: { id: number, sid: string, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> } | null | undefined };
+
+export type ReviewFragment = { id: number, rate: any, text: string, createdAt: any };
+
+export type InsertReviewMutationVariables = Exact<{
+  review: ReviewInsertInput;
+}>;
+
+
+export type InsertReviewMutation = { insert_review_one?: { id: number } | null | undefined };
 
 export const Album = gql`
     fragment Album on album {
@@ -2308,6 +2319,23 @@ export const AlbumWithArtist = gql`
 }
     ${Album}
 ${Artist}`;
+export const Review = gql`
+    fragment Review on review {
+  id
+  rate
+  text
+  createdAt
+}
+    `;
+export const AlbumWithArtistAndReviews = gql`
+    fragment AlbumWithArtistAndReviews on album {
+  ...AlbumWithArtist
+  reviews {
+    ...Review
+  }
+}
+    ${AlbumWithArtist}
+${Review}`;
 export const ArtistWithAlbums = gql`
     fragment ArtistWithAlbums on artist {
   ...Artist
@@ -2327,10 +2355,10 @@ export const GetAlbums = gql`
 export const InsertAlbum = gql`
     mutation InsertAlbum($album: album_insert_input!) {
   insert_album_one(object: $album) {
-    ...Album
+    id
   }
 }
-    ${Album}`;
+    `;
 export const GetAlbum = gql`
     query GetAlbum($id: Int!) {
   album_by_pk(id: $id) {
@@ -2348,10 +2376,10 @@ export const GetArtists = gql`
 export const InsertArtist = gql`
     mutation InsertArtist($artist: artist_insert_input!) {
   insert_artist_one(object: $artist) {
-    ...Artist
+    id
   }
 }
-    ${Artist}`;
+    `;
 export const GetArtist = gql`
     query GetArtist($id: Int!) {
   artist_by_pk(id: $id) {
@@ -2359,3 +2387,10 @@ export const GetArtist = gql`
   }
 }
     ${ArtistWithAlbums}`;
+export const InsertReview = gql`
+    mutation InsertReview($review: review_insert_input!) {
+  insert_review_one(object: $review) {
+    id
+  }
+}
+    `;

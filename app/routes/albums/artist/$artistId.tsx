@@ -31,12 +31,16 @@ const Artist = (): ReactElement => {
 
   return (
     <div>
-      <Link to={routes.artist(artist.id)}>{`Artist: ${artist.name}`}</Link>
-      <Link to={routes.newAlbum(artist.id)}>New album</Link>
+      <p>
+        <Link to={routes.artist(artist.id)}>{`Artist: ${artist.name}`}</Link>
+      </p>
+      <p>
+        <Link to={routes.newAlbum(artist.id)}>New album</Link>
+      </p>
       {artist.albums.map((album) => (
-        <Link key={album.id} to={routes.album(album.id)}>
-          {album.title}
-        </Link>
+        <p key={album.id}>
+          <Link to={routes.album(album.id)}>{album.title}</Link>
+        </p>
       ))}
       <pre>{JSON.stringify(artist, null, 2)}</pre>
       <Outlet />

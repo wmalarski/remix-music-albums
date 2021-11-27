@@ -5,10 +5,10 @@ fragment Artist on artist {
 }
 
 fragment ArtistWithAlbums on artist {
-...Artist
-    albums {
-      ...Album
-    }
+  ...Artist
+  albums {
+    ...Album
+  }
 }
 
 query GetArtists($limit: Int, $offset: Int) {
@@ -19,7 +19,7 @@ query GetArtists($limit: Int, $offset: Int) {
 
 mutation InsertArtist($artist: artist_insert_input!) {
   insert_artist_one(object: $artist) {
-    ...Artist
+    id
   }
 }
 

@@ -3,7 +3,7 @@ import { Link, LoaderFunction, Outlet, useLoaderData } from "remix";
 import invariant from "tiny-invariant";
 import { jsonFetcher } from "~/api/fetcher";
 import {
-  AlbumWithArtistFragment,
+  AlbumWithArtistAndReviewsFragment,
   GetAlbum,
   GetAlbumQuery,
   GetAlbumQueryVariables,
@@ -27,12 +27,19 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Album = (): ReactElement => {
-  const album = useLoaderData<AlbumWithArtistFragment>();
+  const album = useLoaderData<AlbumWithArtistAndReviewsFragment>();
 
   return (
     <div>
-      <Link to={routes.album(album.id)}>Album</Link>
-      <Link to={routes.artist(album.artistByArtist.id)}>Artist</Link>
+      <p>
+        <Link to={routes.album(album.id)}>Album</Link>
+      </p>
+      <p>
+        <Link to={routes.artist(album.artistByArtist.id)}>Artist</Link>
+      </p>
+      <p>
+        <Link to={routes.newReview(album.id)}>Review</Link>
+      </p>
       <pre>{JSON.stringify(album, null, 2)}</pre>
       <Outlet />
     </div>
