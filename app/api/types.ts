@@ -2232,18 +2232,89 @@ export type VisitVarianceOrderBy = {
   profile?: InputMaybe<OrderBy>;
 };
 
-export type GetArtistsQueryVariables = Exact<{ [key: string]: never; }>;
+export type AlbumFragment = { id: number, sid: string, title: string, year: number };
+
+export type GetAlbumsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, name: string, sid: string } }> };
+
+export type ArtistFragment = { id: number, sid: string, name: string };
+
+export type GetArtistsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+}>;
 
 
 export type GetArtistsQuery = { artist: Array<{ id: number, sid: string, name: string }> };
 
+export type InsertArtistMutationVariables = Exact<{
+  artist: ArtistInsertInput;
+}>;
 
-export const GetArtists = gql`
-    query GetArtists {
-  artist {
-    id
-    sid
-    name
-  }
+
+export type InsertArtistMutation = { insert_artist_one?: { id: number, sid: string, name: string } | null | undefined };
+
+export type GetArtistQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetArtistQuery = { artist_by_pk?: { id: number, sid: string, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> } | null | undefined };
+
+export const Album = gql`
+    fragment Album on album {
+  id
+  sid
+  title
+  year
 }
     `;
+export const Artist = gql`
+    fragment Artist on artist {
+  id
+  sid
+  name
+}
+    `;
+export const GetAlbums = gql`
+    query GetAlbums($limit: Int, $offset: Int) {
+  album(limit: $limit, offset: $offset) {
+    ...Album
+    artistByArtist {
+      id
+      name
+      sid
+    }
+  }
+}
+    ${Album}`;
+export const GetArtists = gql`
+    query GetArtists($limit: Int, $offset: Int) {
+  artist(limit: $limit, offset: $offset) {
+    ...Artist
+  }
+}
+    ${Artist}`;
+export const InsertArtist = gql`
+    mutation InsertArtist($artist: artist_insert_input!) {
+  insert_artist_one(object: $artist) {
+    ...Artist
+  }
+}
+    ${Artist}`;
+export const GetArtist = gql`
+    query GetArtist($id: Int!) {
+  artist_by_pk(id: $id) {
+    ...Artist
+    albums {
+      ...Album
+    }
+  }
+}
+    ${Artist}
+${Album}`;

@@ -10,6 +10,7 @@ import invariant from "tiny-invariant";
 import { createPost } from "~/api/post";
 
 export const action: ActionFunction = async ({ request }) => {
+  // eslint-disable-next-line promise/param-names
   await new Promise((res) => setTimeout(res, 1000));
 
   const formData = await request.formData();

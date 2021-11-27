@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { MetaFunction } from "remix";
+import { MetaFunction, Outlet } from "remix";
 
 export const meta: MetaFunction = () => {
   return {
@@ -8,12 +8,15 @@ export const meta: MetaFunction = () => {
   };
 };
 
-const Index = (): ReactElement => {
+const Albums = (): ReactElement => {
   return (
     <div className="remix__page">
-      <main>Index</main>
+      <main>
+        Albums
+        <Outlet />
+      </main>
     </div>
   );
 };
 
-export default Index;
+export default Albums;

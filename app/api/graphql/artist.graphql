@@ -1,0 +1,26 @@
+fragment Artist on artist {
+  id
+  sid
+  name
+}
+
+query GetArtists($limit: Int, $offset: Int) {
+  artist(limit: $limit, offset: $offset) {
+    ...Artist
+  }
+}
+
+mutation InsertArtist($artist: artist_insert_input!) {
+  insert_artist_one(object: $artist) {
+    ...Artist
+  }
+}
+
+query GetArtist($id: Int!) {
+  artist_by_pk(id: $id) {
+    ...Artist
+    albums {
+      ...Album
+    }
+  }
+}

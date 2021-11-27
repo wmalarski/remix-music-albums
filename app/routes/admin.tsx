@@ -1,13 +1,19 @@
 import { ReactElement } from "react";
-import { Link, Outlet, useLoaderData } from "remix";
+import {
+  Link,
+  LinksFunction,
+  LoaderFunction,
+  Outlet,
+  useLoaderData,
+} from "remix";
 import { getPosts, Post } from "~/api/post";
 import adminStyles from "~/styles/admin.css";
 
-export const links = () => {
+export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: adminStyles }];
 };
 
-export const loader = () => {
+export const loader: LoaderFunction = () => {
   return getPosts();
 };
 

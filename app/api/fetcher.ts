@@ -7,6 +7,16 @@ type GraphqlApiConfig = {
   adminSecret: string;
 };
 
+export type FetcherError = {
+  message: string;
+  code: string;
+};
+
+export type FetcherPayload<TData> = {
+  data?: TData;
+  errors?: FetcherError[];
+};
+
 const getGraphqlApiConfig = (): GraphqlApiConfig => {
   invariant(
     process.env.GRAPHQL_API_ENDPOINT,
@@ -40,4 +50,15 @@ export const fetcher = <TVariables>(
       "x-hasura-admin-secret": adminSecret,
     },
   });
+};
+
+export const jsonFetcher = async <TData, TVariables>(
+  documentNode: DocumentNode,
+  variables?: TVariables
+): Promise<FetcherPayload<TData>> => {
+  const result = await fetcher(documentNode, variables);
+
+  const json = await result.json();
+
+  return json;
 };

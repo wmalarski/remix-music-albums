@@ -1,7 +1,0 @@
-query GetArtists {
-  artist {
-    id
-    sid
-    name
-  }
-}

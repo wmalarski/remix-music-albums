@@ -1,6 +1,5 @@
+import type { LinksFunction, MetaFunction } from "remix";
 import { Outlet } from "remix";
-import type { MetaFunction, LinksFunction } from "remix";
-
 import stylesUrl from "~/styles/demos/about.css";
 
 export const meta: MetaFunction = () => {
@@ -19,7 +18,7 @@ export default function Index() {
       <div className="about__intro">
         <h2>About Us</h2>
         <p>
-          Ok, so this page isn't really <em>about us</em>, but we did want to
+          Ok, so this page isn t really <em>about us</em>, but we did want to
           show you a few more things Remix can do.
         </p>
         <p>

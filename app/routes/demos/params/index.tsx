@@ -1,6 +1,3 @@
-import { useCatch, Link, json, useLoaderData, Outlet } from "remix";
-import type { LoaderFunction } from "remix";
-
 export default function Boundaries() {
   return (
     <>
@@ -12,11 +9,11 @@ export default function Boundaries() {
       </p>
       <h2>Errors</h2>
       <p>
-        When a route throws and error in it's action, loader, or component,
-        Remix automatically catches it, won't even try to render the component,
-        but it will render the route's ErrorBoundary instead. If the route
-        doesn't have one, it will bubble up to the routes above it until it hits
-        the root.
+        When a route throws and error in it s action, loader, or component,
+        Remix automatically catches it, won t even try to render the component,
+        but it will render the route s ErrorBoundary instead. If the route doesn
+        t have one, it will bubble up to the routes above it until it hits the
+        root.
       </p>
       <p>So be as granular as you want with your error handling.</p>
       <h2>Not Found</h2>
@@ -30,8 +27,8 @@ export default function Boundaries() {
       <p>
         Loaders and Actions can throw a <code>Response</code> instead of an
         error and Remix will render the CatchBoundary instead of the component.
-        This is great when loading data from a database isn't found. As soon as
-        you know you can't render the component normally, throw a 404 response
+        This is great when loading data from a database isn t found. As soon as
+        you know you can t render the component normally, throw a 404 response
         and send your app into the catch boundary. Just like error boundaries,
         catch boundaries bubble, too.
       </p>

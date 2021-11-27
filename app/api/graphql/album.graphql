@@ -1,0 +1,17 @@
+fragment Album on album {
+  id
+  sid
+  title
+  year
+}
+
+query GetAlbums($limit: Int, $offset: Int) {
+  album(limit: $limit, offset: $offset) {
+    ...Album
+    artistByArtist {
+      id
+      name
+      sid
+    }
+  }
+}
