@@ -43,7 +43,7 @@ export const getPosts = async (): Promise<Post[]> => {
         `${filename} has bad meta data!`
       );
 
-      let html = marked(body);
+      const html = marked(body);
 
       return {
         slug: filename.replace(/\.md$/, ""),
@@ -59,14 +59,14 @@ export const getPost = async (slug: string): Promise<Post> => {
 
   const file = await fs.readFile(filepath);
 
-  let { attributes, body } = parseFrontMatter(file.toString());
+  const { attributes, body } = parseFrontMatter(file.toString());
 
   invariant(
     isValidPostAttributes(attributes),
     `Post ${filepath} is missing attributes`
   );
 
-  let html = marked(body);
+  const html = marked(body);
 
   return { slug, html, title: attributes.title };
 };
