@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 import { Link, LoaderFunction, Outlet, useLoaderData } from "remix";
-import invariant from "tiny-invariant";
 import { jsonFetcher } from "~/api/fetcher";
 import {
   ArtistWithAlbumsFragment,
@@ -11,8 +10,8 @@ import {
 import { routes } from "~/utils/routes";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  invariant(params.artistId, "expected params.artistId");
-  invariant(/^\d+$/.test(params.artistId), "params.artistId not number");
+  if (!params.artistId || !/^\d+$/.test(params.artistId))
+    throw new Response("Not Found", { status: 404 });
 
   const id = Number(params.artistId);
 

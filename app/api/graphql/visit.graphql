@@ -1,0 +1,12 @@
+mutation InsertVisit($visit: visit_insert_input!) {
+  insert_visit_one(
+    object: $visit
+    on_conflict: {
+      constraint: unique_album_profile
+      update_columns: [updatedAt, createdAt]
+      where: { createdAt: { _is_null: false } }
+    }
+  ) {
+    id
+  }
+}

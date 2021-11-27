@@ -1,34 +1,28 @@
 import { ReactElement } from "react";
-import {
-  ActionFunction,
-  Form,
-  redirect,
-  useActionData,
-  useTransition,
-} from "remix";
-import invariant from "tiny-invariant";
+import { ActionFunction, redirect, useActionData, useTransition } from "remix";
 import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
   InsertAlbum,
   InsertAlbumMutation,
   InsertAlbumMutationVariables,
 } from "~/api/types";
-import { validateNewAlbum, ValidateNewAlbumResult } from "~/api/validators";
+import { NewAlbumForm, NewAlbumFormResult } from "~/molecules/albums";
 import { routes } from "~/utils/routes";
 
-type NewAlbumActionData = ValidateNewAlbumResult & {
+type NewAlbumActionData = {
+  errors?: NewAlbumFormResult["errors"];
   fetcherErrors?: FetcherError[];
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  invariant(params.artistId, "expected params.artistId");
-  invariant(/^\d+$/.test(params.artistId), "params.artistId not number");
+  if (!params.artistId || !/^\d+$/.test(params.artistId))
+    throw new Response("Not Found", { status: 404 });
 
   const artistId = Number(params.artistId);
   const formData = await request.formData();
-  const { variables, validationErrors } = validateNewAlbum(formData, artistId);
+  const { variables, errors } = NewAlbumForm.validate(formData, artistId);
 
-  if (validationErrors) return { validationErrors };
+  if (errors) return { errors };
 
   const result = await jsonFetcher<
     InsertAlbumMutation,
@@ -47,31 +41,11 @@ const NewAlbum = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <Form method="post">
-      <p>
-        <label>
-          Title: {action?.validationErrors?.title && <em>Title is required</em>}
-          <input type="text" name="title" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Year: {action?.validationErrors?.year && <em>Year is required</em>}
-          <input type="number" name="year" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Sid: {action?.validationErrors?.sid && <em>Sid is required</em>}
-          <input type="text" name="sid" />
-        </label>
-      </p>
-      <p>
-        <button type="submit">
-          {transition.submission ? "Creating..." : "Create Album"}
-        </button>
-      </p>
-    </Form>
+    <NewAlbumForm
+      transition={transition}
+      validationErrors={action?.errors}
+      fetcherErrors={action?.fetcherErrors}
+    />
   );
 };
 

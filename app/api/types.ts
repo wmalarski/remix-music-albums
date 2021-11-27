@@ -2009,6 +2009,8 @@ export type VisitBoolExp = {
 /** unique or primary key constraints on table "visit" */
 export enum VisitConstraint {
   /** unique or primary key constraint */
+  UniqueAlbumProfile = 'unique_album_profile',
+  /** unique or primary key constraint */
   VisitPkey = 'visit_pkey'
 }
 
@@ -2295,6 +2297,13 @@ export type InsertReviewMutationVariables = Exact<{
 
 export type InsertReviewMutation = { insert_review_one?: { id: number } | null | undefined };
 
+export type InsertVisitMutationVariables = Exact<{
+  visit: VisitInsertInput;
+}>;
+
+
+export type InsertVisitMutation = { insert_visit_one?: { id: number } | null | undefined };
+
 export const Album = gql`
     fragment Album on album {
   id
@@ -2390,6 +2399,16 @@ export const GetArtist = gql`
 export const InsertReview = gql`
     mutation InsertReview($review: review_insert_input!) {
   insert_review_one(object: $review) {
+    id
+  }
+}
+    `;
+export const InsertVisit = gql`
+    mutation InsertVisit($visit: visit_insert_input!) {
+  insert_visit_one(
+    object: $visit
+    on_conflict: {constraint: unique_album_profile, update_columns: [updatedAt, createdAt], where: {createdAt: {_is_null: false}}}
+  ) {
     id
   }
 }

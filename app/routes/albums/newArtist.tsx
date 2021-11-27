@@ -1,29 +1,24 @@
 import { ReactElement } from "react";
-import {
-  ActionFunction,
-  Form,
-  redirect,
-  useActionData,
-  useTransition,
-} from "remix";
+import { ActionFunction, redirect, useActionData, useTransition } from "remix";
 import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
   InsertArtist,
   InsertArtistMutation,
   InsertArtistMutationVariables,
 } from "~/api/types";
-import { validateNewArtist, ValidateNewArtistResult } from "~/api/validators";
+import { NewArtistForm, NewArtistFormResult } from "~/molecules/artists";
 import { routes } from "~/utils/routes";
 
-type NewArtistActionData = ValidateNewArtistResult & {
+type NewArtistActionData = {
+  errors?: NewArtistFormResult["errors"];
   fetcherErrors?: FetcherError[];
 };
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const { variables, validationErrors } = validateNewArtist(formData);
+  const { variables, errors } = NewArtistForm.validate(formData);
 
-  if (validationErrors) return { validationErrors };
+  if (errors) return { errors };
 
   const result = await jsonFetcher<
     InsertArtistMutation,
@@ -42,25 +37,11 @@ const NewArtist = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <Form method="post">
-      <p>
-        <label>
-          Name: {action?.validationErrors?.name && <em>Name is required</em>}
-          <input type="text" name="name" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Sid: {action?.validationErrors?.sid && <em>Sid is required</em>}
-          <input type="text" name="sid" />
-        </label>
-      </p>
-      <p>
-        <button type="submit">
-          {transition.submission ? "Creating..." : "Create Artist"}
-        </button>
-      </p>
-    </Form>
+    <NewArtistForm
+      transition={transition}
+      validationErrors={action?.errors}
+      fetcherErrors={action?.fetcherErrors}
+    />
   );
 };
 
