@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
-import { MetaFunction, Outlet } from "remix";
+import { Link, MetaFunction, Outlet } from "remix";
+import { routes } from "~/utils/routes";
 
 export const meta: MetaFunction = () => {
   return {
@@ -13,6 +14,8 @@ const Albums = (): ReactElement => {
     <div className="remix__page">
       <main>
         Albums
+        <Link to={routes.albums}>Albums</Link>
+        <Link to={routes.newArtist}>New Artist</Link>
         <Outlet />
       </main>
     </div>

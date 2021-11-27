@@ -2234,15 +2234,33 @@ export type VisitVarianceOrderBy = {
 
 export type AlbumFragment = { id: number, sid: string, title: string, year: number };
 
+export type AlbumWithArtistFragment = { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } };
+
 export type GetAlbumsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type GetAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, name: string, sid: string } }> };
+export type GetAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } }> };
+
+export type InsertAlbumMutationVariables = Exact<{
+  album: AlbumInsertInput;
+}>;
+
+
+export type InsertAlbumMutation = { insert_album_one?: { id: number, sid: string, title: string, year: number } | null | undefined };
+
+export type GetAlbumQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetAlbumQuery = { album_by_pk?: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } | null | undefined };
 
 export type ArtistFragment = { id: number, sid: string, name: string };
+
+export type ArtistWithAlbumsFragment = { id: number, sid: string, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> };
 
 export type GetArtistsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2281,18 +2299,45 @@ export const Artist = gql`
   name
 }
     `;
+export const AlbumWithArtist = gql`
+    fragment AlbumWithArtist on album {
+  ...Album
+  artistByArtist {
+    ...Artist
+  }
+}
+    ${Album}
+${Artist}`;
+export const ArtistWithAlbums = gql`
+    fragment ArtistWithAlbums on artist {
+  ...Artist
+  albums {
+    ...Album
+  }
+}
+    ${Artist}
+${Album}`;
 export const GetAlbums = gql`
     query GetAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
+    ...AlbumWithArtist
+  }
+}
+    ${AlbumWithArtist}`;
+export const InsertAlbum = gql`
+    mutation InsertAlbum($album: album_insert_input!) {
+  insert_album_one(object: $album) {
     ...Album
-    artistByArtist {
-      id
-      name
-      sid
-    }
   }
 }
     ${Album}`;
+export const GetAlbum = gql`
+    query GetAlbum($id: Int!) {
+  album_by_pk(id: $id) {
+    ...AlbumWithArtist
+  }
+}
+    ${AlbumWithArtist}`;
 export const GetArtists = gql`
     query GetArtists($limit: Int, $offset: Int) {
   artist(limit: $limit, offset: $offset) {
@@ -2310,11 +2355,7 @@ export const InsertArtist = gql`
 export const GetArtist = gql`
     query GetArtist($id: Int!) {
   artist_by_pk(id: $id) {
-    ...Artist
-    albums {
-      ...Album
-    }
+    ...ArtistWithAlbums
   }
 }
-    ${Artist}
-${Album}`;
+    ${ArtistWithAlbums}`;

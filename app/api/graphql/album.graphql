@@ -5,13 +5,27 @@ fragment Album on album {
   year
 }
 
+fragment AlbumWithArtist on album {
+  ...Album
+  artistByArtist {
+    ...Artist
+  }
+}
+
 query GetAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
+    ...AlbumWithArtist
+  }
+}
+
+mutation InsertAlbum($album: album_insert_input!) {
+  insert_album_one(object: $album) {
     ...Album
-    artistByArtist {
-      id
-      name
-      sid
-    }
+  }
+}
+
+query GetAlbum($id: Int!) {
+  album_by_pk(id: $id) {
+    ...AlbumWithArtist
   }
 }
