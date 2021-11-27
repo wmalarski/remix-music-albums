@@ -1,5 +1,5 @@
-import { useCatch, Link, json, useLoaderData } from "remix";
 import type { LoaderFunction, MetaFunction } from "remix";
+import { json, useCatch, useLoaderData } from "remix";
 
 // The `$` in route filenames becomes a pattern that's parsed from the URL and
 // passed to your loaders so you can look up data.
@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   // Sometimes your code just blows up and you never anticipated it. Remix will
   // automatically catch it and send the UI to the error boundary.
   if (params.id === "kaboom") {
-    lol();
+    // lol();
   }
 
   // but otherwise the record was found, user has access, so we can do whatever
@@ -61,10 +61,12 @@ export function CatchBoundary() {
           Maybe ask the webmaster ({caught.data.webmasterEmail}) for access.
         </p>
       );
+      break;
     case 404:
       message = (
         <p>Looks like you tried to visit a page that does not exist.</p>
       );
+      break;
     default:
       message = (
         <p>
@@ -80,8 +82,8 @@ export function CatchBoundary() {
       <h2>Oops!</h2>
       <p>{message}</p>
       <p>
-        (Isn't it cool that the user gets to stay in context and try a different
-        link in the parts of the UI that didn't blow up?)
+        (Isn t it cool that the user gets to stay in context and try a different
+        link in the parts of the UI that didn t blow up?)
       </p>
     </>
   );
@@ -96,8 +98,8 @@ export function ErrorBoundary({ error }: { error: Error }) {
       <h2>Error!</h2>
       <p>{error.message}</p>
       <p>
-        (Isn't it cool that the user gets to stay in context and try a different
-        link in the parts of the UI that didn't blow up?)
+        (Isn t it cool that the user gets to stay in context and try a different
+        link in the parts of the UI that didn t blow up?)
       </p>
     </>
   );
