@@ -29,7 +29,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!id || result.errors) return { fetcherErrors: result.errors };
 
-  return redirect(routes.artist(id));
+  return redirect(routes.artist(id).toString());
 };
 
 const NewArtist = (): ReactElement => {

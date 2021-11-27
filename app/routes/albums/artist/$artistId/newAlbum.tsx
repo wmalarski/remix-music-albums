@@ -34,7 +34,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (!id || result.errors) return { fetcherErrors: result.errors };
 
-  return redirect(routes.album(id));
+  return redirect(routes.album(id).toString());
 };
 
 const NewAlbum = (): ReactElement => {

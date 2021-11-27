@@ -6,9 +6,8 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
+import { fetcher, FetcherPayload } from "~/api/fetcher";
 import {
-  AlbumWithArtistFragment,
   GetAlbums,
   GetAlbumsQuery,
   GetAlbumsQueryVariables,
@@ -17,14 +16,9 @@ import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { toNumber } from "~/utils/validation";
 
-type AlbumsActionData = {
-  albums?: AlbumWithArtistFragment[];
-  errors?: FetcherError[];
-};
-
 export const meta: MetaFunction = () => {
   return {
-    title: "Remix Starter",
+    title: "Remix Albums",
     description: "Welcome to remix!",
   };
 };
@@ -33,22 +27,17 @@ export const loader: LoaderFunction = async ({ params }) => {
   const limit = toNumber(params.limit, 12);
   const offset = toNumber(params.offset, 0);
 
-  const payload = await jsonFetcher<GetAlbumsQuery, GetAlbumsQueryVariables>(
-    GetAlbums,
-    { limit, offset }
-  );
-
-  return { albums: payload.data?.album, errors: payload.errors };
+  return fetcher<GetAlbumsQueryVariables>(GetAlbums, { limit, offset });
 };
 
 const Albums = (): ReactElement => {
-  const action = useLoaderData<AlbumsActionData>();
+  const action = useLoaderData<FetcherPayload<GetAlbumsQuery>>();
   const transition = useTransition();
 
   return (
     <Page>
       <main>
-        <AlbumsGrid albums={action?.albums} transition={transition} />
+        <AlbumsGrid albums={action?.data?.album} transition={transition} />
         <Divider />
         <Outlet />
       </main>
