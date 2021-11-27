@@ -1,10 +1,17 @@
 import { ReactElement } from "react";
 import type { LinksFunction } from "remix";
-import { Outlet, useCatch } from "remix";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  useCatch,
+} from "remix";
 import darkStylesUrl from "~/styles/dark.css";
 import globalStylesUrl from "~/styles/global.css";
-import { Document } from "./components/Document/Document";
-import { Layout } from "./components/Layout/Layout";
+import { Divider, Layout } from "./components";
 
 // https://remix.run/api/app#links
 export const links: LinksFunction = () => {
@@ -39,7 +46,7 @@ export const ErrorBoundary = ({ error }: { error: Error }): ReactElement => {
         <div>
           <h1>There was an error</h1>
           <p>{error.message}</p>
-          <hr />
+          <Divider />
           <p>
             Hey, developer, you should replace this with what you want your
             users to see.
@@ -83,6 +90,31 @@ export const CatchBoundary = (): ReactElement => {
         {message}
       </Layout>
     </Document>
+  );
+};
+
+type DocumentProps = {
+  children: React.ReactNode;
+  title?: string;
+};
+
+const Document = ({ children, title }: DocumentProps): ReactElement => {
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        {title ? <title>{title}</title> : null}
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+        {process.env.NODE_ENV === "development" && <LiveReload />}
+      </body>
+    </html>
   );
 };
 

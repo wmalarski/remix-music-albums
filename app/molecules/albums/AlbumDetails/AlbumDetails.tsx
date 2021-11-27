@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import { Link } from "remix";
 import { AlbumWithArtistFragment } from "~/api/types";
+import { StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
 type AlbumDetailsProps = {
@@ -12,13 +12,15 @@ export const AlbumDetails = ({ album }: AlbumDetailsProps): ReactElement => {
     <div>
       <p>AlbumDetails</p>
       <p>
-        <Link to={routes.album(album.id)}>Album</Link>
+        <StyledLink to={routes.album(album.id)}>Album</StyledLink>
       </p>
       <p>
-        <Link to={routes.artist(album.artistByArtist.id)}>Artist</Link>
+        <StyledLink to={routes.artist(album.artistByArtist.id)}>
+          Artist
+        </StyledLink>
       </p>
       <p>
-        <Link to={routes.newReview(album.id)}>Review</Link>
+        <StyledLink to={routes.newReview(album.id)}>Review</StyledLink>
       </p>
       <pre>{JSON.stringify(album, null, 2)}</pre>
     </div>

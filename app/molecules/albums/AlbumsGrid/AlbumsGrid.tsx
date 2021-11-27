@@ -1,7 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
-import { Link } from "remix";
 import { AlbumWithArtistFragment } from "~/api/types";
+import { StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
 type AlbumsGridProps = {
@@ -15,7 +15,7 @@ export const AlbumsGrid = ({ albums }: AlbumsGridProps): ReactElement => {
       AlbumsGrid
       {albums?.map((album) => (
         <p key={album.id}>
-          <Link to={routes.album(album.id)}>{album.title}</Link>
+          <StyledLink to={routes.album(album.id)}>{album.title}</StyledLink>
         </p>
       ))}
     </div>

@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 import {
-  Link,
   LoaderFunction,
   MetaFunction,
   Outlet,
@@ -14,8 +13,8 @@ import {
   GetAlbumsQuery,
   GetAlbumsQueryVariables,
 } from "~/api/types";
+import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
-import { routes } from "~/utils/routes";
 import { toNumber } from "~/utils/validation";
 
 type AlbumsActionData = {
@@ -47,24 +46,13 @@ const Albums = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <div className="remix__page">
+    <Page>
       <main>
-        <p>
-          <Link to={routes.albums}>Albums</Link>
-        </p>
-        <p>
-          <Link to={routes.newArtist}>New Artist</Link>
-        </p>
-        <p>
-          <Link to={routes.reviews}>Reviews</Link>
-        </p>
-        <p>
-          <Link to={routes.visits}>Visits</Link>
-        </p>
         <AlbumsGrid albums={action?.albums} transition={transition} />
+        <Divider />
         <Outlet />
       </main>
-    </div>
+    </Page>
   );
 };
 

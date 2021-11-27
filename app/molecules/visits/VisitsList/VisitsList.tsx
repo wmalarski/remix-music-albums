@@ -1,7 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
-import { Link } from "remix";
 import { VisitWithAlbumAndArtistFragment } from "~/api/types";
+import { StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
 type VisitsListProps = {
@@ -17,14 +17,16 @@ export const VisitsList = ({ visits }: VisitsListProps): ReactElement => {
         {visits?.map((visit) => (
           <div key={visit.id}>
             <p>
-              <Link to={routes.album(visit.albumByAlbum.id)}>
+              <StyledLink to={routes.album(visit.albumByAlbum.id)}>
                 {visit.albumByAlbum.title}
-              </Link>
+              </StyledLink>
             </p>
             <p>
-              <Link to={routes.artist(visit.albumByAlbum.artistByArtist.id)}>
+              <StyledLink
+                to={routes.artist(visit.albumByAlbum.artistByArtist.id)}
+              >
                 {visit.albumByAlbum.artistByArtist.name}
-              </Link>
+              </StyledLink>
             </p>
             <p>{visit.createdAt}</p>
           </div>

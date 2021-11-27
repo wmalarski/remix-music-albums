@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { MetaFunction } from "remix";
+import { Page } from "~/components";
 
 export const meta: MetaFunction = () => {
   return {
@@ -10,9 +11,9 @@ export const meta: MetaFunction = () => {
 
 const Index = (): ReactElement => {
   return (
-    <div className="remix__page">
+    <Page>
       <main>Index</main>
-    </div>
+    </Page>
   );
 };
 

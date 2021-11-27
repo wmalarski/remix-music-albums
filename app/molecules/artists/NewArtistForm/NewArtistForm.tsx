@@ -2,6 +2,7 @@ import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { FetcherError } from "~/api/fetcher";
+import { TextInput } from "~/components";
 import { NewArtistFormResult, validateNewArtist } from "./NewArtistForm.utils";
 
 type NewArtistFormProps = {
@@ -19,13 +20,13 @@ export const NewArtistForm = ({
       <p>
         <label>
           Name: {validationErrors?.name && <em>Name is required</em>}
-          <input type="text" name="name" />
+          <TextInput type="text" name="name" />
         </label>
       </p>
       <p>
         <label>
           Sid: {validationErrors?.sid && <em>Sid is required</em>}
-          <input type="text" name="sid" />
+          <TextInput type="text" name="sid" />
         </label>
       </p>
       <p>

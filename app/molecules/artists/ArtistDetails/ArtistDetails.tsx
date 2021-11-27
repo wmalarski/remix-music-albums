@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import { Link } from "remix";
 import { ArtistFragment } from "~/api/types";
+import { StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
 type ArtistDetailsProps = {
@@ -12,10 +12,12 @@ export const ArtistDetails = ({ artist }: ArtistDetailsProps): ReactElement => {
     <div>
       ArtistDetails
       <p>
-        <Link to={routes.artist(artist.id)}>{`Artist: ${artist.name}`}</Link>
+        <StyledLink
+          to={routes.artist(artist.id)}
+        >{`Artist: ${artist.name}`}</StyledLink>
       </p>
       <p>
-        <Link to={routes.newAlbum(artist.id)}>New album</Link>
+        <StyledLink to={routes.newAlbum(artist.id)}>New album</StyledLink>
       </p>
       <pre>{JSON.stringify(artist, null, 2)}</pre>
     </div>

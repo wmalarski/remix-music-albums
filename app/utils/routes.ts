@@ -1,4 +1,5 @@
 export const routes = {
+  home: "/",
   albums: "/albums",
   reviews: "/albums/reviews",
   visits: "/albums/visits",
