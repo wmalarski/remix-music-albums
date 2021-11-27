@@ -4,7 +4,7 @@ import {
   LoaderFunction,
   MetaFunction,
   Outlet,
-  useActionData,
+  useLoaderData,
   useTransition,
 } from "remix";
 import { FetcherError, jsonFetcher } from "~/api/fetcher";
@@ -43,15 +43,24 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Albums = (): ReactElement => {
-  const action = useActionData<AlbumsActionData>();
+  const action = useLoaderData<AlbumsActionData>();
   const transition = useTransition();
 
   return (
     <div className="remix__page">
       <main>
-        Albums
-        <Link to={routes.albums}>Albums</Link>
-        <Link to={routes.newArtist}>New Artist</Link>
+        <p>
+          <Link to={routes.albums}>Albums</Link>
+        </p>
+        <p>
+          <Link to={routes.newArtist}>New Artist</Link>
+        </p>
+        <p>
+          <Link to={routes.reviews}>Reviews</Link>
+        </p>
+        <p>
+          <Link to={routes.visits}>Visits</Link>
+        </p>
         <AlbumsGrid albums={action?.albums} transition={transition} />
         <Outlet />
       </main>

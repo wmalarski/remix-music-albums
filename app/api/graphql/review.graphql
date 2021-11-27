@@ -5,8 +5,21 @@ fragment Review on review {
   createdAt
 }
 
+fragment ReviewWithAlbumAndArtist on review {
+  ...Review
+  albumByAlbum {
+    ...AlbumWithArtist
+  }
+}
+
 mutation InsertReview($review: review_insert_input!) {
   insert_review_one(object: $review) {
     id
+  }
+}
+
+query GetReviews($limit: Int, $offset: Int) {
+  review(limit: $limit, offset: $offset) {
+    ...ReviewWithAlbumAndArtist
   }
 }

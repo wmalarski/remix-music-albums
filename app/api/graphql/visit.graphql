@@ -1,3 +1,15 @@
+fragment Visit on visit {
+  id
+  createdAt
+}
+
+fragment VisitWithAlbumAndArtist on visit {
+  ...Visit
+  albumByAlbum {
+    ...AlbumWithArtist
+  }
+}
+
 mutation InsertVisit($visit: visit_insert_input!) {
   insert_visit_one(
     object: $visit
@@ -8,5 +20,11 @@ mutation InsertVisit($visit: visit_insert_input!) {
     }
   ) {
     id
+  }
+}
+
+query GetVisits($limit: Int, $offset: Int) {
+  visit(limit: $limit, offset: $offset) {
+    ...VisitWithAlbumAndArtist
   }
 }
