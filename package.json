@@ -16,8 +16,11 @@
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml dotenv_config_path=.env"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^0.1.1",
+    "@radix-ui/react-id": "^0.1.1",
     "@remix-run/react": "^1.0.6",
     "@remix-run/serve": "^1.0.6",
+    "@stitches/react": "^1.2.5",
     "cross-fetch": "^3.1.4",
     "dotenv": "^10.0.0",
     "graphql": "^16.0.1",

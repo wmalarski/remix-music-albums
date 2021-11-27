@@ -1,6 +1,7 @@
 import { ReactElement, ReactNode } from "react";
 import { Link } from "remix";
 import { Logo } from "../Logo/Logo";
+import * as Styles from "./Layout.styles";
 
 type LayoutProps = {
   children: ReactNode;
@@ -14,6 +15,7 @@ export const Layout = ({ children }: LayoutProps): ReactElement => {
           <Link to="/" title="Remix" className="remix-app__header-home-link">
             <Logo />
           </Link>
+          <Styles.Button>Hello</Styles.Button>
           <nav aria-label="Main navigation" className="remix-app__header-nav">
             <ul>
               <li>

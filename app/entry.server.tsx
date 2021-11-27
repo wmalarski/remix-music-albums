@@ -1,6 +1,8 @@
+import { IdProvider } from "@radix-ui/react-id";
 import { renderToString } from "react-dom/server";
 import type { EntryContext } from "remix";
 import { RemixServer } from "remix";
+import { getCssText } from "./styles/stitches.config";
 
 export default function handleRequest(
   request: Request,
@@ -9,8 +11,10 @@ export default function handleRequest(
   remixContext: EntryContext
 ): Response {
   const markup = renderToString(
-    <RemixServer context={remixContext} url={request.url} />
-  );
+    <IdProvider>
+      <RemixServer context={remixContext} url={request.url} />
+    </IdProvider>
+  ).replace(/<\/head>/, `<style id="stitches">${getCssText()}</style></head>`);
 
   responseHeaders.set("Content-Type", "text/html");
 
