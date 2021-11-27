@@ -8,6 +8,7 @@ import {
 } from "~/api/types";
 import { NewAlbumForm, NewAlbumFormResult } from "~/molecules/albums";
 import { routes } from "~/utils/routes";
+import { isNumber } from "~/utils/validation";
 
 type NewAlbumActionData = {
   errors?: NewAlbumFormResult["errors"];
@@ -15,7 +16,7 @@ type NewAlbumActionData = {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  if (!params.artistId || !/^\d+$/.test(params.artistId))
+  if (!isNumber(params.artistId))
     throw new Response("Not Found", { status: 404 });
 
   const artistId = Number(params.artistId);

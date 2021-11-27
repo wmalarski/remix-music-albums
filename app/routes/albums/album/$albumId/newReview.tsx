@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { ActionFunction, useActionData, useTransition } from "remix";
+import { ActionFunction, redirect, useActionData, useTransition } from "remix";
 import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
   InsertAlbum,
@@ -7,15 +7,16 @@ import {
   InsertReviewMutationVariables,
 } from "~/api/types";
 import { NewReviewForm, NewReviewFormResult } from "~/molecules/reviews";
+import { routes } from "~/utils/routes";
+import { isNumber } from "~/utils/validation";
 
 type NewReviewActionData = {
-  reviewId?: number;
   errors?: NewReviewFormResult["errors"];
   fetcherErrors?: FetcherError[];
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  if (!params.albumId || !/^\d+$/.test(params.albumId))
+  if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
   const profile = 1; // TODO add profiles
@@ -34,9 +35,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     InsertReviewMutationVariables
   >(InsertAlbum, variables);
 
-  const reviewId = result.data?.insert_review_one?.id;
+  if (result.errors) return { fetcherErrors: result.errors };
 
-  return { reviewId, fetcherErrors: result.errors };
+  return redirect(routes.album(albumId));
 };
 
 const NewReview = (): ReactElement => {

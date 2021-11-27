@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { json, Link, LoaderFunction, Outlet, useLoaderData } from "remix";
+import { json, LoaderFunction, Outlet, useLoaderData } from "remix";
 import { jsonFetcher } from "~/api/fetcher";
 import {
   AlbumWithArtistAndReviewsFragment,
@@ -10,10 +10,11 @@ import {
   InsertVisitMutation,
   InsertVisitMutationVariables,
 } from "~/api/types";
-import { routes } from "~/utils/routes";
+import { AlbumDetails } from "~/molecules/albums";
+import { isNumber } from "~/utils/validation";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  if (!params.albumId || !/^\d+$/.test(params.albumId))
+  if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
   const profile = 1; // TODO add profiles
@@ -36,16 +37,7 @@ const Album = (): ReactElement => {
 
   return (
     <div>
-      <p>
-        <Link to={routes.album(album.id)}>Album</Link>
-      </p>
-      <p>
-        <Link to={routes.artist(album.artistByArtist.id)}>Artist</Link>
-      </p>
-      <p>
-        <Link to={routes.newReview(album.id)}>Review</Link>
-      </p>
-      <pre>{JSON.stringify(album, null, 2)}</pre>
+      <AlbumDetails album={album} />
       <Outlet />
     </div>
   );

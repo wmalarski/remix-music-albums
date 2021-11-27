@@ -1,16 +1,19 @@
-import { ReactElement } from "react";
-import { Link, LoaderFunction, Outlet, useLoaderData } from "remix";
+import { ReactElement, useMemo } from "react";
+import { LoaderFunction, Outlet, useLoaderData, useTransition } from "remix";
 import { jsonFetcher } from "~/api/fetcher";
 import {
+  AlbumWithArtistFragment,
   ArtistWithAlbumsFragment,
   GetArtist,
   GetArtistQuery,
   GetArtistQueryVariables,
 } from "~/api/types";
-import { routes } from "~/utils/routes";
+import { AlbumsGrid } from "~/molecules/albums";
+import { ArtistDetails } from "~/molecules/artists";
+import { isNumber } from "~/utils/validation";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  if (!params.artistId || !/^\d+$/.test(params.artistId))
+  if (!isNumber(params.artistId))
     throw new Response("Not Found", { status: 404 });
 
   const id = Number(params.artistId);
@@ -27,21 +30,17 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const Artist = (): ReactElement => {
   const artist = useLoaderData<ArtistWithAlbumsFragment>();
+  const transition = useTransition();
+
+  const albums = useMemo<AlbumWithArtistFragment[]>(() => {
+    const { albums: artistAlbums, ...artistByArtist } = artist;
+    return artistAlbums.map((album) => ({ ...album, artistByArtist }));
+  }, [artist]);
 
   return (
     <div>
-      <p>
-        <Link to={routes.artist(artist.id)}>{`Artist: ${artist.name}`}</Link>
-      </p>
-      <p>
-        <Link to={routes.newAlbum(artist.id)}>New album</Link>
-      </p>
-      {artist.albums.map((album) => (
-        <p key={album.id}>
-          <Link to={routes.album(album.id)}>{album.title}</Link>
-        </p>
-      ))}
-      <pre>{JSON.stringify(artist, null, 2)}</pre>
+      <ArtistDetails artist={artist} />
+      <AlbumsGrid albums={albums} transition={transition} />
       <Outlet />
     </div>
   );
