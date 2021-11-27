@@ -5,3 +5,4 @@ public
 node_modules
 build
 public/build
+app/api/types.ts

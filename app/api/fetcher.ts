@@ -1,4 +1,5 @@
 import { fetch } from "cross-fetch";
+import { DocumentNode } from "graphql";
 import invariant from "tiny-invariant";
 
 type GraphqlApiConfig = {
@@ -24,10 +25,12 @@ const getGraphqlApiConfig = (): GraphqlApiConfig => {
 };
 
 export const fetcher = <TVariables>(
-  query: string,
+  documentNode: DocumentNode,
   variables?: TVariables
 ): Promise<Response> => {
   const { adminSecret, apiEndpoint } = getGraphqlApiConfig();
+
+  const query = documentNode.loc?.source.body;
 
   return fetch(apiEndpoint, {
     body: JSON.stringify({ query, variables }),

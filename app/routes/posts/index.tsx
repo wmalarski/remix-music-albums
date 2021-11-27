@@ -1,13 +1,12 @@
 import { ReactElement } from "react";
 import { useLoaderData } from "remix";
-import { queryArtists } from "~/api/artists";
+import { fetcher } from "~/api/fetcher";
+import { GetArtists, GetArtistsQuery } from "~/api/types";
 
-export const loader = async (): Promise<Response> => {
-  return queryArtists();
-};
+export const loader = async (): Promise<Response> => fetcher(GetArtists);
 
 const Posts = (): ReactElement => {
-  const posts = useLoaderData();
+  const posts = useLoaderData<GetArtistsQuery>();
   console.log(posts);
 
   return (
