@@ -1,3 +1,4 @@
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import {
   ActionFunction,
@@ -12,6 +13,7 @@ import {
   InsertArtistMutation,
   InsertArtistMutationVariables,
 } from "~/api/types";
+import { Dialog } from "~/components";
 import { NewArtistForm, NewArtistFormResult } from "~/molecules/artists";
 import { routes } from "~/utils/routes";
 
@@ -43,11 +45,16 @@ const NewArtist = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <NewArtistForm
-      transition={transition}
-      validationErrors={action?.errors}
-      fetcherErrors={action?.fetcherErrors}
-    />
+    <Dialog>
+      <NewArtistForm
+        transition={transition}
+        validationErrors={action?.errors}
+        fetcherErrors={action?.fetcherErrors}
+      />
+      <Dialog.Close to={routes.albums()}>
+        <Cross1Icon />
+      </Dialog.Close>
+    </Dialog>
   );
 };
 

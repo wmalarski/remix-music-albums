@@ -9,7 +9,7 @@ import {
   useCatch,
 } from "remix";
 import { Divider, Layout } from "./components";
-import { globalStyles } from "./styles/stitches.config";
+import { darkTheme, globalStyles } from "./styles/stitches.config";
 
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
@@ -87,7 +87,7 @@ type DocumentProps = {
 
 const Document = ({ children, title }: DocumentProps): ReactElement => {
   return (
-    <html lang="en">
+    <html lang="en" className={darkTheme}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

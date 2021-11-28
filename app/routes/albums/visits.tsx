@@ -1,3 +1,4 @@
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData, useTransition } from "remix";
 import { fetcher, FetcherPayload } from "~/api/fetcher";
@@ -6,7 +7,9 @@ import {
   GetVisitsQuery,
   GetVisitsQueryVariables,
 } from "~/api/types";
+import { Dialog, Heading } from "~/components";
 import { VisitsList } from "~/molecules/visits";
+import { routes } from "~/utils/routes";
 import { toNumber } from "~/utils/validation";
 
 export const loader: LoaderFunction = ({ params }) => {
@@ -21,10 +24,13 @@ const Visits = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <div>
-      <p>Visits</p>
+    <Dialog>
+      <Heading>Visits</Heading>
       <VisitsList visits={action?.data?.visit} transition={transition} />
-    </div>
+      <Dialog.Close to={routes.albums()}>
+        <Cross1Icon />
+      </Dialog.Close>
+    </Dialog>
   );
 };
 

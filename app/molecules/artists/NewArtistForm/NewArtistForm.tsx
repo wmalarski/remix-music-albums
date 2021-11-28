@@ -2,7 +2,7 @@ import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { FetcherError } from "~/api/fetcher";
-import { TextInput } from "~/components";
+import { Heading, TextInput } from "~/components";
 import { NewArtistFormResult, validateNewArtist } from "./NewArtistForm.utils";
 
 type NewArtistFormProps = {
@@ -17,6 +17,7 @@ export const NewArtistForm = ({
 }: NewArtistFormProps): ReactElement => {
   return (
     <Form method="post">
+      <Heading>New Artist</Heading>
       <p>
         <label>
           Name: {validationErrors?.name && <em>Name is required</em>}

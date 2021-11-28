@@ -1,3 +1,4 @@
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement, useMemo } from "react";
 import {
   json,
@@ -14,8 +15,10 @@ import {
   GetArtistQuery,
   GetArtistQueryVariables,
 } from "~/api/types";
+import { Dialog } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { ArtistDetails } from "~/molecules/artists";
+import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -44,11 +47,14 @@ const Artist = (): ReactElement => {
   }, [artist]);
 
   return (
-    <div>
+    <Dialog>
       <ArtistDetails artist={artist} />
       <AlbumsGrid albums={albums} transition={transition} />
       <Outlet />
-    </div>
+      <Dialog.Close to={routes.albums()}>
+        <Cross1Icon />
+      </Dialog.Close>
+    </Dialog>
   );
 };
 

@@ -1,3 +1,4 @@
+import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { json, LoaderFunction, Outlet, useLoaderData } from "remix";
 import { jsonFetcher } from "~/api/fetcher";
@@ -10,7 +11,9 @@ import {
   InsertVisitMutation,
   InsertVisitMutationVariables,
 } from "~/api/types";
+import { Dialog } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
+import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -36,10 +39,13 @@ const Album = (): ReactElement => {
   const album = useLoaderData<AlbumWithArtistAndReviewsFragment>();
 
   return (
-    <div>
+    <Dialog>
       <AlbumDetails album={album} />
       <Outlet />
-    </div>
+      <Dialog.Close to={routes.albums()}>
+        <Cross1Icon />
+      </Dialog.Close>
+    </Dialog>
   );
 };
 
