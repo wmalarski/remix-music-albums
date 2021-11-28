@@ -42,11 +42,7 @@ export const action: ActionFunction = async ({ params }) => {
   >(DeleteAlbum, { id: Number(params.albumId) });
 
   const artist = result.data?.delete_album_by_pk?.artist;
-
-  console.log("albumId action", JSON.stringify(result, null, 2));
-
   if (!artist || result.errors) return json({ fetcherErrors: result.errors });
-
   return redirect(routes.artist(artist));
 };
 
@@ -56,7 +52,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const profile = 1; // TODO add profiles
   const id = Number(params.albumId);
-  const [payload, result] = await Promise.all([
+  const [payload] = await Promise.all([
     jsonFetcher<SelectAlbumQuery, SelectAlbumQueryVariables>(SelectAlbum, {
       id,
     }),
@@ -65,8 +61,6 @@ export const loader: LoaderFunction = async ({ params }) => {
       { visit: { album: id, profile } }
     ),
   ]);
-
-  console.log("albumId", JSON.stringify({ payload, result }, null, 2));
 
   const albumFragment = payload.data?.album_by_pk;
   if (!albumFragment) throw new Response("Not Found", { status: 404 });

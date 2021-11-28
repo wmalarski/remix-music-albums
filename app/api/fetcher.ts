@@ -63,5 +63,11 @@ export const jsonFetcher = async <TData, TVariables>(
 
   const json = await result.json();
 
+  if (json.errors) {
+    console.error(
+      JSON.stringify({ definitions: documentNode.definitions, json }, null, 2)
+    );
+  }
+
   return json;
 };

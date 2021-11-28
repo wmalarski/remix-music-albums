@@ -21,8 +21,6 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectVisitsQueryVariables
   >(SelectVisits, { limit, offset });
 
-  console.log("visits", JSON.stringify(result, null, 2));
-
   return json(result);
 };
 

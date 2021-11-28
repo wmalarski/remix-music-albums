@@ -38,11 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
   >(InsertArtist, variables);
 
   const id = result.data?.insert_artist_one?.id;
-
-  console.log("newArtist", JSON.stringify(result, null, 2));
-
   if (!id || result.errors) return json({ fetcherErrors: result.errors });
-
   return redirect(routes.artist(id));
 };
 

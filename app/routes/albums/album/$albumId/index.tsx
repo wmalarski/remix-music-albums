@@ -28,8 +28,6 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const reviewId = formData.get("reviewId")?.toString();
 
-  console.log({ formData });
-
   if (!isNumber(reviewId)) throw new Response("Not Found", { status: 404 });
 
   const result = await jsonFetcher<
@@ -38,11 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
   >(DeleteReview, { id: Number(reviewId) });
 
   const album = result.data?.delete_review_by_pk?.album;
-
-  console.log("reviews action", JSON.stringify(result, null, 2));
-
   if (!album || result.errors) return json({ fetcherErrors: result.errors });
-
   return redirect(routes.album(album));
 };
 

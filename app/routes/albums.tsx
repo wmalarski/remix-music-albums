@@ -15,6 +15,7 @@ import {
 } from "~/api/types";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
+import { LoaderErrors } from "~/molecules/root";
 import { toNumber } from "~/utils/validation";
 
 export const meta: MetaFunction = () => {
@@ -33,8 +34,6 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectAlbumsQueryVariables
   >(SelectAlbums, { limit, offset });
 
-  console.log("albums", JSON.stringify(result, null, 2));
-
   return json(result);
 };
 
@@ -49,6 +48,7 @@ const Albums = (): ReactElement => {
         <Divider />
         <Outlet />
       </main>
+      <LoaderErrors />
     </Page>
   );
 };

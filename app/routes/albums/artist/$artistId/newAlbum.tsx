@@ -40,12 +40,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     InsertAlbumMutationVariables
   >(InsertAlbum, variables);
 
-  console.log("newAlbum", JSON.stringify(result, null, 2));
-
   const id = result.data?.insert_album_one?.id;
-
   if (!id || result.errors) return json({ fetcherErrors: result.errors });
-
   return redirect(routes.album(id));
 };
 

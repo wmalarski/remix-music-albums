@@ -26,7 +26,6 @@ type NewReviewActionData = {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  console.log({ request, params });
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
@@ -35,7 +34,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
   const { variables, errors } = validateNewReview(formData, albumId, profile);
 
-  console.log({ variables, errors });
   if (errors) return json({ errors });
 
   const result = await jsonFetcher<
@@ -43,10 +41,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     InsertReviewMutationVariables
   >(InsertReview, variables);
 
-  console.log(JSON.stringify({ result }, null, 2));
-
   if (result.errors) return json({ fetcherErrors: result.errors });
-
   return redirect(routes.album(albumId));
 };
 
@@ -55,11 +50,7 @@ const NewReview = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <NewReviewForm
-      transition={transition}
-      fetcherErrors={action?.fetcherErrors}
-      validationErrors={action?.errors}
-    />
+    <NewReviewForm transition={transition} validationErrors={action?.errors} />
   );
 };
 

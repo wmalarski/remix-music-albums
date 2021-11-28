@@ -1,13 +1,11 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { FetcherError } from "~/api/fetcher";
 import { Heading, TextInput } from "~/components";
 import { validateNewReview } from "..";
 import { NewReviewFormResult } from "./NewReviewForm.utils";
 
 type NewReviewFormProps = {
-  fetcherErrors?: FetcherError[];
   transition: Transition;
   validationErrors?: NewReviewFormResult["errors"];
 };

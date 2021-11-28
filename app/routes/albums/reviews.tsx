@@ -34,11 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   >(DeleteReview, { id: Number(reviewId) });
 
   const album = result.data?.delete_review_by_pk?.album;
-
-  console.log("reviews action", JSON.stringify(result, null, 2));
-
   if (!album || result.errors) return json({ fetcherErrors: result.errors });
-
   return redirect(routes.album(album));
 };
 
@@ -50,8 +46,6 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectReviewsQuery,
     SelectReviewsQueryVariables
   >(SelectReviews, { limit, offset });
-
-  console.log("reviews", JSON.stringify(result, null, 2));
 
   return json(result);
 };
