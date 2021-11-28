@@ -12,6 +12,7 @@ import {
   InsertReviewMutation,
   InsertReviewMutationVariables,
 } from "~/api/types";
+import { ErrorsList } from "~/components";
 import {
   NewReviewForm,
   NewReviewFormResult,
@@ -30,9 +31,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     throw new Response("Not Found", { status: 404 });
 
   const profile = 1; // TODO add profiles
-  const albumId = Number(params.albumId);
+  const album = Number(params.albumId);
   const formData = await request.formData();
-  const { variables, errors } = validateNewReview(formData, albumId, profile);
+  const { variables, errors } = validateNewReview({
+    formData,
+    album,
+    profile,
+  });
 
   if (errors) return json({ errors });
 
@@ -42,7 +47,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   >(InsertReview, variables);
 
   if (result.errors) return json({ fetcherErrors: result.errors });
-  return redirect(routes.album(albumId));
+  return redirect(routes.album(album));
 };
 
 const NewReview = (): ReactElement => {
@@ -50,7 +55,10 @@ const NewReview = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <NewReviewForm transition={transition} validationErrors={action?.errors} />
+    <>
+      <NewReviewForm transition={transition} errors={action?.errors} />
+      <ErrorsList errors={action?.fetcherErrors} />
+    </>
   );
 };
 

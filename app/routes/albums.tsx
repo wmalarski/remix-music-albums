@@ -7,7 +7,7 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherPayload, jsonFetcher } from "~/api/fetcher";
+import { jsonFetcher } from "~/api/fetcher";
 import {
   SelectAlbums,
   SelectAlbumsQuery,
@@ -15,7 +15,6 @@ import {
 } from "~/api/types";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
-import { LoaderErrors } from "~/molecules/root";
 import { toNumber } from "~/utils/validation";
 
 export const meta: MetaFunction = () => {
@@ -34,21 +33,23 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectAlbumsQueryVariables
   >(SelectAlbums, { limit, offset });
 
-  return json(result);
+  if (result.errors)
+    throw new Response(JSON.stringify(result.errors), { status: 500 });
+
+  return json(result.data);
 };
 
 const Albums = (): ReactElement => {
-  const loader = useLoaderData<FetcherPayload<SelectAlbumsQuery>>();
+  const loader = useLoaderData<SelectAlbumsQuery>();
   const transition = useTransition();
 
   return (
     <Page>
       <main>
-        <AlbumsGrid albums={loader?.data?.album} transition={transition} />
+        <AlbumsGrid albums={loader.album} transition={transition} />
         <Divider />
         <Outlet />
       </main>
-      <LoaderErrors />
     </Page>
   );
 };

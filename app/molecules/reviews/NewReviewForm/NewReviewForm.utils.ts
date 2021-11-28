@@ -9,11 +9,17 @@ export type NewReviewFormResult = {
   };
 };
 
-export const validateNewReview = (
-  formData: FormData,
-  album: number,
-  profile: number
-): NewReviewFormResult => {
+type ValidateNewReviewArgs = {
+  formData: FormData;
+  album: number;
+  profile: number;
+};
+
+export const validateNewReview = ({
+  formData,
+  album,
+  profile,
+}: ValidateNewReviewArgs): NewReviewFormResult => {
   const text = formData.get("text");
   const rate = formData.get("rate");
 

@@ -5,10 +5,11 @@ import {
   json,
   LoaderFunction,
   redirect,
+  useActionData,
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherPayload, jsonFetcher } from "~/api/fetcher";
+import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
   DeleteReview,
   DeleteReviewMutation,
@@ -17,10 +18,14 @@ import {
   SelectReviewsQuery,
   SelectReviewsQueryVariables,
 } from "~/api/types";
-import { Dialog, Heading } from "~/components";
+import { Dialog, ErrorsList, Heading } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
 import { routes } from "~/utils/routes";
 import { isNumber, toNumber } from "~/utils/validation";
+
+type ReviewsActionData = {
+  fetcherErrors?: FetcherError[];
+};
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -47,21 +52,28 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectReviewsQueryVariables
   >(SelectReviews, { limit, offset });
 
-  return json(result);
+  if (result.errors)
+    throw new Response(JSON.stringify(result.errors), { status: 500 });
+
+  return json(result.data);
 };
 
 const Reviews = (): ReactElement => {
-  const loader = useLoaderData<FetcherPayload<SelectReviewsQuery>>();
+  const action = useActionData<ReviewsActionData>();
+  const loader = useLoaderData<SelectReviewsQuery>();
   const transition = useTransition();
 
   return (
-    <Dialog>
-      <Heading>Reviews</Heading>
-      <ReviewList reviews={loader?.data?.review} transition={transition} />
-      <Dialog.Close to={routes.albums()}>
-        <Cross1Icon />
-      </Dialog.Close>
-    </Dialog>
+    <>
+      <Dialog>
+        <Heading>Reviews</Heading>
+        <ReviewList reviews={loader.review} transition={transition} />
+        <Dialog.Close to={routes.albums()}>
+          <Cross1Icon />
+        </Dialog.Close>
+      </Dialog>
+      <ErrorsList errors={action?.fetcherErrors} />
+    </>
   );
 };
 

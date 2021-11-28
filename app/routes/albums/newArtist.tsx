@@ -13,7 +13,7 @@ import {
   InsertArtistMutation,
   InsertArtistMutationVariables,
 } from "~/api/types";
-import { Dialog } from "~/components";
+import { Dialog, ErrorsList } from "~/components";
 import {
   NewArtistForm,
   NewArtistFormResult,
@@ -39,6 +39,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const id = result.data?.insert_artist_one?.id;
   if (!id || result.errors) return json({ fetcherErrors: result.errors });
+
   return redirect(routes.artist(id));
 };
 
@@ -47,16 +48,15 @@ const NewArtist = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <Dialog>
-      <NewArtistForm
-        transition={transition}
-        validationErrors={action?.errors}
-        fetcherErrors={action?.fetcherErrors}
-      />
-      <Dialog.Close to={routes.albums()}>
-        <Cross1Icon />
-      </Dialog.Close>
-    </Dialog>
+    <>
+      <Dialog>
+        <NewArtistForm transition={transition} errors={action?.errors} />
+        <Dialog.Close to={routes.albums()}>
+          <Cross1Icon />
+        </Dialog.Close>
+      </Dialog>
+      <ErrorsList errors={action?.fetcherErrors} />
+    </>
   );
 };
 

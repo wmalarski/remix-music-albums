@@ -1,38 +1,36 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { FetcherError } from "~/api/fetcher";
 import { Heading, TextInput } from "~/components";
 import { NewAlbumFormResult, validateNewAlbum } from "./NewAlbumForm.utils";
 
 type NewAlbumFormProps = {
-  fetcherErrors?: FetcherError[];
   transition: Transition;
-  validationErrors: NewAlbumFormResult["errors"];
+  errors: NewAlbumFormResult["errors"];
 };
 
 export const NewAlbumForm = ({
   transition,
-  validationErrors,
+  errors,
 }: NewAlbumFormProps): ReactElement => {
   return (
     <Form method="post">
       <Heading>New Artist</Heading>
       <p>
         <label>
-          Title: {validationErrors?.title && <em>Title is required</em>}
+          Title: {errors?.title && <em>Title is required</em>}
           <TextInput type="text" name="title" />
         </label>
       </p>
       <p>
         <label>
-          Year: {validationErrors?.year && <em>Year is required</em>}
+          Year: {errors?.year && <em>Year is required</em>}
           <input type="number" name="year" />
         </label>
       </p>
       <p>
         <label>
-          Sid: {validationErrors?.sid && <em>Sid is required</em>}
+          Sid: {errors?.sid && <em>Sid is required</em>}
           <TextInput type="text" name="sid" />
         </label>
       </p>

@@ -12,6 +12,7 @@ import {
   InsertAlbumMutation,
   InsertAlbumMutationVariables,
 } from "~/api/types";
+import { ErrorsList } from "~/components";
 import {
   NewAlbumForm,
   NewAlbumFormResult,
@@ -50,11 +51,10 @@ const NewAlbum = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <NewAlbumForm
-      transition={transition}
-      validationErrors={action?.errors}
-      fetcherErrors={action?.fetcherErrors}
-    />
+    <>
+      <NewAlbumForm transition={transition} errors={action?.errors} />
+      <ErrorsList errors={action?.fetcherErrors} />
+    </>
   );
 };
 

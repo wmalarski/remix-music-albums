@@ -6,10 +6,11 @@ import {
   LoaderFunction,
   Outlet,
   redirect,
+  useActionData,
   useLoaderData,
   useTransition,
 } from "remix";
-import { jsonFetcher } from "~/api/fetcher";
+import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
   AlbumWithArtistFragment,
   ArtistWithAlbumsFragment,
@@ -20,11 +21,15 @@ import {
   SelectArtistQuery,
   SelectArtistQueryVariables,
 } from "~/api/types";
-import { Dialog } from "~/components";
+import { Dialog, ErrorsList } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { ArtistDetails } from "~/molecules/artists";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
+
+type ArtistActionData = {
+  fetcherErrors?: FetcherError[];
+};
 
 export const action: ActionFunction = async ({ params }) => {
   if (!isNumber(params.artistId))
@@ -50,12 +55,17 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectArtistQueryVariables
   >(SelectArtist, { id: Number(params.artistId) });
 
+  if (result.errors)
+    throw new Response(JSON.stringify(result.errors), { status: 500 });
+
   const artistFragment = result.data?.artist_by_pk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });
+
   return json(artistFragment);
 };
 
 const Artist = (): ReactElement => {
+  const action = useActionData<ArtistActionData>();
   const loader = useLoaderData<ArtistWithAlbumsFragment>();
   const transition = useTransition();
 
@@ -65,14 +75,17 @@ const Artist = (): ReactElement => {
   }, [loader]);
 
   return (
-    <Dialog>
-      <ArtistDetails artist={loader} transition={transition} />
-      <AlbumsGrid albums={albums} transition={transition} />
-      <Outlet />
-      <Dialog.Close to={routes.albums()}>
-        <Cross1Icon />
-      </Dialog.Close>
-    </Dialog>
+    <>
+      <Dialog>
+        <ArtistDetails artist={loader} transition={transition} />
+        <AlbumsGrid albums={albums} transition={transition} />
+        <Outlet />
+        <Dialog.Close to={routes.albums()}>
+          <Cross1Icon />
+        </Dialog.Close>
+      </Dialog>
+      <ErrorsList errors={action?.fetcherErrors} />
+    </>
   );
 };
 

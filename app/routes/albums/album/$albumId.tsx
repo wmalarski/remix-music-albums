@@ -23,7 +23,7 @@ import {
   SelectAlbumQuery,
   SelectAlbumQueryVariables,
 } from "~/api/types";
-import { Dialog } from "~/components";
+import { Dialog, ErrorsList } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
@@ -48,11 +48,11 @@ export const action: ActionFunction = async ({ params }) => {
 
 export const loader: LoaderFunction = async ({ params }) => {
   if (!isNumber(params.albumId))
-    throw new Response("Not Found", { status: 404 });
+    throw new Response("Album Not Found", { status: 404 });
 
   const profile = 1; // TODO add profiles
   const id = Number(params.albumId);
-  const [payload] = await Promise.all([
+  const [result] = await Promise.all([
     jsonFetcher<SelectAlbumQuery, SelectAlbumQueryVariables>(SelectAlbum, {
       id,
     }),
@@ -62,8 +62,12 @@ export const loader: LoaderFunction = async ({ params }) => {
     ),
   ]);
 
-  const albumFragment = payload.data?.album_by_pk;
-  if (!albumFragment) throw new Response("Not Found", { status: 404 });
+  if (result.errors)
+    throw new Response(JSON.stringify(result.errors), { status: 500 });
+
+  const albumFragment = result.data?.album_by_pk;
+  if (!albumFragment) throw new Response("Album Not Found", { status: 404 });
+
   return json(albumFragment);
 };
 
@@ -73,17 +77,20 @@ const Album = (): ReactElement => {
   const transition = useTransition();
 
   return (
-    <Dialog>
-      <AlbumDetails
-        album={loader}
-        fetcherErrors={action?.fetcherErrors}
-        transition={transition}
-      />
-      <Outlet />
-      <Dialog.Close to={routes.albums()}>
-        <Cross1Icon />
-      </Dialog.Close>
-    </Dialog>
+    <>
+      <Dialog>
+        <AlbumDetails
+          album={loader}
+          fetcherErrors={action?.fetcherErrors}
+          transition={transition}
+        />
+        <Outlet />
+        <Dialog.Close to={routes.albums()}>
+          <Cross1Icon />
+        </Dialog.Close>
+      </Dialog>
+      <ErrorsList errors={action?.fetcherErrors} />
+    </>
   );
 };
 

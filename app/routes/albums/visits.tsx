@@ -1,7 +1,7 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { json, LoaderFunction, useLoaderData, useTransition } from "remix";
-import { FetcherPayload, jsonFetcher } from "~/api/fetcher";
+import { jsonFetcher } from "~/api/fetcher";
 import {
   SelectVisits,
   SelectVisitsQuery,
@@ -21,17 +21,20 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectVisitsQueryVariables
   >(SelectVisits, { limit, offset });
 
-  return json(result);
+  if (result.errors)
+    throw new Response(JSON.stringify(result.errors), { status: 500 });
+
+  return json(result.data);
 };
 
 const Visits = (): ReactElement => {
-  const loader = useLoaderData<FetcherPayload<SelectVisitsQuery>>();
+  const loader = useLoaderData<SelectVisitsQuery>();
   const transition = useTransition();
 
   return (
     <Dialog>
       <Heading>Visits</Heading>
-      <VisitsList visits={loader?.data?.visit} transition={transition} />
+      <VisitsList visits={loader.visit} transition={transition} />
       <Dialog.Close to={routes.albums()}>
         <Cross1Icon />
       </Dialog.Close>

@@ -24,20 +24,25 @@ type AlbumReviewsLoaderData = {
   albumId: number;
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
+  if (!isNumber(params.albumId))
+    throw new Response("Album Not Found", { status: 404 });
+
   const formData = await request.formData();
   const reviewId = formData.get("reviewId")?.toString();
 
-  if (!isNumber(reviewId)) throw new Response("Not Found", { status: 404 });
+  if (!isNumber(reviewId))
+    throw new Response("Review Not Found", { status: 404 });
 
   const result = await jsonFetcher<
     DeleteReviewMutation,
     DeleteReviewMutationVariables
   >(DeleteReview, { id: Number(reviewId) });
 
-  const album = result.data?.delete_review_by_pk?.album;
-  if (!album || result.errors) return json({ fetcherErrors: result.errors });
-  return redirect(routes.album(album));
+  if (result.errors)
+    throw new Response(JSON.stringify(result.errors), { status: 500 });
+
+  return redirect(routes.album(Number(params.albumId)));
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
