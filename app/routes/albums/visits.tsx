@@ -1,7 +1,7 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { LoaderFunction, useLoaderData, useTransition } from "remix";
-import { fetcher, FetcherPayload } from "~/api/fetcher";
+import { json, LoaderFunction, useLoaderData, useTransition } from "remix";
+import { FetcherPayload, jsonFetcher } from "~/api/fetcher";
 import {
   SelectVisits,
   SelectVisitsQuery,
@@ -12,11 +12,18 @@ import { VisitsList } from "~/molecules/visits";
 import { routes } from "~/utils/routes";
 import { toNumber } from "~/utils/validation";
 
-export const loader: LoaderFunction = ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const limit = toNumber(params.visitLimit, 12);
   const offset = toNumber(params.visitOffset, 0);
 
-  return fetcher<SelectVisitsQueryVariables>(SelectVisits, { limit, offset });
+  const result = await jsonFetcher<
+    SelectVisitsQuery,
+    SelectVisitsQueryVariables
+  >(SelectVisits, { limit, offset });
+
+  console.log("visits", JSON.stringify(result, null, 2));
+
+  return json(result);
 };
 
 const Visits = (): ReactElement => {

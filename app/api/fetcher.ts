@@ -9,7 +9,10 @@ type GraphqlApiConfig = {
 
 export type FetcherError = {
   message: string;
-  code: string;
+  extensions: {
+    path: string;
+    code: string;
+  };
 };
 
 export type FetcherPayload<TData> = {

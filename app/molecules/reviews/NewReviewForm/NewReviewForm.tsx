@@ -2,7 +2,7 @@ import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { FetcherError } from "~/api/fetcher";
-import { TextInput } from "~/components";
+import { Heading, TextInput } from "~/components";
 import { validateNewReview } from "..";
 import { NewReviewFormResult } from "./NewReviewForm.utils";
 
@@ -18,6 +18,7 @@ export const NewReviewForm = ({
 }: NewReviewFormProps): ReactElement => {
   return (
     <Form method="post">
+      <Heading>Review album</Heading>
       <p>
         <label>
           Text: {validationErrors?.text && <em>Text is required</em>}

@@ -8,11 +8,15 @@ import {
 } from "remix";
 import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
-  InsertAlbum,
+  InsertReview,
   InsertReviewMutation,
   InsertReviewMutationVariables,
 } from "~/api/types";
-import { NewReviewForm, NewReviewFormResult } from "~/molecules/reviews";
+import {
+  NewReviewForm,
+  NewReviewFormResult,
+  validateNewReview,
+} from "~/molecules/reviews";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -22,28 +26,28 @@ type NewReviewActionData = {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
+  console.log({ request, params });
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
   const profile = 1; // TODO add profiles
   const albumId = Number(params.albumId);
   const formData = await request.formData();
-  const { variables, errors } = NewReviewForm.validate(
-    formData,
-    albumId,
-    profile
-  );
+  const { variables, errors } = validateNewReview(formData, albumId, profile);
 
+  console.log({ variables, errors });
   if (errors) return json({ errors });
 
   const result = await jsonFetcher<
     InsertReviewMutation,
     InsertReviewMutationVariables
-  >(InsertAlbum, variables);
+  >(InsertReview, variables);
+
+  console.log(JSON.stringify({ result }, null, 2));
 
   if (result.errors) return json({ fetcherErrors: result.errors });
 
-  return redirect(routes.album(albumId).toString());
+  return redirect(routes.album(albumId));
 };
 
 const NewReview = (): ReactElement => {

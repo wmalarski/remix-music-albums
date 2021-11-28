@@ -14,7 +14,11 @@ import {
   InsertArtistMutationVariables,
 } from "~/api/types";
 import { Dialog } from "~/components";
-import { NewArtistForm, NewArtistFormResult } from "~/molecules/artists";
+import {
+  NewArtistForm,
+  NewArtistFormResult,
+  validateNewArtist,
+} from "~/molecules/artists";
 import { routes } from "~/utils/routes";
 
 type NewArtistActionData = {
@@ -24,7 +28,7 @@ type NewArtistActionData = {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const { variables, errors } = NewArtistForm.validate(formData);
+  const { variables, errors } = validateNewArtist(formData);
 
   if (errors) return json({ errors });
 
@@ -35,9 +39,11 @@ export const action: ActionFunction = async ({ request }) => {
 
   const id = result.data?.insert_artist_one?.id;
 
+  console.log("newArtist", JSON.stringify(result, null, 2));
+
   if (!id || result.errors) return json({ fetcherErrors: result.errors });
 
-  return redirect(routes.artist(id).toString());
+  return redirect(routes.artist(id));
 };
 
 const NewArtist = (): ReactElement => {

@@ -1,7 +1,7 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { LoaderFunction, useLoaderData, useTransition } from "remix";
-import { fetcher, FetcherPayload } from "~/api/fetcher";
+import { json, LoaderFunction, useLoaderData, useTransition } from "remix";
+import { FetcherPayload, jsonFetcher } from "~/api/fetcher";
 import {
   SelectReviews,
   SelectReviewsQuery,
@@ -12,11 +12,18 @@ import { ReviewList } from "~/molecules/reviews";
 import { routes } from "~/utils/routes";
 import { toNumber } from "~/utils/validation";
 
-export const loader: LoaderFunction = ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const limit = toNumber(params.reviewLimit, 12);
   const offset = toNumber(params.reviewOffset, 0);
 
-  return fetcher<SelectReviewsQueryVariables>(SelectReviews, { limit, offset });
+  const result = await jsonFetcher<
+    SelectReviewsQuery,
+    SelectReviewsQueryVariables
+  >(SelectReviews, { limit, offset });
+
+  console.log("reviews", JSON.stringify(result, null, 2));
+
+  return json(result);
 };
 
 const Reviews = (): ReactElement => {

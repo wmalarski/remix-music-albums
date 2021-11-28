@@ -1,4 +1,3 @@
-import { IdProvider } from "@radix-ui/react-id";
 import { renderToString } from "react-dom/server";
 import type { EntryContext } from "remix";
 import { RemixServer } from "remix";
@@ -10,16 +9,23 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ): Response {
-  const markup = renderToString(
-    <IdProvider>
+  try {
+    const markup = renderToString(
       <RemixServer context={remixContext} url={request.url} />
-    </IdProvider>
-  ).replace(/<\/head>/, `<style id="stitches">${getCssText()}</style></head>`);
-
-  responseHeaders.set("Content-Type", "text/html");
-
-  return new Response("<!DOCTYPE html>" + markup, {
-    status: responseStatusCode,
-    headers: responseHeaders,
-  });
+    ).replace(
+      /<\/head>/,
+      `<style id="stitches">${getCssText()}</style></head>`
+    );
+    responseHeaders.set("Content-Type", "text/html");
+    return new Response("<!DOCTYPE html>" + markup, {
+      status: responseStatusCode,
+      headers: responseHeaders,
+    });
+  } catch (error) {
+    console.error("error", error);
+    return new Response("hello", {
+      status: 500,
+      headers: responseHeaders,
+    });
+  }
 }

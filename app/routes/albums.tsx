@@ -1,12 +1,13 @@
 import { ReactElement } from "react";
 import {
+  json,
   LoaderFunction,
   MetaFunction,
   Outlet,
   useLoaderData,
   useTransition,
 } from "remix";
-import { fetcher, FetcherPayload } from "~/api/fetcher";
+import { FetcherPayload, jsonFetcher } from "~/api/fetcher";
 import {
   SelectAlbums,
   SelectAlbumsQuery,
@@ -23,11 +24,18 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const loader: LoaderFunction = ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const limit = toNumber(params.limit, 12);
   const offset = toNumber(params.offset, 0);
 
-  return fetcher<SelectAlbumsQueryVariables>(SelectAlbums, { limit, offset });
+  const result = await jsonFetcher<
+    SelectAlbumsQuery,
+    SelectAlbumsQueryVariables
+  >(SelectAlbums, { limit, offset });
+
+  console.log("albums", JSON.stringify(result, null, 2));
+
+  return json(result);
 };
 
 const Albums = (): ReactElement => {

@@ -12,7 +12,11 @@ import {
   InsertAlbumMutation,
   InsertAlbumMutationVariables,
 } from "~/api/types";
-import { NewAlbumForm, NewAlbumFormResult } from "~/molecules/albums";
+import {
+  NewAlbumForm,
+  NewAlbumFormResult,
+  validateNewAlbum,
+} from "~/molecules/albums";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -27,7 +31,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const artistId = Number(params.artistId);
   const formData = await request.formData();
-  const { variables, errors } = NewAlbumForm.validate(formData, artistId);
+  const { variables, errors } = validateNewAlbum(formData, artistId);
 
   if (errors) return json({ errors });
 
@@ -36,11 +40,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     InsertAlbumMutationVariables
   >(InsertAlbum, variables);
 
+  console.log("newAlbum", JSON.stringify(result, null, 2));
+
   const id = result.data?.insert_album_one?.id;
 
   if (!id || result.errors) return json({ fetcherErrors: result.errors });
 
-  return redirect(routes.album(id).toString());
+  return redirect(routes.album(id));
 };
 
 const NewAlbum = (): ReactElement => {

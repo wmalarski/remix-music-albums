@@ -33,7 +33,7 @@ mutation InsertAlbum($album: album_insert_input!) {
 
 query SelectAlbum($id: Int!) {
   album_by_pk(id: $id) {
-    ...AlbumWithArtist
+    ...AlbumWithArtistAndReviews
   }
 }
 

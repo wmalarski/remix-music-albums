@@ -2260,7 +2260,7 @@ export type SelectAlbumQueryVariables = Exact<{
 }>;
 
 
-export type SelectAlbumQuery = { album_by_pk?: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } | null | undefined };
+export type SelectAlbumQuery = { album_by_pk?: { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid: string, name: string } } | null | undefined };
 
 export type DeleteAlbumMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -2454,10 +2454,10 @@ export const InsertAlbum = gql`
 export const SelectAlbum = gql`
     query SelectAlbum($id: Int!) {
   album_by_pk(id: $id) {
-    ...AlbumWithArtist
+    ...AlbumWithArtistAndReviews
   }
 }
-    ${AlbumWithArtist}`;
+    ${AlbumWithArtistAndReviews}`;
 export const DeleteAlbum = gql`
     mutation DeleteAlbum($id: Int!) {
   delete_album_by_pk(id: $id) {
