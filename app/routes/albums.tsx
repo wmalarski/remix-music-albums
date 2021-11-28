@@ -8,9 +8,9 @@ import {
 } from "remix";
 import { fetcher, FetcherPayload } from "~/api/fetcher";
 import {
-  GetAlbums,
-  GetAlbumsQuery,
-  GetAlbumsQueryVariables,
+  SelectAlbums,
+  SelectAlbumsQuery,
+  SelectAlbumsQueryVariables,
 } from "~/api/types";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
@@ -27,11 +27,11 @@ export const loader: LoaderFunction = ({ params }) => {
   const limit = toNumber(params.limit, 12);
   const offset = toNumber(params.offset, 0);
 
-  return fetcher<GetAlbumsQueryVariables>(GetAlbums, { limit, offset });
+  return fetcher<SelectAlbumsQueryVariables>(SelectAlbums, { limit, offset });
 };
 
 const Albums = (): ReactElement => {
-  const action = useLoaderData<FetcherPayload<GetAlbumsQuery>>();
+  const action = useLoaderData<FetcherPayload<SelectAlbumsQuery>>();
   const transition = useTransition();
 
   return (

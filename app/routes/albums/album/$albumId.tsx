@@ -4,12 +4,12 @@ import { json, LoaderFunction, Outlet, useLoaderData } from "remix";
 import { jsonFetcher } from "~/api/fetcher";
 import {
   AlbumWithArtistAndReviewsFragment,
-  GetAlbum,
-  GetAlbumQuery,
-  GetAlbumQueryVariables,
   InsertVisit,
   InsertVisitMutation,
   InsertVisitMutationVariables,
+  SelectAlbum,
+  SelectAlbumQuery,
+  SelectAlbumQueryVariables,
 } from "~/api/types";
 import { Dialog } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
@@ -23,7 +23,9 @@ export const loader: LoaderFunction = async ({ params }) => {
   const profile = 1; // TODO add profiles
   const id = Number(params.albumId);
   const [payload] = await Promise.all([
-    jsonFetcher<GetAlbumQuery, GetAlbumQueryVariables>(GetAlbum, { id }),
+    jsonFetcher<SelectAlbumQuery, SelectAlbumQueryVariables>(SelectAlbum, {
+      id,
+    }),
     jsonFetcher<InsertVisitMutation, InsertVisitMutationVariables>(
       InsertVisit,
       { visit: { album: id, profile } }

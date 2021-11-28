@@ -3,9 +3,9 @@ import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData, useTransition } from "remix";
 import { fetcher, FetcherPayload } from "~/api/fetcher";
 import {
-  GetVisits,
-  GetVisitsQuery,
-  GetVisitsQueryVariables,
+  SelectVisits,
+  SelectVisitsQuery,
+  SelectVisitsQueryVariables,
 } from "~/api/types";
 import { Dialog, Heading } from "~/components";
 import { VisitsList } from "~/molecules/visits";
@@ -16,11 +16,11 @@ export const loader: LoaderFunction = ({ params }) => {
   const limit = toNumber(params.visitLimit, 12);
   const offset = toNumber(params.visitOffset, 0);
 
-  return fetcher<GetVisitsQueryVariables>(GetVisits, { limit, offset });
+  return fetcher<SelectVisitsQueryVariables>(SelectVisits, { limit, offset });
 };
 
 const Visits = (): ReactElement => {
-  const action = useLoaderData<FetcherPayload<GetVisitsQuery>>();
+  const action = useLoaderData<FetcherPayload<SelectVisitsQuery>>();
   const transition = useTransition();
 
   return (

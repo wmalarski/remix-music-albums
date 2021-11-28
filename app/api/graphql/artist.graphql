@@ -11,7 +11,7 @@ fragment ArtistWithAlbums on artist {
   }
 }
 
-query GetArtists($limit: Int, $offset: Int) {
+query SelectArtists($limit: Int, $offset: Int) {
   artist(limit: $limit, offset: $offset) {
     ...Artist
   }
@@ -23,8 +23,14 @@ mutation InsertArtist($artist: artist_insert_input!) {
   }
 }
 
-query GetArtist($id: Int!) {
+query SelectArtist($id: Int!) {
   artist_by_pk(id: $id) {
     ...ArtistWithAlbums
+  }
+}
+
+mutation DeleteArtist($id: Int!) {
+  delete_artist_by_pk(id: $id) {
+    id
   }
 }

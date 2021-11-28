@@ -11,9 +11,9 @@ import { jsonFetcher } from "~/api/fetcher";
 import {
   AlbumWithArtistFragment,
   ArtistWithAlbumsFragment,
-  GetArtist,
-  GetArtistQuery,
-  GetArtistQueryVariables,
+  SelectArtist,
+  SelectArtistQuery,
+  SelectArtistQueryVariables,
 } from "~/api/types";
 import { Dialog } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
@@ -27,10 +27,10 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const id = Number(params.artistId);
 
-  const payload = await jsonFetcher<GetArtistQuery, GetArtistQueryVariables>(
-    GetArtist,
-    { id }
-  );
+  const payload = await jsonFetcher<
+    SelectArtistQuery,
+    SelectArtistQueryVariables
+  >(SelectArtist, { id });
 
   const artistFragment = payload.data?.artist_by_pk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });

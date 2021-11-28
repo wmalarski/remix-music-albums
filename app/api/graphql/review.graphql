@@ -18,8 +18,20 @@ mutation InsertReview($review: review_insert_input!) {
   }
 }
 
-query GetReviews($limit: Int, $offset: Int) {
+query SelectReviews($limit: Int, $offset: Int) {
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
+  }
+}
+
+mutation DeleteReview($id: Int!) {
+  delete_review_by_pk(id: $id) {
+    album
+  }
+}
+
+mutation UpdateReview($id: Int!, $input: review_set_input) {
+  update_review_by_pk(pk_columns: { id: $id }, _set: $input) {
+    id
   }
 }

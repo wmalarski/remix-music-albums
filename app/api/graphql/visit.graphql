@@ -23,7 +23,7 @@ mutation InsertVisit($visit: visit_insert_input!) {
   }
 }
 
-query GetVisits($limit: Int, $offset: Int) {
+query SelectVisits($limit: Int, $offset: Int) {
   visit(limit: $limit, offset: $offset) {
     ...VisitWithAlbumAndArtist
   }

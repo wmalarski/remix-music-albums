@@ -19,7 +19,7 @@ fragment AlbumWithArtistAndReviews on album {
   }
 }
 
-query GetAlbums($limit: Int, $offset: Int) {
+query SelectAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
   }
@@ -31,8 +31,20 @@ mutation InsertAlbum($album: album_insert_input!) {
   }
 }
 
-query GetAlbum($id: Int!) {
+query SelectAlbum($id: Int!) {
   album_by_pk(id: $id) {
     ...AlbumWithArtist
+  }
+}
+
+mutation DeleteAlbum($id: Int!) {
+  delete_album_by_pk(id: $id) {
+    artist
+  }
+}
+
+mutation UpdateAlbum($id: Int!, $input: album_set_input) {
+  update_album_by_pk(pk_columns: { id: $id }, _set: $input) {
+    id
   }
 }

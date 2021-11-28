@@ -3,9 +3,9 @@ import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData, useTransition } from "remix";
 import { fetcher, FetcherPayload } from "~/api/fetcher";
 import {
-  GetReviews,
-  GetReviewsQuery,
-  GetReviewsQueryVariables,
+  SelectReviews,
+  SelectReviewsQuery,
+  SelectReviewsQueryVariables,
 } from "~/api/types";
 import { Dialog, Heading } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
@@ -16,11 +16,11 @@ export const loader: LoaderFunction = ({ params }) => {
   const limit = toNumber(params.reviewLimit, 12);
   const offset = toNumber(params.reviewOffset, 0);
 
-  return fetcher<GetReviewsQueryVariables>(GetReviews, { limit, offset });
+  return fetcher<SelectReviewsQueryVariables>(SelectReviews, { limit, offset });
 };
 
 const Reviews = (): ReactElement => {
-  const action = useLoaderData<FetcherPayload<GetReviewsQuery>>();
+  const action = useLoaderData<FetcherPayload<SelectReviewsQuery>>();
   const transition = useTransition();
 
   return (
