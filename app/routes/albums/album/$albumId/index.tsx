@@ -1,13 +1,5 @@
 import { ReactElement, useMemo } from "react";
-import {
-  ActionFunction,
-  json,
-  LoaderFunction,
-  redirect,
-  useLoaderData,
-  useMatches,
-  useTransition,
-} from "remix";
+import { ActionFunction, redirect, useTransition } from "remix";
 import { jsonFetcher } from "~/api/fetcher";
 import {
   AlbumWithArtistAndReviewsFragment,
@@ -18,11 +10,8 @@ import {
 } from "~/api/types";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
 import { routes } from "~/utils/routes";
+import { useRouteLoaderData } from "~/utils/useRouteLoaderData";
 import { isNumber } from "~/utils/validation";
-
-type AlbumReviewsLoaderData = {
-  albumId: number;
-};
 
 export const action: ActionFunction = async ({ request, params }) => {
   if (!isNumber(params.albumId))
@@ -45,28 +34,15 @@ export const action: ActionFunction = async ({ request, params }) => {
   return redirect(routes.album(Number(params.albumId)));
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
-  if (!isNumber(params.albumId))
-    throw new Response("Not Found", { status: 404 });
-
-  return json({ albumId: Number(params.albumId) });
-};
-
 const AlbumReviews = (): ReactElement => {
-  const loader = useLoaderData<AlbumReviewsLoaderData>();
+  const album = useRouteLoaderData<AlbumWithArtistAndReviewsFragment>(1);
   const transition = useTransition();
 
-  const matches = useMatches();
-
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
-    const albumPathname = routes.album(loader.albumId);
-    const matched = matches.find((match) => match.pathname === albumPathname);
-    if (!matched) return [];
-
-    const album = matched.data as AlbumWithArtistAndReviewsFragment;
+    if (!album) return [];
     const { reviews: albumReviews, ...albumByAlbum } = album;
     return albumReviews?.map((review) => ({ ...review, albumByAlbum }));
-  }, [loader.albumId, matches]);
+  }, [album]);
 
   return <AlbumReviewsList reviews={reviews} transition={transition} />;
 };

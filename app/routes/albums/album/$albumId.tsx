@@ -50,15 +50,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!isNumber(params.albumId))
     throw new Response("Album Not Found", { status: 404 });
 
-  const profile = 1; // TODO add profiles
-  const id = Number(params.albumId);
+  const profileId = 1; // TODO add profiles
+  const albumId = Number(params.albumId);
   const [result] = await Promise.all([
     jsonFetcher<SelectAlbumQuery, SelectAlbumQueryVariables>(SelectAlbum, {
-      id,
+      id: albumId,
     }),
     jsonFetcher<InsertVisitMutation, InsertVisitMutationVariables>(
       InsertVisit,
-      { visit: { album: id, profile } }
+      { visit: { album: albumId, profile: profileId } }
     ),
   ]);
 
@@ -79,11 +79,7 @@ const Album = (): ReactElement => {
   return (
     <>
       <Dialog>
-        <AlbumDetails
-          album={loader}
-          fetcherErrors={action?.fetcherErrors}
-          transition={transition}
-        />
+        <AlbumDetails album={loader} transition={transition} />
         <Outlet />
         <Dialog.Close to={routes.albums()}>
           <Cross1Icon />

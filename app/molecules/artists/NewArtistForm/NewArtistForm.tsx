@@ -2,7 +2,7 @@ import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { Heading, TextInput } from "~/components";
-import { NewArtistFormResult, validateNewArtist } from "./NewArtistForm.utils";
+import { NewArtistFormResult } from "./NewArtistForm.utils";
 
 type NewArtistFormProps = {
   errors: NewArtistFormResult["errors"];
@@ -36,5 +36,3 @@ export const NewArtistForm = ({
     </Form>
   );
 };
-
-NewArtistForm.validate = validateNewArtist;

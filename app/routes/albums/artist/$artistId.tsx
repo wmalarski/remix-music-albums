@@ -55,12 +55,8 @@ export const loader: LoaderFunction = async ({ params }) => {
     SelectArtistQueryVariables
   >(SelectArtist, { id: Number(params.artistId) });
 
-  if (result.errors)
-    throw new Response(JSON.stringify(result.errors), { status: 500 });
-
   const artistFragment = result.data?.artist_by_pk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });
-
   return json(artistFragment);
 };
 

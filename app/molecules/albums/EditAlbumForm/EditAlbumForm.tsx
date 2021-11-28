@@ -1,42 +1,39 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
+import { AlbumFragment } from "~/api/types";
 import { Heading, TextInput } from "~/components";
-import { NewAlbumFormResult } from "./NewAlbumForm.utils";
+import { EditAlbumFormResult } from "./EditAlbumForm.utils";
 
-type NewAlbumFormProps = {
+type EditAlbumFormProps = {
   transition: Transition;
-  errors: NewAlbumFormResult["errors"];
+  errors: EditAlbumFormResult["errors"];
+  album?: AlbumFragment | null;
 };
 
-export const NewAlbumForm = ({
+export const EditAlbumForm = ({
   transition,
   errors,
-}: NewAlbumFormProps): ReactElement => {
+  album,
+}: EditAlbumFormProps): ReactElement => {
   return (
     <Form method="post">
-      <Heading>New Album</Heading>
+      <Heading>Edit Album</Heading>
       <p>
         <label>
           Title: {errors?.title && <em>Title is required</em>}
-          <TextInput type="text" name="title" />
+          <TextInput type="text" name="title" defaultValue={album?.title} />
         </label>
       </p>
       <p>
         <label>
           Year: {errors?.year && <em>Year is required</em>}
-          <input type="number" name="year" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Sid: {errors?.sid && <em>Sid is required</em>}
-          <TextInput type="text" name="sid" />
+          <input type="number" name="year" defaultValue={album?.year} />
         </label>
       </p>
       <p>
         <button type="submit">
-          {transition.submission ? "Creating..." : "Create Album"}
+          {transition.submission ? "Saving..." : "Save Album"}
         </button>
       </p>
     </Form>
