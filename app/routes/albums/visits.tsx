@@ -27,13 +27,13 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Visits = (): ReactElement => {
-  const action = useLoaderData<FetcherPayload<SelectVisitsQuery>>();
+  const loader = useLoaderData<FetcherPayload<SelectVisitsQuery>>();
   const transition = useTransition();
 
   return (
     <Dialog>
       <Heading>Visits</Heading>
-      <VisitsList visits={action?.data?.visit} transition={transition} />
+      <VisitsList visits={loader?.data?.visit} transition={transition} />
       <Dialog.Close to={routes.albums()}>
         <Cross1Icon />
       </Dialog.Close>

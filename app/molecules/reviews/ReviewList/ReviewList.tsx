@@ -1,5 +1,6 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
+import { Form } from "remix";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
 import { StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
@@ -9,7 +10,10 @@ type ReviewListProps = {
   transition: Transition;
 };
 
-export const ReviewList = ({ reviews }: ReviewListProps): ReactElement => {
+export const ReviewList = ({
+  reviews,
+  transition,
+}: ReviewListProps): ReactElement => {
   return (
     <div>
       <p>ReviewList</p>
@@ -31,6 +35,12 @@ export const ReviewList = ({ reviews }: ReviewListProps): ReactElement => {
             <p>{review.rate}</p>
             <p>{review.text}</p>
             <p>{review.createdAt}</p>
+            <Form method="delete">
+              <input type="hidden" value={review.id} name="reviewId" />
+              <button type="submit">
+                {transition.submission ? "Deleting..." : "Delete"}
+              </button>
+            </Form>
           </div>
         ))}
       </div>

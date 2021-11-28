@@ -1,5 +1,5 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { ReactElement, useMemo } from "react";
+import { ReactElement } from "react";
 import {
   ActionFunction,
   json,
@@ -19,14 +19,12 @@ import {
   InsertVisit,
   InsertVisitMutation,
   InsertVisitMutationVariables,
-  ReviewWithAlbumAndArtistFragment,
   SelectAlbum,
   SelectAlbumQuery,
   SelectAlbumQueryVariables,
 } from "~/api/types";
 import { Dialog } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
-import { ReviewList } from "~/molecules/reviews";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -38,12 +36,10 @@ export const action: ActionFunction = async ({ params }) => {
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
-  const albumId = Number(params.albumId);
-
   const result = await jsonFetcher<
     DeleteAlbumMutation,
     DeleteAlbumMutationVariables
-  >(DeleteAlbum, { id: albumId });
+  >(DeleteAlbum, { id: Number(params.albumId) });
 
   const artist = result.data?.delete_album_by_pk?.artist;
 
@@ -78,23 +74,17 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Album = (): ReactElement => {
-  const album = useLoaderData<AlbumWithArtistAndReviewsFragment>();
+  const loader = useLoaderData<AlbumWithArtistAndReviewsFragment>();
   const action = useActionData<AlbumActionData>();
   const transition = useTransition();
-
-  const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
-    const { reviews: albumReviews, ...albumByAlbum } = album;
-    return albumReviews?.map((review) => ({ ...review, albumByAlbum }));
-  }, [album]);
 
   return (
     <Dialog>
       <AlbumDetails
-        album={album}
+        album={loader}
         fetcherErrors={action?.fetcherErrors}
         transition={transition}
       />
-      <ReviewList reviews={reviews} transition={transition} />
       <Outlet />
       <Dialog.Close to={routes.albums()}>
         <Cross1Icon />

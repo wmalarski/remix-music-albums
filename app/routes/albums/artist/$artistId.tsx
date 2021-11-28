@@ -68,18 +68,18 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Artist = (): ReactElement => {
-  const artist = useLoaderData<ArtistWithAlbumsFragment>();
+  const loader = useLoaderData<ArtistWithAlbumsFragment>();
   const action = useActionData<ArtistActionData>();
   const transition = useTransition();
 
   const albums = useMemo<AlbumWithArtistFragment[]>(() => {
-    const { albums: artistAlbums, ...artistByArtist } = artist;
+    const { albums: artistAlbums, ...artistByArtist } = loader;
     return artistAlbums.map((album) => ({ ...album, artistByArtist }));
-  }, [artist]);
+  }, [loader]);
 
   return (
     <Dialog>
-      <ArtistDetails artist={artist} transition={transition} />
+      <ArtistDetails artist={loader} transition={transition} />
       <AlbumsGrid albums={albums} transition={transition} />
       <Outlet />
       <Dialog.Close to={routes.albums()}>

@@ -39,13 +39,13 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Albums = (): ReactElement => {
-  const action = useLoaderData<FetcherPayload<SelectAlbumsQuery>>();
+  const loader = useLoaderData<FetcherPayload<SelectAlbumsQuery>>();
   const transition = useTransition();
 
   return (
     <Page>
       <main>
-        <AlbumsGrid albums={action?.data?.album} transition={transition} />
+        <AlbumsGrid albums={loader?.data?.album} transition={transition} />
         <Divider />
         <Outlet />
       </main>
