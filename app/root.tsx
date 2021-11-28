@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import type { LinksFunction } from "remix";
 import {
   Links,
   LiveReload,
@@ -9,25 +8,13 @@ import {
   ScrollRestoration,
   useCatch,
 } from "remix";
-import darkStylesUrl from "~/styles/dark.css";
-import globalStylesUrl from "~/styles/global.css";
 import { Divider, Layout } from "./components";
-
-// https://remix.run/api/app#links
-export const links: LinksFunction = () => {
-  return [
-    { rel: "stylesheet", href: globalStylesUrl },
-    {
-      rel: "stylesheet",
-      href: darkStylesUrl,
-      media: "(prefers-color-scheme: dark)",
-    },
-  ];
-};
+import { globalStyles } from "./styles/stitches.config";
 
 // https://remix.run/api/conventions#default-export
 // https://remix.run/api/conventions#route-filenames
 const App = (): ReactElement => {
+  globalStyles();
   return (
     <Document>
       <Layout>

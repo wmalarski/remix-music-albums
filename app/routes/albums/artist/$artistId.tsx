@@ -1,5 +1,11 @@
 import { ReactElement, useMemo } from "react";
-import { LoaderFunction, Outlet, useLoaderData, useTransition } from "remix";
+import {
+  json,
+  LoaderFunction,
+  Outlet,
+  useLoaderData,
+  useTransition,
+} from "remix";
 import { jsonFetcher } from "~/api/fetcher";
 import {
   AlbumWithArtistFragment,
@@ -25,7 +31,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const artistFragment = payload.data?.artist_by_pk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });
-  return artistFragment;
+  return json(artistFragment);
 };
 
 const Artist = (): ReactElement => {

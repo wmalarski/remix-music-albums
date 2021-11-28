@@ -9,7 +9,7 @@ import {
 import { VisitsList } from "~/molecules/visits";
 import { toNumber } from "~/utils/validation";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = ({ params }) => {
   const limit = toNumber(params.visitLimit, 12);
   const offset = toNumber(params.visitOffset, 0);
 

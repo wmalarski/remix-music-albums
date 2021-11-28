@@ -1,5 +1,11 @@
 import { ReactElement } from "react";
-import { ActionFunction, redirect, useActionData, useTransition } from "remix";
+import {
+  ActionFunction,
+  json,
+  redirect,
+  useActionData,
+  useTransition,
+} from "remix";
 import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
   InsertAlbum,
@@ -28,14 +34,14 @@ export const action: ActionFunction = async ({ request, params }) => {
     profile
   );
 
-  if (errors) return { errors };
+  if (errors) return json({ errors });
 
   const result = await jsonFetcher<
     InsertReviewMutation,
     InsertReviewMutationVariables
   >(InsertAlbum, variables);
 
-  if (result.errors) return { fetcherErrors: result.errors };
+  if (result.errors) return json({ fetcherErrors: result.errors });
 
   return redirect(routes.album(albumId).toString());
 };

@@ -23,7 +23,7 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = ({ params }) => {
   const limit = toNumber(params.limit, 12);
   const offset = toNumber(params.offset, 0);
 

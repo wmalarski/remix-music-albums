@@ -17,7 +17,7 @@ export const Li = styled("li", {
 export const HomeLink = styled(Link, {
   width: "106px",
   height: "30px",
-  color: "var(--color-foreground)",
+  color: "$foreground",
 });
 
 export const Content = styled(Container, {
@@ -29,5 +29,5 @@ export const Content = styled(Container, {
 export const Header = styled("header", {
   paddingTop: "1rem",
   paddingBottom: "1rem",
-  borderBottom: "1px solid var(--color-border)",
+  borderBottom: "1px solid $border",
 });

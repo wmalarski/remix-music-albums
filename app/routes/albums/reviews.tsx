@@ -9,7 +9,7 @@ import {
 import { ReviewList } from "~/molecules/reviews";
 import { toNumber } from "~/utils/validation";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = ({ params }) => {
   const limit = toNumber(params.reviewLimit, 12);
   const offset = toNumber(params.reviewOffset, 0);
 

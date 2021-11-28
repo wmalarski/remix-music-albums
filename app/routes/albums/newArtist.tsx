@@ -1,5 +1,11 @@
 import { ReactElement } from "react";
-import { ActionFunction, redirect, useActionData, useTransition } from "remix";
+import {
+  ActionFunction,
+  json,
+  redirect,
+  useActionData,
+  useTransition,
+} from "remix";
 import { FetcherError, jsonFetcher } from "~/api/fetcher";
 import {
   InsertArtist,
@@ -18,7 +24,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const { variables, errors } = NewArtistForm.validate(formData);
 
-  if (errors) return { errors };
+  if (errors) return json({ errors });
 
   const result = await jsonFetcher<
     InsertArtistMutation,
@@ -27,7 +33,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const id = result.data?.insert_artist_one?.id;
 
-  if (!id || result.errors) return { fetcherErrors: result.errors };
+  if (!id || result.errors) return json({ fetcherErrors: result.errors });
 
   return redirect(routes.artist(id).toString());
 };

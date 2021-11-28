@@ -2,10 +2,10 @@ import { Link } from "remix";
 import { styled } from "~/styles/stitches.config";
 
 export const StyledLink = styled(Link, {
-  color: "var(--color-links)",
+  color: "$links",
   textDecoration: "none",
   "&:hover": {
-    color: "var(--color-links-hover)",
+    color: "$hover",
     textDecoration: "underline",
   },
 });
