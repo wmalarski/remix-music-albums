@@ -6,13 +6,8 @@ import {
   useActionData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  AlbumWithArtistAndReviewsFragment,
-  UpdateAlbum,
-  UpdateAlbumMutation,
-  UpdateAlbumMutationVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { AlbumWithArtistAndReviewsFragment } from "~/api/types";
 import { ErrorsList } from "~/components";
 import {
   EditAlbumForm,
@@ -34,15 +29,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const albumId = Number(params.albumId);
   const formData = await request.formData();
-  const { variables, errors } = validateEditAlbum({ albumId, formData });
+  const validation = validateEditAlbum({ albumId, formData });
 
-  if (errors) return json({ errors });
+  if (validation.errors) return json({ errors: validation.errors });
 
-  const result = await jsonFetcher<
-    UpdateAlbumMutation,
-    UpdateAlbumMutationVariables
-  >(UpdateAlbum, variables);
-
+  const result = await graphqlSdk.UpdateAlbum(validation.variables);
   if (result.errors) return json({ fetcherErrors: result.errors });
   return redirect(routes.album(albumId));
 };

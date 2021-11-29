@@ -1,11 +1,8 @@
 import { ReactElement, useMemo } from "react";
 import { ActionFunction, redirect, useTransition } from "remix";
-import { jsonFetcher } from "~/api/fetcher";
+import { graphqlSdk } from "~/api/fetcher";
 import {
   AlbumWithArtistAndReviewsFragment,
-  DeleteReview,
-  DeleteReviewMutation,
-  DeleteReviewMutationVariables,
   ReviewWithAlbumAndArtistFragment,
 } from "~/api/types";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
@@ -23,10 +20,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (!isNumber(reviewId))
     throw new Response("Review Not Found", { status: 404 });
 
-  const result = await jsonFetcher<
-    DeleteReviewMutation,
-    DeleteReviewMutationVariables
-  >(DeleteReview, { id: Number(reviewId) });
+  const result = await graphqlSdk.DeleteReview({ id: Number(reviewId) });
 
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });

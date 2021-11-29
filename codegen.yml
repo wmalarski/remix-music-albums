@@ -10,7 +10,9 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-document-nodes"
+      - "typescript-generic-sdk"
     config:
       namingConvention:
         transformUnderscore: true
       skipTypename: true
+      rawRequest: true

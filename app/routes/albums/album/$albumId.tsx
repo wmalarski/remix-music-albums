@@ -10,19 +10,8 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  AlbumWithArtistAndReviewsFragment,
-  DeleteAlbum,
-  DeleteAlbumMutation,
-  DeleteAlbumMutationVariables,
-  InsertVisit,
-  InsertVisitMutation,
-  InsertVisitMutationVariables,
-  SelectAlbum,
-  SelectAlbumQuery,
-  SelectAlbumQueryVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { AlbumWithArtistAndReviewsFragment } from "~/api/types";
 import { Dialog, ErrorsList } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
 import { routes } from "~/utils/routes";
@@ -36,10 +25,7 @@ export const action: ActionFunction = async ({ params }) => {
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
-  const result = await jsonFetcher<
-    DeleteAlbumMutation,
-    DeleteAlbumMutationVariables
-  >(DeleteAlbum, { id: Number(params.albumId) });
+  const result = await graphqlSdk.DeleteAlbum({ id: Number(params.albumId) });
 
   const artist = result.data?.delete_album_by_pk?.artist;
   if (!artist || result.errors) return json({ fetcherErrors: result.errors });
@@ -53,13 +39,8 @@ export const loader: LoaderFunction = async ({ params }) => {
   const profileId = 1; // TODO add profiles
   const albumId = Number(params.albumId);
   const [result] = await Promise.all([
-    jsonFetcher<SelectAlbumQuery, SelectAlbumQueryVariables>(SelectAlbum, {
-      id: albumId,
-    }),
-    jsonFetcher<InsertVisitMutation, InsertVisitMutationVariables>(
-      InsertVisit,
-      { visit: { album: albumId, profile: profileId } }
-    ),
+    graphqlSdk.SelectAlbum({ id: albumId }),
+    graphqlSdk.InsertVisit({ visit: { album: albumId, profile: profileId } }),
   ]);
 
   if (result.errors)

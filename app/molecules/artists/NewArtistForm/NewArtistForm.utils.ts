@@ -1,13 +1,18 @@
 import invariant from "tiny-invariant";
 import { InsertArtistMutationVariables } from "~/api/types";
 
-export type NewArtistFormResult = {
-  variables?: InsertArtistMutationVariables;
-  errors?: {
-    name?: boolean;
-    sid?: boolean;
-  };
-};
+export type NewArtistFormResult =
+  | {
+      variables?: never;
+      errors: {
+        name?: boolean;
+        sid?: boolean;
+      };
+    }
+  | {
+      variables: InsertArtistMutationVariables;
+      errors?: never;
+    };
 
 export const validateNewArtist = (formData: FormData): NewArtistFormResult => {
   const name = formData.get("name");

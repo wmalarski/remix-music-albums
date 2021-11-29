@@ -6,12 +6,7 @@ import {
   useActionData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  InsertReview,
-  InsertReviewMutation,
-  InsertReviewMutationVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
 import { ErrorsList } from "~/components";
 import {
   NewReviewForm,
@@ -30,24 +25,21 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
-  const profile = 1; // TODO add profiles
-  const album = Number(params.albumId);
+  const profileId = 1; // TODO add profiles
+  const albumId = Number(params.albumId);
   const formData = await request.formData();
-  const { variables, errors } = validateNewReview({
+  const validation = validateNewReview({
     formData,
-    album,
-    profile,
+    albumId,
+    profileId,
   });
 
-  if (errors) return json({ errors });
+  if (validation.errors) return json({ errors: validation.errors });
 
-  const result = await jsonFetcher<
-    InsertReviewMutation,
-    InsertReviewMutationVariables
-  >(InsertReview, variables);
+  const result = await graphqlSdk.InsertReview(validation.variables);
 
   if (result.errors) return json({ fetcherErrors: result.errors });
-  return redirect(routes.album(album));
+  return redirect(routes.album(albumId));
 };
 
 const NewReview = (): ReactElement => {

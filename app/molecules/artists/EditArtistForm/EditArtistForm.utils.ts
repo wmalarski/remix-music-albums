@@ -1,12 +1,17 @@
 import invariant from "tiny-invariant";
 import { UpdateArtistMutationVariables } from "~/api/types";
 
-export type EditArtistFormResult = {
-  variables?: UpdateArtistMutationVariables;
-  errors?: {
-    name?: boolean;
-  };
-};
+export type EditArtistFormResult =
+  | {
+      variables?: never;
+      errors: {
+        name?: boolean;
+      };
+    }
+  | {
+      variables: UpdateArtistMutationVariables;
+      errors?: never;
+    };
 
 type ValidateEditArtistArgs = {
   formData: FormData;

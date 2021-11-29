@@ -10,17 +10,8 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  AlbumWithArtistFragment,
-  ArtistWithAlbumsFragment,
-  DeleteArtist,
-  DeleteArtistMutation,
-  DeleteArtistMutationVariables,
-  SelectArtist,
-  SelectArtistQuery,
-  SelectArtistQueryVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { AlbumWithArtistFragment, ArtistWithAlbumsFragment } from "~/api/types";
 import { Dialog, ErrorsList } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { ArtistDetails } from "~/molecules/artists";
@@ -37,10 +28,7 @@ export const action: ActionFunction = async ({ params }) => {
 
   const artistId = Number(params.artistId);
 
-  const result = await jsonFetcher<
-    DeleteArtistMutation,
-    DeleteArtistMutationVariables
-  >(DeleteArtist, { id: artistId });
+  const result = await graphqlSdk.DeleteArtist({ id: artistId });
 
   if (result.errors) return json({ fetcherErrors: result.errors });
   return redirect(routes.albums());
@@ -50,10 +38,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!isNumber(params.artistId))
     throw new Response("Not Found", { status: 404 });
 
-  const result = await jsonFetcher<
-    SelectArtistQuery,
-    SelectArtistQueryVariables
-  >(SelectArtist, { id: Number(params.artistId) });
+  const result = await graphqlSdk.SelectArtist({ id: Number(params.artistId) });
 
   const artistFragment = result.data?.artist_by_pk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });
@@ -62,18 +47,18 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const Artist = (): ReactElement => {
   const action = useActionData<ArtistActionData>();
-  const loader = useLoaderData<ArtistWithAlbumsFragment>();
+  const artist = useLoaderData<ArtistWithAlbumsFragment>();
   const transition = useTransition();
 
   const albums = useMemo<AlbumWithArtistFragment[]>(() => {
-    const { albums: artistAlbums, ...artistByArtist } = loader;
+    const { albums: artistAlbums, ...artistByArtist } = artist;
     return artistAlbums.map((album) => ({ ...album, artistByArtist }));
-  }, [loader]);
+  }, [artist]);
 
   return (
     <>
       <Dialog>
-        <ArtistDetails artist={loader} transition={transition} />
+        <ArtistDetails artist={artist} transition={transition} />
         <AlbumsGrid albums={albums} transition={transition} />
         <Outlet />
         <Dialog.Close to={routes.albums()}>

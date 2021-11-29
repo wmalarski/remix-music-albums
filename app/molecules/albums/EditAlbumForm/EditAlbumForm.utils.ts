@@ -1,13 +1,18 @@
 import invariant from "tiny-invariant";
 import { UpdateAlbumMutationVariables } from "~/api/types";
 
-export type EditAlbumFormResult = {
-  variables?: UpdateAlbumMutationVariables;
-  errors?: {
-    title?: boolean;
-    year?: boolean;
-  };
-};
+export type EditAlbumFormResult =
+  | {
+      variables?: never;
+      errors: {
+        title?: boolean;
+        year?: boolean;
+      };
+    }
+  | {
+      errors?: never;
+      variables: UpdateAlbumMutationVariables;
+    };
 
 type ValidateEditAlbumArgs = {
   albumId: number;

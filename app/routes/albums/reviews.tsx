@@ -9,15 +9,8 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  DeleteReview,
-  DeleteReviewMutation,
-  DeleteReviewMutationVariables,
-  SelectReviews,
-  SelectReviewsQuery,
-  SelectReviewsQueryVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { SelectReviewsQuery } from "~/api/types";
 import { Dialog, ErrorsList, Heading } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
 import { routes } from "~/utils/routes";
@@ -33,10 +26,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!isNumber(reviewId)) throw new Response("Not Found", { status: 404 });
 
-  const result = await jsonFetcher<
-    DeleteReviewMutation,
-    DeleteReviewMutationVariables
-  >(DeleteReview, { id: Number(reviewId) });
+  const result = await graphqlSdk.DeleteReview({ id: Number(reviewId) });
 
   const album = result.data?.delete_review_by_pk?.album;
   if (!album || result.errors) return json({ fetcherErrors: result.errors });
@@ -47,10 +37,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const limit = toNumber(params.reviewLimit, 12);
   const offset = toNumber(params.reviewOffset, 0);
 
-  const result = await jsonFetcher<
-    SelectReviewsQuery,
-    SelectReviewsQueryVariables
-  >(SelectReviews, { limit, offset });
+  const result = await graphqlSdk.SelectReviews({ limit, offset });
 
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
@@ -60,14 +47,14 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const Reviews = (): ReactElement => {
   const action = useActionData<ReviewsActionData>();
-  const loader = useLoaderData<SelectReviewsQuery>();
+  const query = useLoaderData<SelectReviewsQuery>();
   const transition = useTransition();
 
   return (
     <>
       <Dialog>
         <Heading>Reviews</Heading>
-        <ReviewList reviews={loader.review} transition={transition} />
+        <ReviewList reviews={query.review} transition={transition} />
         <Dialog.Close to={routes.albums()}>
           <Cross1Icon />
         </Dialog.Close>

@@ -7,12 +7,8 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { jsonFetcher } from "~/api/fetcher";
-import {
-  SelectAlbums,
-  SelectAlbumsQuery,
-  SelectAlbumsQueryVariables,
-} from "~/api/types";
+import { graphqlSdk } from "~/api/fetcher";
+import { SelectAlbumsQuery } from "~/api/types";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { toNumber } from "~/utils/validation";
@@ -28,10 +24,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   const limit = toNumber(params.limit, 12);
   const offset = toNumber(params.offset, 0);
 
-  const result = await jsonFetcher<
-    SelectAlbumsQuery,
-    SelectAlbumsQueryVariables
-  >(SelectAlbums, { limit, offset });
+  const result = await graphqlSdk.SelectAlbums({ limit, offset });
 
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
@@ -40,13 +33,13 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Albums = (): ReactElement => {
-  const loader = useLoaderData<SelectAlbumsQuery>();
+  const query = useLoaderData<SelectAlbumsQuery>();
   const transition = useTransition();
 
   return (
     <Page>
       <main>
-        <AlbumsGrid albums={loader.album} transition={transition} />
+        <AlbumsGrid albums={query.album} transition={transition} />
         <Divider />
         <Outlet />
       </main>

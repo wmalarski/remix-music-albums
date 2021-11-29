@@ -6,12 +6,7 @@ import {
   useActionData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  UpdateArtist,
-  UpdateArtistMutation,
-  UpdateArtistMutationVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
 import { ErrorsList } from "~/components";
 import {
   EditArtistForm,
@@ -32,14 +27,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const artistId = Number(params.artistId);
   const formData = await request.formData();
-  const { variables, errors } = validateEditArtist({ formData, artistId });
+  const validation = validateEditArtist({ formData, artistId });
 
-  if (errors) return json({ errors });
+  if (validation.errors) return json({ errors: validation.errors });
 
-  const result = await jsonFetcher<
-    UpdateArtistMutation,
-    UpdateArtistMutationVariables
-  >(UpdateArtist, variables);
+  const result = await graphqlSdk.UpdateArtist(validation.variables);
 
   if (result.errors) return json({ fetcherErrors: result.errors });
   return redirect(routes.artist(artistId));

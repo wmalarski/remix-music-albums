@@ -6,12 +6,7 @@ import {
   useActionData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  InsertAlbum,
-  InsertAlbumMutation,
-  InsertAlbumMutationVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
 import { ErrorsList } from "~/components";
 import {
   NewAlbumForm,
@@ -32,14 +27,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const artistId = Number(params.artistId);
   const formData = await request.formData();
-  const { variables, errors } = validateNewAlbum(formData, artistId);
+  const validation = validateNewAlbum(formData, artistId);
 
-  if (errors) return json({ errors });
+  if (validation.errors) return json({ errors: validation.errors });
 
-  const result = await jsonFetcher<
-    InsertAlbumMutation,
-    InsertAlbumMutationVariables
-  >(InsertAlbum, variables);
+  const result = await graphqlSdk.InsertAlbum(validation.variables);
 
   const id = result.data?.insert_album_one?.id;
   if (!id || result.errors) return json({ fetcherErrors: result.errors });

@@ -7,12 +7,7 @@ import {
   useActionData,
   useTransition,
 } from "remix";
-import { FetcherError, jsonFetcher } from "~/api/fetcher";
-import {
-  InsertArtist,
-  InsertArtistMutation,
-  InsertArtistMutationVariables,
-} from "~/api/types";
+import { FetcherError, graphqlSdk } from "~/api/fetcher";
 import { Dialog, ErrorsList } from "~/components";
 import {
   NewArtistForm,
@@ -28,14 +23,11 @@ type NewArtistActionData = {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
-  const { variables, errors } = validateNewArtist(formData);
+  const validation = validateNewArtist(formData);
 
-  if (errors) return json({ errors });
+  if (validation.errors) return json({ errors: validation.errors });
 
-  const result = await jsonFetcher<
-    InsertArtistMutation,
-    InsertArtistMutationVariables
-  >(InsertArtist, variables);
+  const result = await graphqlSdk.InsertArtist(validation.variables);
 
   const id = result.data?.insert_artist_one?.id;
   if (!id || result.errors) return json({ fetcherErrors: result.errors });

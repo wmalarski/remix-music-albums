@@ -1,3 +1,4 @@
+import { DocumentNode } from 'graphql';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -2560,3 +2561,246 @@ export const SelectVisits = gql`
   }
 }
     ${VisitWithAlbumAndArtist}`;
+export const AlbumFragmentDoc = gql`
+    fragment Album on album {
+  id
+  sid
+  title
+  year
+}
+    `;
+export const ArtistFragmentDoc = gql`
+    fragment Artist on artist {
+  id
+  sid
+  name
+}
+    `;
+export const AlbumWithArtistFragmentDoc = gql`
+    fragment AlbumWithArtist on album {
+  ...Album
+  artistByArtist {
+    ...Artist
+  }
+}
+    ${AlbumFragmentDoc}
+${ArtistFragmentDoc}`;
+export const ReviewFragmentDoc = gql`
+    fragment Review on review {
+  id
+  rate
+  text
+  createdAt
+}
+    `;
+export const AlbumWithArtistAndReviewsFragmentDoc = gql`
+    fragment AlbumWithArtistAndReviews on album {
+  ...AlbumWithArtist
+  reviews {
+    ...Review
+  }
+}
+    ${AlbumWithArtistFragmentDoc}
+${ReviewFragmentDoc}`;
+export const ArtistWithAlbumsFragmentDoc = gql`
+    fragment ArtistWithAlbums on artist {
+  ...Artist
+  albums {
+    ...Album
+  }
+}
+    ${ArtistFragmentDoc}
+${AlbumFragmentDoc}`;
+export const ReviewWithAlbumAndArtistFragmentDoc = gql`
+    fragment ReviewWithAlbumAndArtist on review {
+  ...Review
+  albumByAlbum {
+    ...AlbumWithArtist
+  }
+}
+    ${ReviewFragmentDoc}
+${AlbumWithArtistFragmentDoc}`;
+export const VisitFragmentDoc = gql`
+    fragment Visit on visit {
+  id
+  createdAt
+}
+    `;
+export const VisitWithAlbumAndArtistFragmentDoc = gql`
+    fragment VisitWithAlbumAndArtist on visit {
+  ...Visit
+  albumByAlbum {
+    ...AlbumWithArtist
+  }
+}
+    ${VisitFragmentDoc}
+${AlbumWithArtistFragmentDoc}`;
+export const SelectAlbumsDocument = gql`
+    query SelectAlbums($limit: Int, $offset: Int) {
+  album(limit: $limit, offset: $offset) {
+    ...AlbumWithArtist
+  }
+}
+    ${AlbumWithArtistFragmentDoc}`;
+export const InsertAlbumDocument = gql`
+    mutation InsertAlbum($album: album_insert_input!) {
+  insert_album_one(object: $album) {
+    id
+  }
+}
+    `;
+export const SelectAlbumDocument = gql`
+    query SelectAlbum($id: Int!) {
+  album_by_pk(id: $id) {
+    ...AlbumWithArtistAndReviews
+  }
+}
+    ${AlbumWithArtistAndReviewsFragmentDoc}`;
+export const DeleteAlbumDocument = gql`
+    mutation DeleteAlbum($id: Int!) {
+  delete_album_by_pk(id: $id) {
+    artist
+  }
+}
+    `;
+export const UpdateAlbumDocument = gql`
+    mutation UpdateAlbum($id: Int!, $input: album_set_input) {
+  update_album_by_pk(pk_columns: {id: $id}, _set: $input) {
+    id
+  }
+}
+    `;
+export const SelectArtistsDocument = gql`
+    query SelectArtists($limit: Int, $offset: Int) {
+  artist(limit: $limit, offset: $offset) {
+    ...Artist
+  }
+}
+    ${ArtistFragmentDoc}`;
+export const InsertArtistDocument = gql`
+    mutation InsertArtist($artist: artist_insert_input!) {
+  insert_artist_one(object: $artist) {
+    id
+  }
+}
+    `;
+export const SelectArtistDocument = gql`
+    query SelectArtist($id: Int!) {
+  artist_by_pk(id: $id) {
+    ...ArtistWithAlbums
+  }
+}
+    ${ArtistWithAlbumsFragmentDoc}`;
+export const DeleteArtistDocument = gql`
+    mutation DeleteArtist($id: Int!) {
+  delete_artist_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export const UpdateArtistDocument = gql`
+    mutation UpdateArtist($id: Int!, $input: artist_set_input) {
+  update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
+    id
+  }
+}
+    `;
+export const InsertReviewDocument = gql`
+    mutation InsertReview($review: review_insert_input!) {
+  insert_review_one(object: $review) {
+    id
+  }
+}
+    `;
+export const SelectReviewsDocument = gql`
+    query SelectReviews($limit: Int, $offset: Int) {
+  review(limit: $limit, offset: $offset) {
+    ...ReviewWithAlbumAndArtist
+  }
+}
+    ${ReviewWithAlbumAndArtistFragmentDoc}`;
+export const DeleteReviewDocument = gql`
+    mutation DeleteReview($id: Int!) {
+  delete_review_by_pk(id: $id) {
+    album
+  }
+}
+    `;
+export const UpdateReviewDocument = gql`
+    mutation UpdateReview($id: Int!, $input: review_set_input) {
+  update_review_by_pk(pk_columns: {id: $id}, _set: $input) {
+    id
+  }
+}
+    `;
+export const InsertVisitDocument = gql`
+    mutation InsertVisit($visit: visit_insert_input!) {
+  insert_visit_one(
+    object: $visit
+    on_conflict: {constraint: unique_album_profile, update_columns: [updatedAt, createdAt], where: {createdAt: {_is_null: false}}}
+  ) {
+    id
+  }
+}
+    `;
+export const SelectVisitsDocument = gql`
+    query SelectVisits($limit: Int, $offset: Int) {
+  visit(limit: $limit, offset: $offset) {
+    ...VisitWithAlbumAndArtist
+  }
+}
+    ${VisitWithAlbumAndArtistFragmentDoc}`;
+export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<{ data?: R, errors?: Array<{ message: string; extensions: { path: string; code: string } }> }>
+export function getSdk<C>(requester: Requester<C>) {
+  return {
+    SelectAlbums(variables?: SelectAlbumsQueryVariables, options?: C): Promise<{ data?: SelectAlbumsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectAlbumsQuery, SelectAlbumsQueryVariables>(SelectAlbumsDocument, variables, options);
+    },
+    InsertAlbum(variables: InsertAlbumMutationVariables, options?: C): Promise<{ data?: InsertAlbumMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<InsertAlbumMutation, InsertAlbumMutationVariables>(InsertAlbumDocument, variables, options);
+    },
+    SelectAlbum(variables: SelectAlbumQueryVariables, options?: C): Promise<{ data?: SelectAlbumQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectAlbumQuery, SelectAlbumQueryVariables>(SelectAlbumDocument, variables, options);
+    },
+    DeleteAlbum(variables: DeleteAlbumMutationVariables, options?: C): Promise<{ data?: DeleteAlbumMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<DeleteAlbumMutation, DeleteAlbumMutationVariables>(DeleteAlbumDocument, variables, options);
+    },
+    UpdateAlbum(variables: UpdateAlbumMutationVariables, options?: C): Promise<{ data?: UpdateAlbumMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdateAlbumMutation, UpdateAlbumMutationVariables>(UpdateAlbumDocument, variables, options);
+    },
+    SelectArtists(variables?: SelectArtistsQueryVariables, options?: C): Promise<{ data?: SelectArtistsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectArtistsQuery, SelectArtistsQueryVariables>(SelectArtistsDocument, variables, options);
+    },
+    InsertArtist(variables: InsertArtistMutationVariables, options?: C): Promise<{ data?: InsertArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<InsertArtistMutation, InsertArtistMutationVariables>(InsertArtistDocument, variables, options);
+    },
+    SelectArtist(variables: SelectArtistQueryVariables, options?: C): Promise<{ data?: SelectArtistQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectArtistQuery, SelectArtistQueryVariables>(SelectArtistDocument, variables, options);
+    },
+    DeleteArtist(variables: DeleteArtistMutationVariables, options?: C): Promise<{ data?: DeleteArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<DeleteArtistMutation, DeleteArtistMutationVariables>(DeleteArtistDocument, variables, options);
+    },
+    UpdateArtist(variables: UpdateArtistMutationVariables, options?: C): Promise<{ data?: UpdateArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdateArtistMutation, UpdateArtistMutationVariables>(UpdateArtistDocument, variables, options);
+    },
+    InsertReview(variables: InsertReviewMutationVariables, options?: C): Promise<{ data?: InsertReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<InsertReviewMutation, InsertReviewMutationVariables>(InsertReviewDocument, variables, options);
+    },
+    SelectReviews(variables?: SelectReviewsQueryVariables, options?: C): Promise<{ data?: SelectReviewsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectReviewsQuery, SelectReviewsQueryVariables>(SelectReviewsDocument, variables, options);
+    },
+    DeleteReview(variables: DeleteReviewMutationVariables, options?: C): Promise<{ data?: DeleteReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<DeleteReviewMutation, DeleteReviewMutationVariables>(DeleteReviewDocument, variables, options);
+    },
+    UpdateReview(variables: UpdateReviewMutationVariables, options?: C): Promise<{ data?: UpdateReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<UpdateReviewMutation, UpdateReviewMutationVariables>(UpdateReviewDocument, variables, options);
+    },
+    InsertVisit(variables: InsertVisitMutationVariables, options?: C): Promise<{ data?: InsertVisitMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<InsertVisitMutation, InsertVisitMutationVariables>(InsertVisitDocument, variables, options);
+    },
+    SelectVisits(variables?: SelectVisitsQueryVariables, options?: C): Promise<{ data?: SelectVisitsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectVisitsQuery, SelectVisitsQueryVariables>(SelectVisitsDocument, variables, options);
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;

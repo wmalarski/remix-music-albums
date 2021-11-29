@@ -1,14 +1,19 @@
 import invariant from "tiny-invariant";
 import { InsertAlbumMutationVariables } from "~/api/types";
 
-export type NewAlbumFormResult = {
-  variables?: InsertAlbumMutationVariables;
-  errors?: {
-    title?: boolean;
-    sid?: boolean;
-    year?: boolean;
-  };
-};
+export type NewAlbumFormResult =
+  | {
+      variables?: never;
+      errors: {
+        title?: boolean;
+        sid?: boolean;
+        year?: boolean;
+      };
+    }
+  | {
+      variables: InsertAlbumMutationVariables;
+      errors?: never;
+    };
 
 export const validateNewAlbum = (
   formData: FormData,
