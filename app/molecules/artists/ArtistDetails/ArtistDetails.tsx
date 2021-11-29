@@ -25,6 +25,9 @@ export const ArtistDetails = ({
       <p>
         <StyledLink to={routes.newAlbum(artist.id)}>New album</StyledLink>
       </p>
+      <p>
+        <StyledLink to={routes.editArtist(artist.id)}>Edit Artist</StyledLink>
+      </p>
       <Form method="delete">
         <button type="submit">
           {transition.submission ? "Deleting..." : "Delete"}

@@ -34,3 +34,9 @@ mutation DeleteArtist($id: Int!) {
     id
   }
 }
+
+mutation UpdateArtist($id: Int!, $input: artist_set_input) {
+  update_artist_by_pk(pk_columns: { id: $id }, _set: $input) {
+    id
+  }
+}

@@ -2310,6 +2310,14 @@ export type DeleteArtistMutationVariables = Exact<{
 
 export type DeleteArtistMutation = { delete_artist_by_pk?: { id: number } | null | undefined };
 
+export type UpdateArtistMutationVariables = Exact<{
+  id: Scalars['Int'];
+  input?: InputMaybe<ArtistSetInput>;
+}>;
+
+
+export type UpdateArtistMutation = { update_artist_by_pk?: { id: number } | null | undefined };
+
 export type ReviewFragment = { id: number, rate: any, text: string, createdAt: any };
 
 export type ReviewWithAlbumAndArtistFragment = { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } };
@@ -2496,6 +2504,13 @@ export const SelectArtist = gql`
 export const DeleteArtist = gql`
     mutation DeleteArtist($id: Int!) {
   delete_artist_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export const UpdateArtist = gql`
+    mutation UpdateArtist($id: Int!, $input: artist_set_input) {
+  update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
     id
   }
 }

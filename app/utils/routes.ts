@@ -35,6 +35,7 @@ export const routes = {
       offsetKey: "offsetVisits",
     }),
   artist: (artistId: number): string => `/albums/artist/${artistId}`,
+  editArtist: (artistId: number): string => `/albums/artist/${artistId}/edit`,
   album: (albumId: number): string => `/albums/album/${albumId}`,
   editAlbum: (albumId: number): string => `/albums/album/${albumId}/edit`,
   newArtist: "/albums/newArtist",
