@@ -2,7 +2,6 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement, useMemo } from "react";
 import {
   ActionFunction,
-  json,
   LoaderFunction,
   Outlet,
   redirect,
@@ -10,17 +9,14 @@ import {
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { AlbumWithArtistFragment, ArtistWithAlbumsFragment } from "~/api/types";
 import { Dialog, ErrorsList } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { ArtistDetails } from "~/molecules/artists";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
-
-type ArtistActionData = {
-  fetcherErrors?: FetcherError[];
-};
 
 export const action: ActionFunction = async ({ params }) => {
   if (!isNumber(params.artistId))
@@ -30,7 +26,9 @@ export const action: ActionFunction = async ({ params }) => {
 
   const result = await graphqlSdk.DeleteArtist({ id: artistId });
 
-  if (result.errors) return json({ fetcherErrors: result.errors });
+  if (result.errors)
+    return json<FetcherActionData>({ fetcherErrors: result.errors });
+
   return redirect(routes.albums());
 };
 
@@ -42,11 +40,11 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const artistFragment = result.data?.artist_by_pk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });
-  return json(artistFragment);
+  return json<ArtistWithAlbumsFragment>(artistFragment);
 };
 
 const Artist = (): ReactElement => {
-  const action = useActionData<ArtistActionData>();
+  const action = useActionData<FetcherActionData>();
   const artist = useLoaderData<ArtistWithAlbumsFragment>();
   const transition = useTransition();
 

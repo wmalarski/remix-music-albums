@@ -1,42 +1,37 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import {
-  ActionFunction,
-  json,
-  redirect,
-  useActionData,
-  useTransition,
-} from "remix";
-import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { ActionFunction, redirect, useActionData, useTransition } from "remix";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { Dialog, ErrorsList } from "~/components";
 import {
   NewArtistForm,
   NewArtistFormResult,
   validateNewArtist,
 } from "~/molecules/artists";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 
-type NewArtistActionData = {
+type ActionData = FetcherActionData & {
   errors?: NewArtistFormResult["errors"];
-  fetcherErrors?: FetcherError[];
 };
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const validation = validateNewArtist(formData);
 
-  if (validation.errors) return json({ errors: validation.errors });
+  if (validation.errors) return json<ActionData>({ errors: validation.errors });
 
   const result = await graphqlSdk.InsertArtist(validation.variables);
 
   const id = result.data?.insert_artist_one?.id;
-  if (!id || result.errors) return json({ fetcherErrors: result.errors });
+  if (!id || result.errors)
+    return json<ActionData>({ fetcherErrors: result.errors });
 
   return redirect(routes.artist(id));
 };
 
 const NewArtist = (): ReactElement => {
-  const action = useActionData<NewArtistActionData>();
+  const action = useActionData<ActionData>();
   const transition = useTransition();
 
   return (

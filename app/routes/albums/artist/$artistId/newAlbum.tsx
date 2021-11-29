@@ -1,24 +1,18 @@
 import { ReactElement } from "react";
-import {
-  ActionFunction,
-  json,
-  redirect,
-  useActionData,
-  useTransition,
-} from "remix";
-import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { ActionFunction, redirect, useActionData, useTransition } from "remix";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { ErrorsList } from "~/components";
 import {
   NewAlbumForm,
   NewAlbumFormResult,
   validateNewAlbum,
 } from "~/molecules/albums";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
-type NewAlbumActionData = {
+type ActionData = FetcherActionData & {
   errors?: NewAlbumFormResult["errors"];
-  fetcherErrors?: FetcherError[];
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -29,17 +23,18 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
   const validation = validateNewAlbum(formData, artistId);
 
-  if (validation.errors) return json({ errors: validation.errors });
+  if (validation.errors) return json<ActionData>({ errors: validation.errors });
 
   const result = await graphqlSdk.InsertAlbum(validation.variables);
 
   const id = result.data?.insert_album_one?.id;
-  if (!id || result.errors) return json({ fetcherErrors: result.errors });
+  if (!id || result.errors)
+    return json<ActionData>({ fetcherErrors: result.errors });
   return redirect(routes.album(id));
 };
 
 const NewAlbum = (): ReactElement => {
-  const action = useActionData<NewAlbumActionData>();
+  const action = useActionData<ActionData>();
   const transition = useTransition();
 
   return (

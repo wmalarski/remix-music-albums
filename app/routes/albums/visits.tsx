@@ -1,10 +1,11 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { json, LoaderFunction, useLoaderData, useTransition } from "remix";
+import { LoaderFunction, useLoaderData, useTransition } from "remix";
 import { graphqlSdk } from "~/api/fetcher";
 import { SelectVisitsQuery } from "~/api/types";
 import { Dialog, Heading } from "~/components";
 import { VisitsList } from "~/molecules/visits";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { toNumber } from "~/utils/validation";
 
@@ -17,7 +18,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  return json(result.data);
+  return json<SelectVisitsQuery>(result.data ?? { visit: [] });
 };
 
 const Visits = (): ReactElement => {

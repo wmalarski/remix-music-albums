@@ -10,10 +10,11 @@ type GraphqlApiConfig = {
 
 export type FetcherError = {
   message: string;
-  extensions: {
-    path: string;
-    code: string;
-  };
+  extensions?: unknown;
+};
+
+export type FetcherActionData = {
+  fetcherErrors?: FetcherError[];
 };
 
 export type FetcherPayload<TData> = {

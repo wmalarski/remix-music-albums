@@ -2750,7 +2750,7 @@ export const SelectVisitsDocument = gql`
   }
 }
     ${VisitWithAlbumAndArtistFragmentDoc}`;
-export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<{ data?: R, errors?: Array<{ message: string; extensions: { path: string; code: string } }> }>
+export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<{ data?: R, errors?: Array<{ message: string; extensions?: unknown }> }>
 export function getSdk<C>(requester: Requester<C>) {
   return {
     SelectAlbums(variables?: SelectAlbumsQueryVariables, options?: C): Promise<{ data?: SelectAlbumsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {

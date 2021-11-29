@@ -2,23 +2,19 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import {
   ActionFunction,
-  json,
   LoaderFunction,
   redirect,
   useActionData,
   useLoaderData,
   useTransition,
 } from "remix";
-import { FetcherError, graphqlSdk } from "~/api/fetcher";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { SelectReviewsQuery } from "~/api/types";
 import { Dialog, ErrorsList, Heading } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber, toNumber } from "~/utils/validation";
-
-type ReviewsActionData = {
-  fetcherErrors?: FetcherError[];
-};
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -29,7 +25,8 @@ export const action: ActionFunction = async ({ request }) => {
   const result = await graphqlSdk.DeleteReview({ id: Number(reviewId) });
 
   const album = result.data?.delete_review_by_pk?.album;
-  if (!album || result.errors) return json({ fetcherErrors: result.errors });
+  if (!album || result.errors)
+    return json<FetcherActionData>({ fetcherErrors: result.errors });
   return redirect(routes.album(album));
 };
 
@@ -42,11 +39,11 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  return json(result.data);
+  return json<SelectReviewsQuery>(result.data ?? { review: [] });
 };
 
 const Reviews = (): ReactElement => {
-  const action = useActionData<ReviewsActionData>();
+  const action = useActionData<FetcherActionData>();
   const query = useLoaderData<SelectReviewsQuery>();
   const transition = useTransition();
 

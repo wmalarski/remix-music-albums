@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 import {
-  json,
   LoaderFunction,
   MetaFunction,
   Outlet,
@@ -11,6 +10,7 @@ import { graphqlSdk } from "~/api/fetcher";
 import { SelectAlbumsQuery } from "~/api/types";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
+import { json } from "~/utils/remix";
 import { toNumber } from "~/utils/validation";
 
 export const meta: MetaFunction = () => {
@@ -29,7 +29,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  return json(result.data);
+  return json<SelectAlbumsQuery>(result.data ?? { album: [] });
 };
 
 const Albums = (): ReactElement => {
