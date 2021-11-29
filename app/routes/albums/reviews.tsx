@@ -6,13 +6,12 @@ import {
   redirect,
   useActionData,
   useLoaderData,
-  useTransition,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { SelectReviewsQuery } from "~/api/types";
 import { Dialog, ErrorsList, Heading } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
-import { HandleFunction, json } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber, toNumber } from "~/utils/validation";
 
@@ -49,7 +48,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 const Reviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const query = useLoaderData<SelectReviewsQuery>();
-  const transition = useTransition();
+  const transition = useRouteTransition();
 
   return (
     <>

@@ -12,7 +12,7 @@ import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { AlbumWithArtistAndReviewsFragment } from "~/api/types";
 import { Dialog, ErrorsList } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
-import { HandleFunction, json, useCurrentTransition } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -55,7 +55,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 const Album = (): ReactElement => {
   const loader = useLoaderData<AlbumWithArtistAndReviewsFragment>();
   const action = useActionData<FetcherActionData>();
-  const transition = useCurrentTransition();
+  const transition = useRouteTransition();
 
   return (
     <>

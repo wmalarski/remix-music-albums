@@ -14,7 +14,7 @@ import {
   EditReviewFormResult,
   validateEditReview,
 } from "~/molecules/reviews";
-import { HandleFunction, json, useCurrentTransition } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -61,7 +61,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 const EditReview = (): ReactElement => {
   const review = useLoaderData<ReviewWithAlbumAndArtistFragment>();
   const action = useActionData<ActionData>();
-  const transition = useCurrentTransition();
+  const transition = useRouteTransition();
 
   return (
     <>

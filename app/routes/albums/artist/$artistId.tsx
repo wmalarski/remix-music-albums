@@ -7,14 +7,13 @@ import {
   redirect,
   useActionData,
   useLoaderData,
-  useTransition,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { AlbumWithArtistFragment, ArtistWithAlbumsFragment } from "~/api/types";
 import { Dialog, ErrorsList } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { ArtistDetails } from "~/molecules/artists";
-import { HandleFunction, json } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -50,7 +49,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 const Artist = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const artist = useLoaderData<ArtistWithAlbumsFragment>();
-  const transition = useTransition();
+  const transition = useRouteTransition();
 
   const albums = useMemo<AlbumWithArtistFragment[]>(() => {
     const { albums: artistAlbums, ...artistByArtist } = artist;

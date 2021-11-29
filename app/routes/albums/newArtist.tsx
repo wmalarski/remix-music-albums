@@ -1,6 +1,6 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { ActionFunction, redirect, useActionData, useTransition } from "remix";
+import { ActionFunction, redirect, useActionData } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { Dialog, ErrorsList } from "~/components";
 import {
@@ -8,7 +8,7 @@ import {
   NewArtistFormResult,
   validateNewArtist,
 } from "~/molecules/artists";
-import { HandleFunction, json } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 
 type ActionData = FetcherActionData & {
@@ -36,7 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 const NewArtist = (): ReactElement => {
   const action = useActionData<ActionData>();
-  const transition = useTransition();
+  const transition = useRouteTransition();
 
   return (
     <>

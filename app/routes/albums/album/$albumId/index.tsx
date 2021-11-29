@@ -1,5 +1,5 @@
 import { ReactElement, useMemo } from "react";
-import { ActionFunction, redirect, useActionData, useTransition } from "remix";
+import { ActionFunction, redirect, useActionData } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import {
   AlbumWithArtistAndReviewsFragment,
@@ -7,7 +7,12 @@ import {
 } from "~/api/types";
 import { ErrorsList } from "~/components";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
-import { HandleFunction, json, useRouteLoaderData } from "~/utils/remix";
+import {
+  HandleFunction,
+  json,
+  useRouteLoaderData,
+  useRouteTransition,
+} from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -35,7 +40,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const album = useRouteLoaderData<AlbumWithArtistAndReviewsFragment>("album");
-  const transition = useTransition();
+  const transition = useRouteTransition();
 
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
     if (!album) return [];

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { ActionFunction, redirect, useActionData, useTransition } from "remix";
+import { ActionFunction, redirect, useActionData } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { ErrorsList } from "~/components";
 import {
@@ -7,7 +7,7 @@ import {
   NewAlbumFormResult,
   validateNewAlbum,
 } from "~/molecules/albums";
-import { HandleFunction, json } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -39,7 +39,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const NewAlbum = (): ReactElement => {
   const action = useActionData<ActionData>();
-  const transition = useTransition();
+  const transition = useRouteTransition();
 
   return (
     <>

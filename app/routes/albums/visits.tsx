@@ -1,11 +1,11 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
-import { LoaderFunction, useLoaderData, useTransition } from "remix";
+import { LoaderFunction, useLoaderData } from "remix";
 import { graphqlSdk } from "~/api/fetcher";
 import { SelectVisitsQuery } from "~/api/types";
 import { Dialog, Heading } from "~/components";
 import { VisitsList } from "~/molecules/visits";
-import { HandleFunction, json } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { toNumber } from "~/utils/validation";
 
@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const Visits = (): ReactElement => {
   const query = useLoaderData<SelectVisitsQuery>();
-  const transition = useTransition();
+  const transition = useRouteTransition();
 
   return (
     <Dialog>

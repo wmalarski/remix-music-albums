@@ -4,7 +4,7 @@ import { graphqlSdk } from "~/api/fetcher";
 import { SelectAlbumsQuery } from "~/api/types";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
-import { HandleFunction, json, useCurrentTransition } from "~/utils/remix";
+import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { toNumber } from "~/utils/validation";
 
 export const meta: MetaFunction = () => {
@@ -32,7 +32,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const Albums = (): ReactElement => {
   const query = useLoaderData<SelectAlbumsQuery>();
-  const transition = useCurrentTransition();
+  const transition = useRouteTransition();
 
   return (
     <Page>
