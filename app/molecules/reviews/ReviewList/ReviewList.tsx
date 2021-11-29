@@ -32,11 +32,18 @@ export const ReviewList = ({
                 {review.albumByAlbum.artistByArtist.name}
               </StyledLink>
             </p>
+            <p>
+              <StyledLink
+                to={routes.editReview(review.albumByAlbum.id, review.id)}
+              >
+                Edit review
+              </StyledLink>
+            </p>
             <p>{review.rate}</p>
             <p>{review.text}</p>
             <p>{review.createdAt}</p>
             <Form method="delete">
-              <input type="hidden" value={review.id} name="reviewId" />
+              <input type="hidden" defaultValue={review.id} name="reviewId" />
               <button type="submit">
                 {transition.submission ? "Deleting..." : "Delete"}
               </button>

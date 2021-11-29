@@ -2338,6 +2338,13 @@ export type SelectReviewsQueryVariables = Exact<{
 
 export type SelectReviewsQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } }> };
 
+export type SelectReviewQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type SelectReviewQuery = { review_by_pk?: { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } } | null | undefined };
+
 export type DeleteReviewMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -2526,6 +2533,13 @@ export const InsertReview = gql`
 export const SelectReviews = gql`
     query SelectReviews($limit: Int, $offset: Int) {
   review(limit: $limit, offset: $offset) {
+    ...ReviewWithAlbumAndArtist
+  }
+}
+    ${ReviewWithAlbumAndArtist}`;
+export const SelectReview = gql`
+    query SelectReview($id: Int!) {
+  review_by_pk(id: $id) {
     ...ReviewWithAlbumAndArtist
   }
 }
@@ -2719,6 +2733,13 @@ export const SelectReviewsDocument = gql`
   }
 }
     ${ReviewWithAlbumAndArtistFragmentDoc}`;
+export const SelectReviewDocument = gql`
+    query SelectReview($id: Int!) {
+  review_by_pk(id: $id) {
+    ...ReviewWithAlbumAndArtist
+  }
+}
+    ${ReviewWithAlbumAndArtistFragmentDoc}`;
 export const DeleteReviewDocument = gql`
     mutation DeleteReview($id: Int!) {
   delete_review_by_pk(id: $id) {
@@ -2788,6 +2809,9 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     SelectReviews(variables?: SelectReviewsQueryVariables, options?: C): Promise<{ data?: SelectReviewsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<SelectReviewsQuery, SelectReviewsQueryVariables>(SelectReviewsDocument, variables, options);
+    },
+    SelectReview(variables: SelectReviewQueryVariables, options?: C): Promise<{ data?: SelectReviewQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectReviewQuery, SelectReviewQueryVariables>(SelectReviewDocument, variables, options);
     },
     DeleteReview(variables: DeleteReviewMutationVariables, options?: C): Promise<{ data?: DeleteReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<DeleteReviewMutation, DeleteReviewMutationVariables>(DeleteReviewDocument, variables, options);

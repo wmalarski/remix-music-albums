@@ -41,4 +41,6 @@ export const routes = {
   newArtist: "/albums/newArtist",
   newAlbum: (artistId: number): string => `/albums/artist/${artistId}/newAlbum`,
   newReview: (albumId: number): string => `/albums/album/${albumId}/newReview`,
+  editReview: (albumId: number, reviewId: number): string =>
+    `/albums/album/${albumId}/review/${reviewId}`,
 };

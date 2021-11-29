@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData, useTransition } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
+import { ArtistWithAlbumsFragment } from "~/api/types";
 import { ErrorsList } from "~/components";
 import {
   EditArtistForm,
@@ -9,6 +10,7 @@ import {
 } from "~/molecules/artists";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
+import { useRouteLoaderData } from "~/utils/useRouteLoaderData";
 import { isNumber } from "~/utils/validation";
 
 type ActionData = FetcherActionData & {
@@ -32,12 +34,17 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 const EditAlbum = (): ReactElement => {
+  const artist = useRouteLoaderData<ArtistWithAlbumsFragment>(1);
   const action = useActionData<ActionData>();
   const transition = useTransition();
 
   return (
     <>
-      <EditArtistForm transition={transition} errors={action?.errors} />
+      <EditArtistForm
+        transition={transition}
+        errors={action?.errors}
+        artist={artist}
+      />
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );

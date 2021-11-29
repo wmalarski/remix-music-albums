@@ -42,7 +42,11 @@ const AlbumReviews = (): ReactElement => {
 
   return (
     <>
-      <AlbumReviewsList reviews={reviews} transition={transition} />
+      <AlbumReviewsList
+        albumId={album.id}
+        reviews={reviews}
+        transition={transition}
+      />
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );

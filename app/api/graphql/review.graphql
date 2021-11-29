@@ -24,6 +24,12 @@ query SelectReviews($limit: Int, $offset: Int) {
   }
 }
 
+query SelectReview($id: Int!) {
+  review_by_pk(id: $id) {
+    ...ReviewWithAlbumAndArtist
+  }
+}
+
 mutation DeleteReview($id: Int!) {
   delete_review_by_pk(id: $id) {
     album
