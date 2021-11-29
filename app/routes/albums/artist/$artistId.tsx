@@ -14,9 +14,13 @@ import { AlbumWithArtistFragment, ArtistWithAlbumsFragment } from "~/api/types";
 import { Dialog, ErrorsList } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { ArtistDetails } from "~/molecules/artists";
-import { json } from "~/utils/remix";
+import { HandleFunction, json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
+
+export const handle: HandleFunction = () => {
+  return { route: "artist" };
+};
 
 export const action: ActionFunction = async ({ params }) => {
   if (!isNumber(params.artistId))

@@ -5,7 +5,6 @@ import {
   redirect,
   useActionData,
   useLoaderData,
-  useTransition,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
@@ -15,12 +14,16 @@ import {
   EditReviewFormResult,
   validateEditReview,
 } from "~/molecules/reviews";
-import { json } from "~/utils/remix";
+import { HandleFunction, json, useCurrentTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 type ActionData = FetcherActionData & {
   errors?: EditReviewFormResult["errors"];
+};
+
+export const handle: HandleFunction = () => {
+  return { route: "editReview" };
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -55,10 +58,10 @@ export const loader: LoaderFunction = async ({ params }) => {
   return json<ReviewWithAlbumAndArtistFragment>(reviewFragment);
 };
 
-const EditAlbum = (): ReactElement => {
+const EditReview = (): ReactElement => {
   const review = useLoaderData<ReviewWithAlbumAndArtistFragment>();
   const action = useActionData<ActionData>();
-  const transition = useTransition();
+  const transition = useCurrentTransition();
 
   return (
     <>
@@ -72,4 +75,4 @@ const EditAlbum = (): ReactElement => {
   );
 };
 
-export default EditAlbum;
+export default EditReview;

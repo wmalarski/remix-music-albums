@@ -7,12 +7,16 @@ import {
   NewAlbumFormResult,
   validateNewAlbum,
 } from "~/molecules/albums";
-import { json } from "~/utils/remix";
+import { HandleFunction, json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 type ActionData = FetcherActionData & {
   errors?: NewAlbumFormResult["errors"];
+};
+
+export const handle: HandleFunction = () => {
+  return { route: "newAlbum" };
 };
 
 export const action: ActionFunction = async ({ request, params }) => {

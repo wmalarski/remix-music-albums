@@ -44,3 +44,5 @@ export const routes = {
   editReview: (albumId: number, reviewId: number): string =>
     `/albums/album/${albumId}/review/${reviewId}`,
 };
+
+export type RouteKind = keyof typeof routes | `${keyof typeof routes}/index`;

@@ -7,10 +7,13 @@ import {
 } from "~/api/types";
 import { ErrorsList } from "~/components";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
-import { json } from "~/utils/remix";
+import { HandleFunction, json, useRouteLoaderData } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { useRouteLoaderData } from "~/utils/useRouteLoaderData";
 import { isNumber } from "~/utils/validation";
+
+export const handle: HandleFunction = () => {
+  return { route: "album/index" };
+};
 
 export const action: ActionFunction = async ({ request, params }) => {
   if (!isNumber(params.albumId))
@@ -31,7 +34,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
-  const album = useRouteLoaderData<AlbumWithArtistAndReviewsFragment>(1);
+  const album = useRouteLoaderData<AlbumWithArtistAndReviewsFragment>("album");
   const transition = useTransition();
 
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {

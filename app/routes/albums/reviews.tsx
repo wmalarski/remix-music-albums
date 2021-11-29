@@ -12,9 +12,13 @@ import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { SelectReviewsQuery } from "~/api/types";
 import { Dialog, ErrorsList, Heading } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
-import { json } from "~/utils/remix";
+import { HandleFunction, json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber, toNumber } from "~/utils/validation";
+
+export const handle: HandleFunction = () => {
+  return { route: "reviews" };
+};
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();

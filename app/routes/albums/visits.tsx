@@ -5,9 +5,13 @@ import { graphqlSdk } from "~/api/fetcher";
 import { SelectVisitsQuery } from "~/api/types";
 import { Dialog, Heading } from "~/components";
 import { VisitsList } from "~/molecules/visits";
-import { json } from "~/utils/remix";
+import { HandleFunction, json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { toNumber } from "~/utils/validation";
+
+export const handle: HandleFunction = () => {
+  return { route: "visits" };
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   const limit = toNumber(params.visitLimit, 12);

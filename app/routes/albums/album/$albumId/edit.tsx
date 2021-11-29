@@ -8,13 +8,16 @@ import {
   EditAlbumFormResult,
   validateEditAlbum,
 } from "~/molecules/albums";
-import { json } from "~/utils/remix";
+import { HandleFunction, json, useRouteLoaderData } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { useRouteLoaderData } from "~/utils/useRouteLoaderData";
 import { isNumber } from "~/utils/validation";
 
 type ActionData = FetcherActionData & {
   errors?: EditAlbumFormResult["errors"];
+};
+
+export const handle: HandleFunction = () => {
+  return { route: "editAlbum" };
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -33,7 +36,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 const EditAlbum = (): ReactElement => {
-  const album = useRouteLoaderData<AlbumWithArtistAndReviewsFragment>(1);
+  const album = useRouteLoaderData<AlbumWithArtistAndReviewsFragment>("album");
   const action = useActionData<ActionData>();
   const transition = useTransition();
 

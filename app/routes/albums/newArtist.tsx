@@ -8,11 +8,15 @@ import {
   NewArtistFormResult,
   validateNewArtist,
 } from "~/molecules/artists";
-import { json } from "~/utils/remix";
+import { HandleFunction, json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 
 type ActionData = FetcherActionData & {
   errors?: NewArtistFormResult["errors"];
+};
+
+export const handle: HandleFunction = () => {
+  return { route: "newArtist" };
 };
 
 export const action: ActionFunction = async ({ request }) => {

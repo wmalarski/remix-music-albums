@@ -7,15 +7,18 @@ import {
   redirect,
   useActionData,
   useLoaderData,
-  useTransition,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { AlbumWithArtistAndReviewsFragment } from "~/api/types";
 import { Dialog, ErrorsList } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
-import { json } from "~/utils/remix";
+import { HandleFunction, json, useCurrentTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
+
+export const handle: HandleFunction = () => {
+  return { route: "album" };
+};
 
 export const action: ActionFunction = async ({ params }) => {
   if (!isNumber(params.albumId))
@@ -52,7 +55,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 const Album = (): ReactElement => {
   const loader = useLoaderData<AlbumWithArtistAndReviewsFragment>();
   const action = useActionData<FetcherActionData>();
-  const transition = useTransition();
+  const transition = useCurrentTransition();
 
   return (
     <>

@@ -1,16 +1,10 @@
 import { ReactElement } from "react";
-import {
-  LoaderFunction,
-  MetaFunction,
-  Outlet,
-  useLoaderData,
-  useTransition,
-} from "remix";
+import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
 import { graphqlSdk } from "~/api/fetcher";
 import { SelectAlbumsQuery } from "~/api/types";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
-import { json } from "~/utils/remix";
+import { HandleFunction, json, useCurrentTransition } from "~/utils/remix";
 import { toNumber } from "~/utils/validation";
 
 export const meta: MetaFunction = () => {
@@ -18,6 +12,10 @@ export const meta: MetaFunction = () => {
     title: "Remix Albums",
     description: "Welcome to remix!",
   };
+};
+
+export const handle: HandleFunction = () => {
+  return { route: "albums" };
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -34,7 +32,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const Albums = (): ReactElement => {
   const query = useLoaderData<SelectAlbumsQuery>();
-  const transition = useTransition();
+  const transition = useCurrentTransition();
 
   return (
     <Page>
