@@ -1,5 +1,5 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { ReactElement, useMemo } from "react";
+import { ReactElement } from "react";
 import {
   ActionFunction,
   LoaderFunction,
@@ -9,9 +9,8 @@ import {
   useLoaderData,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
-import { AlbumWithArtistFragment, ArtistWithAlbumsFragment } from "~/api/types";
-import { Dialog, ErrorsList } from "~/components";
-import { AlbumsGrid } from "~/molecules/albums";
+import { ArtistWithAlbumsFragment } from "~/api/types";
+import { Dialog, ErrorsList, Flex } from "~/components";
 import { ArtistDetails } from "~/molecules/artists";
 import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
@@ -51,17 +50,13 @@ const Artist = (): ReactElement => {
   const artist = useLoaderData<ArtistWithAlbumsFragment>();
   const transition = useRouteTransition();
 
-  const albums = useMemo<AlbumWithArtistFragment[]>(() => {
-    const { albums: artistAlbums, ...artistByArtist } = artist;
-    return artistAlbums.map((album) => ({ ...album, artistByArtist }));
-  }, [artist]);
-
   return (
     <>
       <Dialog>
-        <ArtistDetails artist={artist} transition={transition} />
-        <AlbumsGrid albums={albums} transition={transition} />
-        <Outlet />
+        <Flex direction="row">
+          <ArtistDetails artist={artist} transition={transition} />
+          <Outlet />
+        </Flex>
         <Dialog.Close to={routes.albums()}>
           <Cross1Icon />
         </Dialog.Close>

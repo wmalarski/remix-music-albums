@@ -19,9 +19,12 @@ export const {
       linksHover: "hsl(213, 100%, 43%)",
       border: "hsl(0, 0%, 82%)",
       overlay: "hsl(0, 0%, 7%, 0.2)",
-      brand4: "hsl(0, 0, 70%)",
-      brand7: "hsl(0, 0, 15%)",
-      brand11: "hsl(0, 0, 10%)",
+      brand4: "hsl(0, 0%, 70%)",
+      brand7: "hsl(0, 0%, 15%)",
+      brand11: "hsl(0, 0%, 10%)",
+      white4: "hsl(0, 100%, 70%)",
+      white7: "hsl(0, 100%, 15%)",
+      white11: "hsl(0, 100%, 10%)",
     },
     fontSizes: {
       xs: "8px",
@@ -34,6 +37,12 @@ export const {
       thin: 100,
       regular: 400,
       bold: 700,
+    },
+    radii: {
+      scroll: "10px",
+    },
+    sizes: {
+      scroll: "10px",
     },
   },
   media: {

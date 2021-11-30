@@ -4,6 +4,7 @@ import { Form } from "remix";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
 import { StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
+import * as Styles from "./ReviewList.styles";
 
 type ReviewListProps = {
   reviews?: ReviewWithAlbumAndArtistFragment[];
@@ -17,7 +18,7 @@ export const ReviewList = ({
   return (
     <div>
       <p>ReviewList</p>
-      <div>
+      <Styles.StyledScroll>
         {reviews?.map((review) => (
           <div key={review.id}>
             <p>
@@ -50,7 +51,7 @@ export const ReviewList = ({
             </Form>
           </div>
         ))}
-      </div>
+      </Styles.StyledScroll>
     </div>
   );
 };

@@ -2,8 +2,9 @@ import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { ReviewFragment } from "~/api/types";
-import { StyledLink } from "~/components";
+import { Heading, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
+import * as Styles from "./AlbumReviewsList.styles";
 
 type AlbumReviewsListProps = {
   albumId: number;
@@ -18,8 +19,8 @@ export const AlbumReviewsList = ({
 }: AlbumReviewsListProps): ReactElement => {
   return (
     <div>
-      <p>AlbumReviewsList</p>
-      <div>
+      <Heading size="medium">Reviews</Heading>
+      <Styles.StyledScroll>
         {reviews?.map((review) => (
           <div key={review.id}>
             <p>{review.rate}</p>
@@ -38,7 +39,7 @@ export const AlbumReviewsList = ({
             </Form>
           </div>
         ))}
-      </div>
+      </Styles.StyledScroll>
     </div>
   );
 };

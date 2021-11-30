@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 import { VisitWithAlbumAndArtistFragment } from "~/api/types";
 import { StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
+import * as Styles from "./VisitsList.styles";
 
 type VisitsListProps = {
   visits?: VisitWithAlbumAndArtistFragment[];
@@ -13,7 +14,7 @@ export const VisitsList = ({ visits }: VisitsListProps): ReactElement => {
   return (
     <div>
       <p>VisitsList</p>
-      <div>
+      <Styles.StyledScroll>
         {visits?.map((visit) => (
           <div key={visit.id}>
             <p>
@@ -31,7 +32,7 @@ export const VisitsList = ({ visits }: VisitsListProps): ReactElement => {
             <p>{visit.createdAt}</p>
           </div>
         ))}
-      </div>
+      </Styles.StyledScroll>
     </div>
   );
 };
