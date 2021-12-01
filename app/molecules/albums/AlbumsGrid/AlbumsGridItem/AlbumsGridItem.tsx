@@ -10,9 +10,5 @@ type AlbumsGridItemProps = {
 export const AlbumsGridItem = ({
   album,
 }: AlbumsGridItemProps): ReactElement => {
-  return (
-    <p>
-      <StyledLink to={routes.album(album.id)}>{album.title}</StyledLink>
-    </p>
-  );
+  return <StyledLink to={routes.album(album.id)}>{album.title}</StyledLink>;
 };

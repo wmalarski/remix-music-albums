@@ -1,7 +1,8 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
+import { Form, useFormAction } from "remix";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
-import { Divider, Flex } from "~/components";
+import { Button, Divider, Flex } from "~/components";
 import * as Styles from "./ReviewList.styles";
 import { ReviewListItem } from "./ReviewListItem/ReviewListItem";
 
@@ -14,6 +15,8 @@ export const ReviewList = ({
   reviews,
   transition,
 }: ReviewListProps): ReactElement => {
+  const loadAction = useFormAction("load");
+
   return (
     <Styles.StyledScroll>
       <Flex direction="column" gap={0.5} divider={<Divider />}>
@@ -25,6 +28,11 @@ export const ReviewList = ({
           />
         ))}
       </Flex>
+      <Form action={loadAction} method="get">
+        <Button type="submit">
+          {transition.submission ? "Loading..." : "Load"}
+        </Button>
+      </Form>
     </Styles.StyledScroll>
   );
 };

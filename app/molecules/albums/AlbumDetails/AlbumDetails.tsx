@@ -2,7 +2,7 @@ import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { AlbumWithArtistFragment } from "~/api/types";
-import { Heading, StyledLink } from "~/components";
+import { Button, Flex, Heading, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
 type AlbumDetailsProps = {
@@ -15,7 +15,7 @@ export const AlbumDetails = ({
   transition,
 }: AlbumDetailsProps): ReactElement => {
   return (
-    <div>
+    <Flex direction="column">
       <Heading>
         <StyledLink to={routes.album(album.id)}>{album.title}</StyledLink>
       </Heading>
@@ -24,17 +24,13 @@ export const AlbumDetails = ({
           {album.artistByArtist.name}
         </StyledLink>
       </Heading>
-      <p>
-        <StyledLink to={routes.editAlbum(album.id)}>Edit Album</StyledLink>
-      </p>
-      <p>
-        <StyledLink to={routes.newReview(album.id)}>New Review</StyledLink>
-      </p>
+      <StyledLink to={routes.editAlbum(album.id)}>Edit Album</StyledLink>
+      <StyledLink to={routes.newReview(album.id)}>New Review</StyledLink>
       <Form method="delete">
-        <button type="submit">
+        <Button type="submit">
           {transition.submission ? "Deleting..." : "Delete"}
-        </button>
+        </Button>
       </Form>
-    </div>
+    </Flex>
   );
 };

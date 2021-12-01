@@ -1,33 +1,29 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
+import { ReviewFragment } from "~/api/types";
 import { Button, Flex, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
-type ReviewListItemProps = {
-  review: ReviewWithAlbumAndArtistFragment;
+type AlbumReviewsListItemProps = {
+  albumId: number;
+  review: ReviewFragment;
   transition: Transition;
 };
 
-export const ReviewListItem = ({
+export const AlbumReviewsListItem = ({
+  albumId,
   review,
   transition,
-}: ReviewListItemProps): ReactElement => {
+}: AlbumReviewsListItemProps): ReactElement => {
   return (
     <Flex direction="column">
-      <StyledLink to={routes.album(review.albumByAlbum.id)}>
-        {review.albumByAlbum.title}
-      </StyledLink>
-      <StyledLink to={routes.artist(review.albumByAlbum.artistByArtist.id)}>
-        {review.albumByAlbum.artistByArtist.name}
-      </StyledLink>
-      <StyledLink to={routes.editReview(review.albumByAlbum.id, review.id)}>
-        Edit review
-      </StyledLink>
       <p>{review.rate}</p>
       <p>{review.text}</p>
       <p>{review.createdAt}</p>
+      <StyledLink to={routes.editReview(albumId, review.id)}>
+        Edit review
+      </StyledLink>
       <Form method="delete">
         <input type="hidden" defaultValue={review.id} name="reviewId" />
         <Button type="submit">

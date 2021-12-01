@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
   useCatch,
 } from "remix";
-import { Divider, Layout } from "./components";
+import { Divider, Flex, Layout } from "./components";
 import { darkTheme, globalStyles } from "./styles/stitches.config";
 
 // https://remix.run/api/conventions#default-export
@@ -30,7 +30,7 @@ export const ErrorBoundary = ({ error }: { error: Error }): ReactElement => {
   return (
     <Document title="Error!">
       <Layout>
-        <div>
+        <Flex direction="column">
           <h1>There was an error</h1>
           <p>{error.message}</p>
           <Divider />
@@ -38,7 +38,7 @@ export const ErrorBoundary = ({ error }: { error: Error }): ReactElement => {
             Hey, developer, you should replace this with what you want your
             users to see.
           </p>
-        </div>
+        </Flex>
       </Layout>
     </Document>
   );
@@ -100,7 +100,6 @@ const Document = ({ children, title }: DocumentProps): ReactElement => {
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
-        <div id="warnings" />
       </body>
     </html>
   );

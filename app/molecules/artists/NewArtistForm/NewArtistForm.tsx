@@ -1,7 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { Heading, TextInput } from "~/components";
+import { Button, Heading, TextInput } from "~/components";
 import { NewArtistFormResult } from "./NewArtistForm.utils";
 
 type NewArtistFormProps = {
@@ -16,23 +16,17 @@ export const NewArtistForm = ({
   return (
     <Form method="post">
       <Heading>New Artist</Heading>
-      <p>
-        <label>
-          Name: {errors?.name && <em>Name is required</em>}
-          <TextInput type="text" name="name" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Sid: {errors?.sid && <em>Sid is required</em>}
-          <TextInput type="text" name="sid" />
-        </label>
-      </p>
-      <p>
-        <button type="submit">
-          {transition.submission ? "Creating..." : "Create Artist"}
-        </button>
-      </p>
+      <label>
+        Name: {errors?.name && <em>Name is required</em>}
+        <TextInput type="text" name="name" />
+      </label>
+      <label>
+        Sid: {errors?.sid && <em>Sid is required</em>}
+        <TextInput type="text" name="sid" />
+      </label>
+      <Button type="submit">
+        {transition.submission ? "Creating..." : "Create Artist"}
+      </Button>
     </Form>
   );
 };

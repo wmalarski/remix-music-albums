@@ -1,10 +1,9 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
-import { Form } from "remix";
 import { ReviewFragment } from "~/api/types";
-import { Heading, StyledLink } from "~/components";
-import { routes } from "~/utils/routes";
+import { Flex } from "~/components";
 import * as Styles from "./AlbumReviewsList.styles";
+import { AlbumReviewsListItem } from "./AlbumReviewsListItem/AlbumReviewsListItem";
 
 type AlbumReviewsListProps = {
   albumId: number;
@@ -18,28 +17,17 @@ export const AlbumReviewsList = ({
   transition,
 }: AlbumReviewsListProps): ReactElement => {
   return (
-    <div>
-      <Heading size="medium">Reviews</Heading>
-      <Styles.StyledScroll>
+    <Styles.StyledScroll>
+      <Flex direction="column">
         {reviews?.map((review) => (
-          <div key={review.id}>
-            <p>{review.rate}</p>
-            <p>{review.text}</p>
-            <p>{review.createdAt}</p>
-            <p>
-              <StyledLink to={routes.editReview(albumId, review.id)}>
-                Edit review
-              </StyledLink>
-            </p>
-            <Form method="delete">
-              <input type="hidden" defaultValue={review.id} name="reviewId" />
-              <button type="submit">
-                {transition.submission ? "Deleting..." : "Delete"}
-              </button>
-            </Form>
-          </div>
+          <AlbumReviewsListItem
+            key={review.id}
+            albumId={albumId}
+            transition={transition}
+            review={review}
+          />
         ))}
-      </Styles.StyledScroll>
-    </div>
+      </Flex>
+    </Styles.StyledScroll>
   );
 };

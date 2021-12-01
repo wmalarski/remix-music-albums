@@ -5,7 +5,7 @@ import {
   AlbumWithArtistAndReviewsFragment,
   ReviewWithAlbumAndArtistFragment,
 } from "~/api/types";
-import { ErrorsList } from "~/components";
+import { ErrorsList, Flex, Heading } from "~/components";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
 import {
   HandleFunction,
@@ -50,11 +50,14 @@ const AlbumReviews = (): ReactElement => {
 
   return (
     <>
-      <AlbumReviewsList
-        albumId={album.id}
-        reviews={reviews}
-        transition={transition}
-      />
+      <Flex direction="column">
+        <Heading size="medium">Reviews</Heading>
+        <AlbumReviewsList
+          albumId={album.id}
+          reviews={reviews}
+          transition={transition}
+        />
+      </Flex>
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );
