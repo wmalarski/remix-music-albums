@@ -10,7 +10,7 @@ import {
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import { AlbumWithArtistAndReviewsFragment } from "~/api/types";
-import { Dialog, ErrorsList, Flex } from "~/components";
+import { Dialog, Divider, ErrorsList, Flex } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
 import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
@@ -62,6 +62,7 @@ const Album = (): ReactElement => {
       <Dialog>
         <Flex direction="row">
           <AlbumDetails album={loader} transition={transition} />
+          <Divider orientation="vertical" />
           <Outlet />
         </Flex>
         <Dialog.Close to={routes.albums()}>

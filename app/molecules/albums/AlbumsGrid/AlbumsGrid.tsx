@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { AlbumWithArtistFragment } from "~/api/types";
-import { StyledLink } from "~/components";
-import { routes } from "~/utils/routes";
+import { Grid } from "~/components/Grid/Grid";
+import { AlbumsGridItem } from "./AlbumsGridItem/AlbumsGridItem";
 
 type AlbumsGridProps = {
   albums?: AlbumWithArtistFragment[];
@@ -9,13 +9,10 @@ type AlbumsGridProps = {
 
 export const AlbumsGrid = ({ albums }: AlbumsGridProps): ReactElement => {
   return (
-    <div>
-      AlbumsGrid
+    <Grid>
       {albums?.map((album) => (
-        <p key={album.id}>
-          <StyledLink to={routes.album(album.id)}>{album.title}</StyledLink>
-        </p>
+        <AlbumsGridItem key={album.id} album={album} />
       ))}
-    </div>
+    </Grid>
   );
 };

@@ -1,5 +1,6 @@
 import { ReactElement, useMemo } from "react";
 import { AlbumWithArtistFragment, ArtistWithAlbumsFragment } from "~/api/types";
+import { Flex, Heading } from "~/components";
 import { AlbumList } from "~/molecules/albums";
 import { HandleFunction, useRouteLoaderData } from "~/utils/remix";
 
@@ -15,7 +16,12 @@ const ArtistAlbums = (): ReactElement => {
     return artistAlbums.map((album) => ({ ...album, artistByArtist }));
   }, [artist]);
 
-  return <AlbumList albums={albums} />;
+  return (
+    <Flex direction="column">
+      <Heading>Albums</Heading>
+      <AlbumList albums={albums} />
+    </Flex>
+  );
 };
 
 export default ArtistAlbums;

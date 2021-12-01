@@ -43,6 +43,10 @@ export const {
     },
     sizes: {
       scroll: "10px",
+      0.25: "0.25rem",
+      0.5: "0.5rem",
+      1: "1rem",
+      2: "2rem",
     },
   },
   media: {

@@ -1,6 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { useMemo } from "react";
 import {
+  FormMethod,
   json as remixJson,
   useFormAction,
   useMatches,
@@ -19,9 +20,12 @@ export const json = <TData>(
   init?: Parameters<typeof remixJson>[1]
 ): ReturnType<typeof remixJson> => remixJson(data, init);
 
-export const useRouteTransition = (): Transition => {
+export const useRouteTransition = (
+  action?: string,
+  method?: FormMethod
+): Transition => {
   const transition = useTransition();
-  const currentAction = useFormAction();
+  const currentAction = useFormAction(action, method);
   return transition.submission?.action === currentAction
     ? transition
     : {

@@ -1,9 +1,9 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { VisitWithAlbumAndArtistFragment } from "~/api/types";
-import { StyledLink } from "~/components";
-import { routes } from "~/utils/routes";
+import { Divider, Flex } from "~/components";
 import * as Styles from "./VisitsList.styles";
+import { VisitsListItem } from "./VisitsListItem/VisitsListItem";
 
 type VisitsListProps = {
   visits?: VisitWithAlbumAndArtistFragment[];
@@ -12,27 +12,12 @@ type VisitsListProps = {
 
 export const VisitsList = ({ visits }: VisitsListProps): ReactElement => {
   return (
-    <div>
-      <p>VisitsList</p>
-      <Styles.StyledScroll>
+    <Styles.StyledScroll>
+      <Flex direction="column" gap={0.5} divider={<Divider />}>
         {visits?.map((visit) => (
-          <div key={visit.id}>
-            <p>
-              <StyledLink to={routes.album(visit.albumByAlbum.id)}>
-                {visit.albumByAlbum.title}
-              </StyledLink>
-            </p>
-            <p>
-              <StyledLink
-                to={routes.artist(visit.albumByAlbum.artistByArtist.id)}
-              >
-                {visit.albumByAlbum.artistByArtist.name}
-              </StyledLink>
-            </p>
-            <p>{visit.createdAt}</p>
-          </div>
+          <VisitsListItem key={visit.id} visit={visit} />
         ))}
-      </Styles.StyledScroll>
-    </div>
+      </Flex>
+    </Styles.StyledScroll>
   );
 };

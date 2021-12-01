@@ -100,6 +100,7 @@ const Document = ({ children, title }: DocumentProps): ReactElement => {
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
+        <div id="warnings" />
       </body>
     </html>
   );

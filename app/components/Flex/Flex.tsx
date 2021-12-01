@@ -1,15 +1,44 @@
-import { styled } from "~/styles/stitches.config";
+import React, {
+  cloneElement,
+  ComponentProps,
+  ForwardedRef,
+  forwardRef,
+  Fragment,
+  ReactElement,
+  ReactNode,
+} from "react";
+import { getValidChildren } from "../utils/getValidChildren";
+import * as Styles from "./Flex.styles";
 
-export const Flex = styled("div", {
-  display: "flex",
+type FlexProps = ComponentProps<typeof Styles.Container> & {
+  divider?: ReactElement;
+  children: ReactNode;
+};
 
-  variants: {
-    direction: {
-      column: { flexDirection: "column" },
-      row: { flexDirection: "row", flexWrap: "nowrap" },
-    },
-  },
-  defaultVariants: {
-    direction: "row",
-  },
-});
+export const Flex = forwardRef<HTMLDivElement, FlexProps>(
+  (
+    { divider, children, ...props }: FlexProps,
+    ref: ForwardedRef<HTMLDivElement>
+  ): ReactElement => {
+    const hasDivider = !!divider;
+
+    const validChildren = getValidChildren(children);
+
+    const clones = !hasDivider
+      ? validChildren
+      : validChildren.map((child, index) => (
+          <Fragment key={typeof child.key !== "undefined" ? child.key : index}>
+            {child}
+            {index + 1 !== validChildren.length && cloneElement(divider)}
+          </Fragment>
+        ));
+
+    return (
+      <Styles.Container {...props} ref={ref}>
+        {clones}
+      </Styles.Container>
+    );
+  }
+);
+
+Flex.displayName = "Flex";
