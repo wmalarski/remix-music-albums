@@ -27,4 +27,9 @@ query SelectVisits($limit: Int, $offset: Int) {
   visit(limit: $limit, offset: $offset) {
     ...VisitWithAlbumAndArtist
   }
+  visit_aggregate {
+    aggregate {
+      count
+    }
+  }
 }

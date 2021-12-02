@@ -28,6 +28,12 @@ export const routes = {
       offset,
       offsetKey: "offsetReviews",
     }),
+  reviewsLoad: ({ offset }: PaginationArgs = {}): string =>
+    paginationSearch({
+      pathname: "/albums/reviews/load",
+      offset,
+      offsetKey: "offsetReviews",
+    }),
   visits: ({ offset }: PaginationArgs = {}): string =>
     paginationSearch({
       pathname: "/albums/visits",

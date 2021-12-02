@@ -2247,7 +2247,7 @@ export type SelectAlbumsQueryVariables = Exact<{
 }>;
 
 
-export type SelectAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } }> };
+export type SelectAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } }>, album_aggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type InsertAlbumMutationVariables = Exact<{
   album: AlbumInsertInput;
@@ -2288,7 +2288,7 @@ export type SelectArtistsQueryVariables = Exact<{
 }>;
 
 
-export type SelectArtistsQuery = { artist: Array<{ id: number, sid: string, name: string }> };
+export type SelectArtistsQuery = { artist: Array<{ id: number, sid: string, name: string }>, artist_aggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type InsertArtistMutationVariables = Exact<{
   artist: ArtistInsertInput;
@@ -2336,7 +2336,7 @@ export type SelectReviewsQueryVariables = Exact<{
 }>;
 
 
-export type SelectReviewsQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } }> };
+export type SelectReviewsQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } }>, review_aggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type SelectReviewQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -2377,7 +2377,7 @@ export type SelectVisitsQueryVariables = Exact<{
 }>;
 
 
-export type SelectVisitsQuery = { visit: Array<{ id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } }> };
+export type SelectVisitsQuery = { visit: Array<{ id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } }>, visit_aggregate: { aggregate?: { count: number } | null | undefined } };
 
 export const Album = gql`
     fragment Album on album {
@@ -2458,6 +2458,11 @@ export const SelectAlbums = gql`
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
   }
+  album_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
     ${AlbumWithArtist}`;
 export const InsertAlbum = gql`
@@ -2492,6 +2497,11 @@ export const SelectArtists = gql`
     query SelectArtists($limit: Int, $offset: Int) {
   artist(limit: $limit, offset: $offset) {
     ...Artist
+  }
+  artist_aggregate {
+    aggregate {
+      count
+    }
   }
 }
     ${Artist}`;
@@ -2535,6 +2545,11 @@ export const SelectReviews = gql`
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
+  review_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
     ${ReviewWithAlbumAndArtist}`;
 export const SelectReview = gql`
@@ -2572,6 +2587,11 @@ export const SelectVisits = gql`
     query SelectVisits($limit: Int, $offset: Int) {
   visit(limit: $limit, offset: $offset) {
     ...VisitWithAlbumAndArtist
+  }
+  visit_aggregate {
+    aggregate {
+      count
+    }
   }
 }
     ${VisitWithAlbumAndArtist}`;
@@ -2654,6 +2674,11 @@ export const SelectAlbumsDocument = gql`
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
   }
+  album_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
     ${AlbumWithArtistFragmentDoc}`;
 export const InsertAlbumDocument = gql`
@@ -2688,6 +2713,11 @@ export const SelectArtistsDocument = gql`
     query SelectArtists($limit: Int, $offset: Int) {
   artist(limit: $limit, offset: $offset) {
     ...Artist
+  }
+  artist_aggregate {
+    aggregate {
+      count
+    }
   }
 }
     ${ArtistFragmentDoc}`;
@@ -2731,6 +2761,11 @@ export const SelectReviewsDocument = gql`
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
+  review_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
     ${ReviewWithAlbumAndArtistFragmentDoc}`;
 export const SelectReviewDocument = gql`
@@ -2768,6 +2803,11 @@ export const SelectVisitsDocument = gql`
     query SelectVisits($limit: Int, $offset: Int) {
   visit(limit: $limit, offset: $offset) {
     ...VisitWithAlbumAndArtist
+  }
+  visit_aggregate {
+    aggregate {
+      count
+    }
   }
 }
     ${VisitWithAlbumAndArtistFragmentDoc}`;

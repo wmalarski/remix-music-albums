@@ -1365,6 +1365,11 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@reach/observe-rect@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@reach/observe-rect/-/observe-rect-1.2.0.tgz#d7a6013b8aafcc64c778a0ccb83355a11204d3b2"
+  integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
+
 "@remix-run/dev@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.0.6.tgz#7436c74dcfb51109fac5fc748671bc5608c7c918"
@@ -7159,6 +7164,13 @@ react-style-singleton@^2.1.0:
     get-nonce "^1.0.0"
     invariant "^2.2.4"
     tslib "^1.0.0"
+
+react-virtual@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/react-virtual/-/react-virtual-2.10.0.tgz#110cc0f48bb6edffd253f532123a074e6bbec4cb"
+  integrity sha512-Mgy//1Ty0YMcELTooFq5mMrEb4dLRzS9PbPrgDbpdgGRgG9RuQrXBxgPCm1vNBonoiNZjbsGSEPLuJ7MuHLvLg==
+  dependencies:
+    "@reach/observe-rect" "^1.1.0"
 
 react@^17.0.2:
   version "17.0.2"

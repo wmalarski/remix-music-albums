@@ -15,6 +15,11 @@ query SelectArtists($limit: Int, $offset: Int) {
   artist(limit: $limit, offset: $offset) {
     ...Artist
   }
+  artist_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
 
 mutation InsertArtist($artist: artist_insert_input!) {

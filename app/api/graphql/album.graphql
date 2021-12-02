@@ -23,6 +23,11 @@ query SelectAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
   }
+  album_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
 
 mutation InsertAlbum($album: album_insert_input!) {

@@ -1,21 +1,31 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
+import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
-import { Button, Flex, StyledLink } from "~/components";
+import { Button, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
+import * as Styles from "./ReviewListItem.styles";
 
 type ReviewListItemProps = {
+  row: VirtualItem;
   review: ReviewWithAlbumAndArtistFragment;
   transition: Transition;
 };
 
 export const ReviewListItem = ({
+  row,
   review,
   transition,
 }: ReviewListItemProps): ReactElement => {
   return (
-    <Flex direction="column">
+    <Styles.Container
+      direction="column"
+      css={{
+        height: `${row.size}px`,
+        transform: `translateY(${row.start}px)`,
+      }}
+    >
       <StyledLink to={routes.album(review.albumByAlbum.id)}>
         {review.albumByAlbum.title}
       </StyledLink>
@@ -34,6 +44,6 @@ export const ReviewListItem = ({
           {transition.submission ? "Deleting..." : "Delete"}
         </Button>
       </Form>
-    </Flex>
+    </Styles.Container>
   );
 };

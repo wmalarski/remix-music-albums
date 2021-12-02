@@ -22,6 +22,11 @@ query SelectReviews($limit: Int, $offset: Int) {
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
+  review_aggregate {
+    aggregate {
+      count
+    }
+  }
 }
 
 query SelectReview($id: Int!) {
