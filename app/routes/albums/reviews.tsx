@@ -48,7 +48,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const result = await graphqlSdk.SelectReviews({
     limit: LIMIT,
-    offset: Math.max(start, 0),
+    offset: start,
   });
 
   if (result.errors)
@@ -65,11 +65,10 @@ const Reviews = (): ReactElement => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { start } = getStartParam(searchParams);
   const transition = useRouteTransition();
+  const size = query.review_aggregate.aggregate?.count ?? 0;
 
   const parentRef = useRef<HTMLDivElement>(null);
-
-  const size = query.review_aggregate.aggregate?.count ?? 0;
-  const rowVirtualizer = useVirtual({
+  const virtualizer = useVirtual({
     size,
     parentRef,
     estimateSize: useCallback(() => 300, []),
@@ -78,7 +77,7 @@ const Reviews = (): ReactElement => {
   });
 
   const neededStart = getScrollStart({
-    items: rowVirtualizer.virtualItems,
+    items: virtualizer.virtualItems,
     limit: LIMIT,
     overScan: DATA_OVER_SCAN,
     start: start,
@@ -98,7 +97,7 @@ const Reviews = (): ReactElement => {
           start={start}
           reviews={query.review}
           transition={transition}
-          virtualizer={rowVirtualizer}
+          virtualizer={virtualizer}
         />
         <Dialog.Close to={routes.albums}>
           <Cross1Icon />

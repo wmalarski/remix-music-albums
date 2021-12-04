@@ -5,5 +5,4 @@ export const Grid = styled("div", {
   gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
   gridTemplateRows: "repeat(6, 200px)",
   gridGap: "1rem",
-  gridAutoFlow: "dense",
 });

@@ -1,23 +1,38 @@
-import { Transition } from "@remix-run/react/transition";
-import { ReactElement } from "react";
+import { ForwardedRef, forwardRef, ReactElement } from "react";
+import { useVirtual } from "react-virtual";
 import { VisitWithAlbumAndArtistFragment } from "~/api/types";
 import { Divider, Flex } from "~/components";
 import * as Styles from "./VisitsList.styles";
 import { VisitsListItem } from "./VisitsListItem/VisitsListItem";
 
 type VisitsListProps = {
+  start: number;
   visits?: VisitWithAlbumAndArtistFragment[];
-  transition: Transition;
+  virtualizer: ReturnType<typeof useVirtual>;
 };
 
-export const VisitsList = ({ visits }: VisitsListProps): ReactElement => {
-  return (
-    <Styles.StyledScroll>
-      <Flex direction="column" gap={0.5} divider={<Divider />}>
-        {visits?.map((visit) => (
-          <VisitsListItem key={visit.id} visit={visit} />
-        ))}
-      </Flex>
-    </Styles.StyledScroll>
-  );
-};
+export const VisitsList = forwardRef(
+  (
+    { visits, start, virtualizer }: VisitsListProps,
+    ref?: ForwardedRef<HTMLDivElement>
+  ): ReactElement => {
+    return (
+      <Styles.StyledScroll ref={ref}>
+        <Flex
+          direction="column"
+          gap={0.5}
+          divider={<Divider />}
+          css={{ listContainer: virtualizer.totalSize }}
+        >
+          {virtualizer.virtualItems.map((row) => {
+            const visit = visits?.[row.index - start];
+            if (!visit) return null;
+            return <VisitsListItem key={visit.id} visit={visit} row={row} />;
+          })}
+        </Flex>
+      </Styles.StyledScroll>
+    );
+  }
+);
+
+VisitsList.displayName = "VisitsList";

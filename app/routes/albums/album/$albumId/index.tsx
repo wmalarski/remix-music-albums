@@ -1,4 +1,5 @@
-import { ReactElement, useMemo } from "react";
+import { ReactElement, useCallback, useMemo, useRef } from "react";
+import { useVirtual } from "react-virtual";
 import { ActionFunction, redirect, useActionData } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
 import {
@@ -15,6 +16,8 @@ import {
 } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
+
+const DATA_OVER_SCAN = 5;
 
 export const handle: HandleFunction = () => {
   return { route: "album/index" };
@@ -48,14 +51,27 @@ const AlbumReviews = (): ReactElement => {
     return albumReviews?.map((review) => ({ ...review, albumByAlbum }));
   }, [album]);
 
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtual({
+    size: reviews.length,
+    parentRef,
+    estimateSize: useCallback(() => 300, []),
+    initialRect: { width: 100, height: 40 },
+    overscan: DATA_OVER_SCAN,
+  });
+
   return (
     <>
       <Flex direction="column">
         <Heading size="medium">Reviews</Heading>
         <AlbumReviewsList
+          ref={parentRef}
           albumId={album.id}
           reviews={reviews}
           transition={transition}
+          start={0}
+          virtualizer={virtualizer}
         />
       </Flex>
       <ErrorsList errors={action?.fetcherErrors} />

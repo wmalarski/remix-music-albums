@@ -24,11 +24,7 @@ export const ReviewList = forwardRef(
           direction="column"
           gap={0.5}
           divider={<Divider />}
-          css={{
-            height: `${virtualizer.totalSize}px`,
-            width: "100%",
-            position: "relative",
-          }}
+          css={{ listContainer: virtualizer.totalSize }}
         >
           {virtualizer.virtualItems.map((row) => {
             const review = reviews?.[row.index - start];
