@@ -31,8 +31,9 @@ export const ReviewList = forwardRef(
           }}
         >
           {virtualizer.virtualItems.map((row) => {
-            const review = reviews?.[Math.abs(start - row.index)];
+            const review = reviews?.[row.index - start];
             if (!review) return null;
+
             return (
               <ReviewListItem
                 key={review.id}

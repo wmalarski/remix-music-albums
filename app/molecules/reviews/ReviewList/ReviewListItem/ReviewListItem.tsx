@@ -20,6 +20,7 @@ export const ReviewListItem = ({
 }: ReviewListItemProps): ReactElement => {
   return (
     <Styles.Container
+      ref={row.measureRef}
       direction="column"
       css={{
         height: `${row.size}px`,

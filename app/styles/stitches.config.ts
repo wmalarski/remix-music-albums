@@ -43,6 +43,7 @@ export const {
     },
     sizes: {
       scroll: "10px",
+      review: "40px",
       0.25: "0.25rem",
       0.5: "0.5rem",
       1: "1rem",
@@ -54,6 +55,13 @@ export const {
   },
   utils: {
     marginX: (value: string) => ({ marginLeft: value, marginRight: value }),
+    listRow: (value: string) => ({
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: value,
+    }),
   },
 });
 

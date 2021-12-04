@@ -27,7 +27,9 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  return json<SelectAlbumsQuery>(result.data ?? { album: [] });
+  return json<SelectAlbumsQuery>(
+    result.data ?? { album: [], album_aggregate: {} }
+  );
 };
 
 const Albums = (): ReactElement => {

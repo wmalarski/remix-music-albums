@@ -22,7 +22,9 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  return json<SelectVisitsQuery>(result.data ?? { visit: [] });
+  return json<SelectVisitsQuery>(
+    result.data ?? { visit: [], visit_aggregate: {} }
+  );
 };
 
 const Visits = (): ReactElement => {
