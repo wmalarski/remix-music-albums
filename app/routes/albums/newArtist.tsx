@@ -42,7 +42,7 @@ const NewArtist = (): ReactElement => {
     <>
       <Dialog>
         <NewArtistForm transition={transition} errors={action?.errors} />
-        <Dialog.Close to={routes.albums()}>
+        <Dialog.Close to={routes.albums}>
           <Cross1Icon />
         </Dialog.Close>
       </Dialog>

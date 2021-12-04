@@ -31,7 +31,7 @@ export const action: ActionFunction = async ({ params }) => {
   if (result.errors)
     return json<FetcherActionData>({ fetcherErrors: result.errors });
 
-  return redirect(routes.albums());
+  return redirect(routes.albums);
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -58,7 +58,7 @@ const Artist = (): ReactElement => {
           <Divider orientation="vertical" />
           <Outlet />
         </Flex>
-        <Dialog.Close to={routes.albums()}>
+        <Dialog.Close to={routes.albums}>
           <Cross1Icon />
         </Dialog.Close>
       </Dialog>

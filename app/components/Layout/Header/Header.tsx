@@ -17,16 +17,16 @@ export const Header = (): ReactElement => {
               <StyledLink to={routes.home}>Home</StyledLink>
             </Styles.Li>
             <Styles.Li>
-              <StyledLink to={routes.albums()}>Albums</StyledLink>
+              <StyledLink to={routes.albums}>Albums</StyledLink>
             </Styles.Li>
             <Styles.Li>
               <StyledLink to={routes.newArtist}>New Artist</StyledLink>
             </Styles.Li>
             <Styles.Li>
-              <StyledLink to={routes.reviews()}>Reviews</StyledLink>
+              <StyledLink to={routes.reviews}>Reviews</StyledLink>
             </Styles.Li>
             <Styles.Li>
-              <StyledLink to={routes.visits()}>Visits</StyledLink>
+              <StyledLink to={routes.visits}>Visits</StyledLink>
             </Styles.Li>
           </Styles.Ul>
         </nav>

@@ -1,45 +1,8 @@
-type PaginationArgs = {
-  offset?: number;
-};
-
-type PaginationSearchArgs = PaginationArgs & {
-  offsetKey: string;
-  pathname: string;
-};
-
-const paginationSearch = ({
-  offset,
-  offsetKey,
-  pathname,
-}: PaginationSearchArgs): string =>
-  `${pathname}${!offset ? "" : `?${offsetKey}=${offset}`}`;
-
 export const routes = {
   home: "/",
-  albums: ({ offset }: PaginationArgs = {}): string =>
-    paginationSearch({
-      pathname: "/albums",
-      offset,
-      offsetKey: "offset",
-    }),
-  reviews: ({ offset }: PaginationArgs = {}): string =>
-    paginationSearch({
-      pathname: "/albums/reviews",
-      offset,
-      offsetKey: "offsetReviews",
-    }),
-  reviewsLoad: ({ offset }: PaginationArgs = {}): string =>
-    paginationSearch({
-      pathname: "/albums/reviews/load",
-      offset,
-      offsetKey: "offsetReviews",
-    }),
-  visits: ({ offset }: PaginationArgs = {}): string =>
-    paginationSearch({
-      pathname: "/albums/visits",
-      offset,
-      offsetKey: "offsetVisits",
-    }),
+  albums: "/albums",
+  reviews: "/albums/reviews",
+  visits: "/albums/visits",
   artist: (artistId: number): string => `/albums/artist/${artistId}`,
   editArtist: (artistId: number): string => `/albums/artist/${artistId}/edit`,
   album: (albumId: number): string => `/albums/album/${albumId}`,

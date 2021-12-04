@@ -65,7 +65,7 @@ const Album = (): ReactElement => {
           <Divider orientation="vertical" />
           <Outlet />
         </Flex>
-        <Dialog.Close to={routes.albums()}>
+        <Dialog.Close to={routes.albums}>
           <Cross1Icon />
         </Dialog.Close>
       </Dialog>

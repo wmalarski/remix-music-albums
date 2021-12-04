@@ -35,7 +35,7 @@ const Visits = (): ReactElement => {
     <Dialog>
       <Heading>Visits</Heading>
       <VisitsList visits={query.visit} transition={transition} />
-      <Dialog.Close to={routes.albums()}>
+      <Dialog.Close to={routes.albums}>
         <Cross1Icon />
       </Dialog.Close>
     </Dialog>

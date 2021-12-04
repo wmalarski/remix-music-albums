@@ -3,9 +3,8 @@ import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
-import { Button, StyledLink } from "~/components";
+import { Button, Flex, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
-import * as Styles from "./ReviewListItem.styles";
 
 type ReviewListItemProps = {
   row: VirtualItem;
@@ -19,13 +18,10 @@ export const ReviewListItem = ({
   transition,
 }: ReviewListItemProps): ReactElement => {
   return (
-    <Styles.Container
+    <Flex
       ref={row.measureRef}
       direction="column"
-      css={{
-        height: `${row.size}px`,
-        transform: `translateY(${row.start}px)`,
-      }}
+      css={{ listRow: `${row.size} ${row.start}` }}
     >
       <StyledLink to={routes.album(review.albumByAlbum.id)}>
         {review.albumByAlbum.title}
@@ -45,6 +41,6 @@ export const ReviewListItem = ({
           {transition.submission ? "Deleting..." : "Delete"}
         </Button>
       </Form>
-    </Styles.Container>
+    </Flex>
   );
 };

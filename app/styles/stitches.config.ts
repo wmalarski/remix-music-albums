@@ -54,14 +54,17 @@ export const {
     bp1: "(min-width: 480px)",
   },
   utils: {
-    marginX: (value: string) => ({ marginLeft: value, marginRight: value }),
-    listRow: (value: string) => ({
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: value,
-    }),
+    listRow: (value: string) => {
+      const [size, start] = value.split(" ");
+      return {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        transform: `translateY(${start}px)`,
+        height: `${size}px`,
+      };
+    },
   },
 });
 

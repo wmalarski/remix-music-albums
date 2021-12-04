@@ -21,9 +21,8 @@ import { isNumber } from "~/utils/validation";
 const LIMIT = 20;
 const DATA_OVER_SCAN = 5;
 
-const getStartLimit = (searchParams: URLSearchParams) => ({
-  start: Number(searchParams.get("start") || "0"),
-  limit: Number(searchParams.get("limit") || LIMIT.toString()),
+const getStartParam = (searchParams: URLSearchParams) => ({
+  start: Number(searchParams.get("startReviews") || "0"),
 });
 
 export const handle: HandleFunction = () => {
@@ -45,10 +44,10 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { start, limit } = getStartLimit(new URL(request.url).searchParams);
+  const { start } = getStartParam(new URL(request.url).searchParams);
 
   const result = await graphqlSdk.SelectReviews({
-    limit,
+    limit: LIMIT,
     offset: Math.max(start, 0),
   });
 
@@ -64,6 +63,7 @@ const Reviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const query = useLoaderData<SelectReviewsQuery>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { start } = getStartParam(searchParams);
   const transition = useRouteTransition();
 
   const parentRef = useRef<HTMLDivElement>(null);
@@ -77,23 +77,16 @@ const Reviews = (): ReactElement => {
     overscan: DATA_OVER_SCAN,
   });
 
-  const { start, limit } = getStartLimit(searchParams);
-
   const neededStart = getScrollStart({
     items: rowVirtualizer.virtualItems,
-    limit,
+    limit: LIMIT,
     overScan: DATA_OVER_SCAN,
     start: start,
   });
 
   useEffect(() => {
-    console.log(JSON.stringify({ neededStart, start }, null, 2));
-    if (neededStart !== start) {
-      setSearchParams({
-        start: String(neededStart),
-        limit: LIMIT.toString(),
-      });
-    }
+    if (neededStart === start) return;
+    setSearchParams({ start: String(neededStart) });
   }, [start, neededStart, setSearchParams]);
 
   return (
@@ -107,7 +100,7 @@ const Reviews = (): ReactElement => {
           transition={transition}
           virtualizer={rowVirtualizer}
         />
-        <Dialog.Close to={routes.albums()}>
+        <Dialog.Close to={routes.albums}>
           <Cross1Icon />
         </Dialog.Close>
       </Dialog>
