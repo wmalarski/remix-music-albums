@@ -5,3 +5,6 @@ node_modules
 /public/build
 
 .env
+venv
+scripts/cache.json
+.idea
