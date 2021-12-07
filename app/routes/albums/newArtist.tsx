@@ -27,7 +27,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const result = await graphqlSdk.InsertArtist(validation.variables);
 
-  const id = result.data?.insert_artist_one?.id;
+  const id = result.data?.insertArtistOne?.id;
   if (!id || result.errors)
     return json<ActionData>({ fetcherErrors: result.errors });
 

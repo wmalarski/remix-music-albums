@@ -37,7 +37,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const result = await graphqlSdk.DeleteReview({ id: Number(reviewId) });
 
-  const album = result.data?.delete_review_by_pk?.album;
+  const album = result.data?.deleteReviewByPk?.album;
   if (!album || result.errors)
     return json<FetcherActionData>({ fetcherErrors: result.errors });
   return redirect(routes.album(album));
@@ -55,7 +55,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
   return json<SelectReviewsQuery>(
-    result.data ?? { review: [], review_aggregate: {} }
+    result.data ?? { review: [], reviewAggregate: {} }
   );
 };
 
@@ -65,7 +65,7 @@ const Reviews = (): ReactElement => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { start } = getStartParam(searchParams);
   const transition = useRouteTransition();
-  const size = query.review_aggregate.aggregate?.count ?? 0;
+  const size = query.reviewAggregate.aggregate?.count ?? 0;
 
   const parentRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtual({

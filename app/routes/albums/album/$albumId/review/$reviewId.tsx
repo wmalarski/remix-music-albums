@@ -52,7 +52,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  const reviewFragment = result.data?.review_by_pk;
+  const reviewFragment = result.data?.reviewByPk;
   if (!reviewFragment) throw new Response("Review Not Found", { status: 404 });
 
   return json<ReviewWithAlbumAndArtistFragment>(reviewFragment);

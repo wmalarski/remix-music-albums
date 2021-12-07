@@ -13,7 +13,7 @@ fragment ReviewWithAlbumAndArtist on review {
 }
 
 mutation InsertReview($review: review_insert_input!) {
-  insert_review_one(object: $review) {
+  insertReviewOne: insert_review_one(object: $review) {
     id
   }
 }
@@ -22,7 +22,7 @@ query SelectReviews($limit: Int, $offset: Int) {
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
-  review_aggregate {
+  reviewAggregate: review_aggregate {
     aggregate {
       count
     }
@@ -30,19 +30,19 @@ query SelectReviews($limit: Int, $offset: Int) {
 }
 
 query SelectReview($id: Int!) {
-  review_by_pk(id: $id) {
+  reviewByPk: review_by_pk(id: $id) {
     ...ReviewWithAlbumAndArtist
   }
 }
 
 mutation DeleteReview($id: Int!) {
-  delete_review_by_pk(id: $id) {
+  deleteReviewByPk: delete_review_by_pk(id: $id) {
     album
   }
 }
 
 mutation UpdateReview($id: Int!, $input: review_set_input) {
-  update_review_by_pk(pk_columns: { id: $id }, _set: $input) {
+  updateReviewByPk: update_review_by_pk(pk_columns: { id: $id }, _set: $input) {
     id
   }
 }

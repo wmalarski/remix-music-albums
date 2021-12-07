@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
   return json<SelectAlbumsQuery>(
-    result.data ?? { album: [], album_aggregate: {} }
+    result.data ?? { album: [], albumAggregate: {} }
   );
 };
 

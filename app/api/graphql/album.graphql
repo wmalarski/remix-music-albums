@@ -19,11 +19,17 @@ fragment AlbumWithArtistAndReviews on album {
   }
 }
 
+query RandomAlbums($limit: Int) {
+  randomAlbums: random_albums(limit: $limit) {
+    id
+  }
+}
+
 query SelectAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
   }
-  album_aggregate {
+  albumAggregate: album_aggregate {
     aggregate {
       count
     }
@@ -31,25 +37,25 @@ query SelectAlbums($limit: Int, $offset: Int) {
 }
 
 mutation InsertAlbum($album: album_insert_input!) {
-  insert_album_one(object: $album) {
+  insertAlbumOne: insert_album_one(object: $album) {
     id
   }
 }
 
 query SelectAlbum($id: Int!) {
-  album_by_pk(id: $id) {
+  albumByPk: album_by_pk(id: $id) {
     ...AlbumWithArtistAndReviews
   }
 }
 
 mutation DeleteAlbum($id: Int!) {
-  delete_album_by_pk(id: $id) {
+  deleteAlbumByPk: delete_album_by_pk(id: $id) {
     artist
   }
 }
 
 mutation UpdateAlbum($id: Int!, $input: album_set_input) {
-  update_album_by_pk(pk_columns: { id: $id }, _set: $input) {
+  updateAlbumByPk: update_album_by_pk(pk_columns: { id: $id }, _set: $input) {
     id
   }
 }

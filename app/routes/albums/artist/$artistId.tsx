@@ -40,7 +40,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const result = await graphqlSdk.SelectArtist({ id: Number(params.artistId) });
 
-  const artistFragment = result.data?.artist_by_pk;
+  const artistFragment = result.data?.artistByPk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });
   return json<ArtistWithAlbumsFragment>(artistFragment);
 };

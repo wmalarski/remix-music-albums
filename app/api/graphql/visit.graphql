@@ -11,7 +11,7 @@ fragment VisitWithAlbumAndArtist on visit {
 }
 
 mutation InsertVisit($visit: visit_insert_input!) {
-  insert_visit_one(
+  insertVisitOne: insert_visit_one(
     object: $visit
     on_conflict: {
       constraint: unique_album_profile
@@ -27,7 +27,7 @@ query SelectVisits($limit: Int, $offset: Int) {
   visit(limit: $limit, offset: $offset) {
     ...VisitWithAlbumAndArtist
   }
-  visit_aggregate {
+  visitAggregate: visit_aggregate {
     aggregate {
       count
     }

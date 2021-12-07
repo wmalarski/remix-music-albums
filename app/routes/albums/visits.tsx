@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
   return json<SelectVisitsQuery>(
-    result.data ?? { visit: [], visit_aggregate: {} }
+    result.data ?? { visit: [], visitAggregate: {} }
   );
 };
 
@@ -38,7 +38,7 @@ const Visits = (): ReactElement => {
   const query = useLoaderData<SelectVisitsQuery>();
   const [searchParams, setSearchParams] = useSearchParams();
   const { start } = getStartParam(searchParams);
-  const size = query.visit_aggregate.aggregate?.count ?? 0;
+  const size = query.visitAggregate.aggregate?.count ?? 0;
 
   const parentRef = useRef<HTMLDivElement>(null);
   const virtualizer = useVirtual({

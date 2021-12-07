@@ -470,7 +470,7 @@ export type Artist = {
   createdAt: Scalars['timestamptz'];
   id: Scalars['Int'];
   name: Scalars['String'];
-  sid: Scalars['String'];
+  sid?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
 };
 
@@ -702,6 +702,8 @@ export type MutationRoot = {
   delete_profile?: Maybe<ProfileMutationResponse>;
   /** delete single row from the table: "profile" */
   delete_profile_by_pk?: Maybe<Profile>;
+  /** delete data from the table: "random_albums" */
+  delete_random_albums?: Maybe<RandomAlbumsMutationResponse>;
   /** delete data from the table: "review" */
   delete_review?: Maybe<ReviewMutationResponse>;
   /** delete single row from the table: "review" */
@@ -722,6 +724,10 @@ export type MutationRoot = {
   insert_profile?: Maybe<ProfileMutationResponse>;
   /** insert a single row into the table: "profile" */
   insert_profile_one?: Maybe<Profile>;
+  /** insert data into the table: "random_albums" */
+  insert_random_albums?: Maybe<RandomAlbumsMutationResponse>;
+  /** insert a single row into the table: "random_albums" */
+  insert_random_albums_one?: Maybe<RandomAlbums>;
   /** insert data into the table: "review" */
   insert_review?: Maybe<ReviewMutationResponse>;
   /** insert a single row into the table: "review" */
@@ -742,6 +748,8 @@ export type MutationRoot = {
   update_profile?: Maybe<ProfileMutationResponse>;
   /** update single row of the table: "profile" */
   update_profile_by_pk?: Maybe<Profile>;
+  /** update data of the table: "random_albums" */
+  update_random_albums?: Maybe<RandomAlbumsMutationResponse>;
   /** update data of the table: "review" */
   update_review?: Maybe<ReviewMutationResponse>;
   /** update single row of the table: "review" */
@@ -786,6 +794,12 @@ export type MutationRootDeleteProfileArgs = {
 /** mutation root */
 export type MutationRootDeleteProfileByPkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type MutationRootDeleteRandomAlbumsArgs = {
+  where: RandomAlbumsBoolExp;
 };
 
 
@@ -852,6 +866,18 @@ export type MutationRootInsertProfileArgs = {
 export type MutationRootInsertProfileOneArgs = {
   object: ProfileInsertInput;
   on_conflict?: InputMaybe<ProfileOnConflict>;
+};
+
+
+/** mutation root */
+export type MutationRootInsertRandomAlbumsArgs = {
+  objects: Array<RandomAlbumsInsertInput>;
+};
+
+
+/** mutation root */
+export type MutationRootInsertRandomAlbumsOneArgs = {
+  object: RandomAlbumsInsertInput;
 };
 
 
@@ -928,6 +954,14 @@ export type MutationRootUpdateProfileByPkArgs = {
   _inc?: InputMaybe<ProfileIncInput>;
   _set?: InputMaybe<ProfileSetInput>;
   pk_columns: ProfilePkColumnsInput;
+};
+
+
+/** mutation root */
+export type MutationRootUpdateRandomAlbumsArgs = {
+  _inc?: InputMaybe<RandomAlbumsIncInput>;
+  _set?: InputMaybe<RandomAlbumsSetInput>;
+  where: RandomAlbumsBoolExp;
 };
 
 
@@ -1266,6 +1300,10 @@ export type QueryRoot = {
   profile_aggregate: ProfileAggregate;
   /** fetch data from the table: "profile" using primary key columns */
   profile_by_pk?: Maybe<Profile>;
+  /** fetch data from the table: "random_albums" */
+  random_albums: Array<RandomAlbums>;
+  /** fetch aggregated fields from the table: "random_albums" */
+  random_albums_aggregate: RandomAlbumsAggregate;
   /** fetch data from the table: "review" */
   review: Array<Review>;
   /** fetch aggregated fields from the table: "review" */
@@ -1350,6 +1388,24 @@ export type QueryRootProfileByPkArgs = {
 };
 
 
+export type QueryRootRandomAlbumsArgs = {
+  distinct_on?: InputMaybe<Array<RandomAlbumsSelectColumn>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<RandomAlbumsOrderBy>>;
+  where?: InputMaybe<RandomAlbumsBoolExp>;
+};
+
+
+export type QueryRootRandomAlbumsAggregateArgs = {
+  distinct_on?: InputMaybe<Array<RandomAlbumsSelectColumn>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<RandomAlbumsOrderBy>>;
+  where?: InputMaybe<RandomAlbumsBoolExp>;
+};
+
+
 export type QueryRootReviewArgs = {
   distinct_on?: InputMaybe<Array<ReviewSelectColumn>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1393,6 +1449,203 @@ export type QueryRootVisitAggregateArgs = {
 
 export type QueryRootVisitByPkArgs = {
   id: Scalars['Int'];
+};
+
+/** columns and relationships of "random_albums" */
+export type RandomAlbums = {
+  artist?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  sid?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+/** aggregated selection of "random_albums" */
+export type RandomAlbumsAggregate = {
+  aggregate?: Maybe<RandomAlbumsAggregateFields>;
+  nodes: Array<RandomAlbums>;
+};
+
+/** aggregate fields of "random_albums" */
+export type RandomAlbumsAggregateFields = {
+  avg?: Maybe<RandomAlbumsAvgFields>;
+  count: Scalars['Int'];
+  max?: Maybe<RandomAlbumsMaxFields>;
+  min?: Maybe<RandomAlbumsMinFields>;
+  stddev?: Maybe<RandomAlbumsStddevFields>;
+  stddev_pop?: Maybe<RandomAlbumsStddevPopFields>;
+  stddev_samp?: Maybe<RandomAlbumsStddevSampFields>;
+  sum?: Maybe<RandomAlbumsSumFields>;
+  var_pop?: Maybe<RandomAlbumsVarPopFields>;
+  var_samp?: Maybe<RandomAlbumsVarSampFields>;
+  variance?: Maybe<RandomAlbumsVarianceFields>;
+};
+
+
+/** aggregate fields of "random_albums" */
+export type RandomAlbumsAggregateFieldsCountArgs = {
+  columns?: InputMaybe<Array<RandomAlbumsSelectColumn>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type RandomAlbumsAvgFields = {
+  artist?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "random_albums". All fields are combined with a logical 'AND'. */
+export type RandomAlbumsBoolExp = {
+  _and?: InputMaybe<Array<RandomAlbumsBoolExp>>;
+  _not?: InputMaybe<RandomAlbumsBoolExp>;
+  _or?: InputMaybe<Array<RandomAlbumsBoolExp>>;
+  artist?: InputMaybe<IntComparisonExp>;
+  createdAt?: InputMaybe<TimestamptzComparisonExp>;
+  id?: InputMaybe<IntComparisonExp>;
+  sid?: InputMaybe<StringComparisonExp>;
+  title?: InputMaybe<StringComparisonExp>;
+  updatedAt?: InputMaybe<TimestamptzComparisonExp>;
+  year?: InputMaybe<IntComparisonExp>;
+};
+
+/** input type for incrementing numeric columns in table "random_albums" */
+export type RandomAlbumsIncInput = {
+  artist?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  year?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "random_albums" */
+export type RandomAlbumsInsertInput = {
+  artist?: InputMaybe<Scalars['Int']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  sid?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  year?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate max on columns */
+export type RandomAlbumsMaxFields = {
+  artist?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  sid?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate min on columns */
+export type RandomAlbumsMinFields = {
+  artist?: Maybe<Scalars['Int']>;
+  createdAt?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  sid?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['timestamptz']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "random_albums" */
+export type RandomAlbumsMutationResponse = {
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<RandomAlbums>;
+};
+
+/** Ordering options when selecting data from "random_albums". */
+export type RandomAlbumsOrderBy = {
+  artist?: InputMaybe<OrderBy>;
+  createdAt?: InputMaybe<OrderBy>;
+  id?: InputMaybe<OrderBy>;
+  sid?: InputMaybe<OrderBy>;
+  title?: InputMaybe<OrderBy>;
+  updatedAt?: InputMaybe<OrderBy>;
+  year?: InputMaybe<OrderBy>;
+};
+
+/** select columns of table "random_albums" */
+export enum RandomAlbumsSelectColumn {
+  /** column name */
+  Artist = 'artist',
+  /** column name */
+  CreatedAt = 'createdAt',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Sid = 'sid',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UpdatedAt = 'updatedAt',
+  /** column name */
+  Year = 'year'
+}
+
+/** input type for updating data in table "random_albums" */
+export type RandomAlbumsSetInput = {
+  artist?: InputMaybe<Scalars['Int']>;
+  createdAt?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  sid?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  updatedAt?: InputMaybe<Scalars['timestamptz']>;
+  year?: InputMaybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type RandomAlbumsStddevFields = {
+  artist?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type RandomAlbumsStddevPopFields = {
+  artist?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type RandomAlbumsStddevSampFields = {
+  artist?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type RandomAlbumsSumFields = {
+  artist?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate var_pop on columns */
+export type RandomAlbumsVarPopFields = {
+  artist?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type RandomAlbumsVarSampFields = {
+  artist?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  year?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type RandomAlbumsVarianceFields = {
+  artist?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  year?: Maybe<Scalars['Float']>;
 };
 
 /** columns and relationships of "review" */
@@ -1774,6 +2027,10 @@ export type SubscriptionRoot = {
   profile_aggregate: ProfileAggregate;
   /** fetch data from the table: "profile" using primary key columns */
   profile_by_pk?: Maybe<Profile>;
+  /** fetch data from the table: "random_albums" */
+  random_albums: Array<RandomAlbums>;
+  /** fetch aggregated fields from the table: "random_albums" */
+  random_albums_aggregate: RandomAlbumsAggregate;
   /** fetch data from the table: "review" */
   review: Array<Review>;
   /** fetch aggregated fields from the table: "review" */
@@ -1855,6 +2112,24 @@ export type SubscriptionRootProfileAggregateArgs = {
 
 export type SubscriptionRootProfileByPkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type SubscriptionRootRandomAlbumsArgs = {
+  distinct_on?: InputMaybe<Array<RandomAlbumsSelectColumn>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<RandomAlbumsOrderBy>>;
+  where?: InputMaybe<RandomAlbumsBoolExp>;
+};
+
+
+export type SubscriptionRootRandomAlbumsAggregateArgs = {
+  distinct_on?: InputMaybe<Array<RandomAlbumsSelectColumn>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<RandomAlbumsOrderBy>>;
+  where?: InputMaybe<RandomAlbumsBoolExp>;
 };
 
 
@@ -2237,9 +2512,16 @@ export type VisitVarianceOrderBy = {
 
 export type AlbumFragment = { id: number, sid: string, title: string, year: number };
 
-export type AlbumWithArtistFragment = { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } };
+export type AlbumWithArtistFragment = { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } };
 
-export type AlbumWithArtistAndReviewsFragment = { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid: string, name: string } };
+export type AlbumWithArtistAndReviewsFragment = { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid?: string | null | undefined, name: string } };
+
+export type RandomAlbumsQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type RandomAlbumsQuery = { randomAlbums: Array<{ id?: number | null | undefined }> };
 
 export type SelectAlbumsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2247,28 +2529,28 @@ export type SelectAlbumsQueryVariables = Exact<{
 }>;
 
 
-export type SelectAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } }>, album_aggregate: { aggregate?: { count: number } | null | undefined } };
+export type SelectAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } }>, albumAggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type InsertAlbumMutationVariables = Exact<{
   album: AlbumInsertInput;
 }>;
 
 
-export type InsertAlbumMutation = { insert_album_one?: { id: number } | null | undefined };
+export type InsertAlbumMutation = { insertAlbumOne?: { id: number } | null | undefined };
 
 export type SelectAlbumQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type SelectAlbumQuery = { album_by_pk?: { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid: string, name: string } } | null | undefined };
+export type SelectAlbumQuery = { albumByPk?: { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } | null | undefined };
 
 export type DeleteAlbumMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type DeleteAlbumMutation = { delete_album_by_pk?: { artist: number } | null | undefined };
+export type DeleteAlbumMutation = { deleteAlbumByPk?: { artist: number } | null | undefined };
 
 export type UpdateAlbumMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -2276,11 +2558,11 @@ export type UpdateAlbumMutationVariables = Exact<{
 }>;
 
 
-export type UpdateAlbumMutation = { update_album_by_pk?: { id: number } | null | undefined };
+export type UpdateAlbumMutation = { updateAlbumByPk?: { id: number } | null | undefined };
 
-export type ArtistFragment = { id: number, sid: string, name: string };
+export type ArtistFragment = { id: number, sid?: string | null | undefined, name: string };
 
-export type ArtistWithAlbumsFragment = { id: number, sid: string, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> };
+export type ArtistWithAlbumsFragment = { id: number, sid?: string | null | undefined, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> };
 
 export type SelectArtistsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2288,28 +2570,28 @@ export type SelectArtistsQueryVariables = Exact<{
 }>;
 
 
-export type SelectArtistsQuery = { artist: Array<{ id: number, sid: string, name: string }>, artist_aggregate: { aggregate?: { count: number } | null | undefined } };
+export type SelectArtistsQuery = { artist: Array<{ id: number, sid?: string | null | undefined, name: string }>, artistAggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type InsertArtistMutationVariables = Exact<{
   artist: ArtistInsertInput;
 }>;
 
 
-export type InsertArtistMutation = { insert_artist_one?: { id: number } | null | undefined };
+export type InsertArtistMutation = { insertArtistOne?: { id: number } | null | undefined };
 
 export type SelectArtistQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type SelectArtistQuery = { artist_by_pk?: { id: number, sid: string, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> } | null | undefined };
+export type SelectArtistQuery = { artistByPk?: { id: number, sid?: string | null | undefined, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> } | null | undefined };
 
 export type DeleteArtistMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type DeleteArtistMutation = { delete_artist_by_pk?: { id: number } | null | undefined };
+export type DeleteArtistMutation = { deleteArtistByPk?: { id: number } | null | undefined };
 
 export type UpdateArtistMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -2317,18 +2599,18 @@ export type UpdateArtistMutationVariables = Exact<{
 }>;
 
 
-export type UpdateArtistMutation = { update_artist_by_pk?: { id: number } | null | undefined };
+export type UpdateArtistMutation = { updateArtistByPk?: { id: number } | null | undefined };
 
 export type ReviewFragment = { id: number, rate: any, text: string, createdAt: any };
 
-export type ReviewWithAlbumAndArtistFragment = { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } };
+export type ReviewWithAlbumAndArtistFragment = { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } };
 
 export type InsertReviewMutationVariables = Exact<{
   review: ReviewInsertInput;
 }>;
 
 
-export type InsertReviewMutation = { insert_review_one?: { id: number } | null | undefined };
+export type InsertReviewMutation = { insertReviewOne?: { id: number } | null | undefined };
 
 export type SelectReviewsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2336,21 +2618,21 @@ export type SelectReviewsQueryVariables = Exact<{
 }>;
 
 
-export type SelectReviewsQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } }>, review_aggregate: { aggregate?: { count: number } | null | undefined } };
+export type SelectReviewsQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } }>, reviewAggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type SelectReviewQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type SelectReviewQuery = { review_by_pk?: { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } } | null | undefined };
+export type SelectReviewQuery = { reviewByPk?: { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } } | null | undefined };
 
 export type DeleteReviewMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type DeleteReviewMutation = { delete_review_by_pk?: { album: number } | null | undefined };
+export type DeleteReviewMutation = { deleteReviewByPk?: { album: number } | null | undefined };
 
 export type UpdateReviewMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -2358,18 +2640,18 @@ export type UpdateReviewMutationVariables = Exact<{
 }>;
 
 
-export type UpdateReviewMutation = { update_review_by_pk?: { id: number } | null | undefined };
+export type UpdateReviewMutation = { updateReviewByPk?: { id: number } | null | undefined };
 
 export type VisitFragment = { id: number, createdAt: any };
 
-export type VisitWithAlbumAndArtistFragment = { id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } };
+export type VisitWithAlbumAndArtistFragment = { id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } };
 
 export type InsertVisitMutationVariables = Exact<{
   visit: VisitInsertInput;
 }>;
 
 
-export type InsertVisitMutation = { insert_visit_one?: { id: number } | null | undefined };
+export type InsertVisitMutation = { insertVisitOne?: { id: number } | null | undefined };
 
 export type SelectVisitsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2377,7 +2659,7 @@ export type SelectVisitsQueryVariables = Exact<{
 }>;
 
 
-export type SelectVisitsQuery = { visit: Array<{ id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid: string, name: string } } }>, visit_aggregate: { aggregate?: { count: number } | null | undefined } };
+export type SelectVisitsQuery = { visit: Array<{ id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } }>, visitAggregate: { aggregate?: { count: number } | null | undefined } };
 
 export const Album = gql`
     fragment Album on album {
@@ -2453,12 +2735,19 @@ export const VisitWithAlbumAndArtist = gql`
 }
     ${Visit}
 ${AlbumWithArtist}`;
+export const RandomAlbums = gql`
+    query RandomAlbums($limit: Int) {
+  randomAlbums: random_albums(limit: $limit) {
+    id
+  }
+}
+    `;
 export const SelectAlbums = gql`
     query SelectAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
   }
-  album_aggregate {
+  albumAggregate: album_aggregate {
     aggregate {
       count
     }
@@ -2467,28 +2756,28 @@ export const SelectAlbums = gql`
     ${AlbumWithArtist}`;
 export const InsertAlbum = gql`
     mutation InsertAlbum($album: album_insert_input!) {
-  insert_album_one(object: $album) {
+  insertAlbumOne: insert_album_one(object: $album) {
     id
   }
 }
     `;
 export const SelectAlbum = gql`
     query SelectAlbum($id: Int!) {
-  album_by_pk(id: $id) {
+  albumByPk: album_by_pk(id: $id) {
     ...AlbumWithArtistAndReviews
   }
 }
     ${AlbumWithArtistAndReviews}`;
 export const DeleteAlbum = gql`
     mutation DeleteAlbum($id: Int!) {
-  delete_album_by_pk(id: $id) {
+  deleteAlbumByPk: delete_album_by_pk(id: $id) {
     artist
   }
 }
     `;
 export const UpdateAlbum = gql`
     mutation UpdateAlbum($id: Int!, $input: album_set_input) {
-  update_album_by_pk(pk_columns: {id: $id}, _set: $input) {
+  updateAlbumByPk: update_album_by_pk(pk_columns: {id: $id}, _set: $input) {
     id
   }
 }
@@ -2498,7 +2787,7 @@ export const SelectArtists = gql`
   artist(limit: $limit, offset: $offset) {
     ...Artist
   }
-  artist_aggregate {
+  artistAggregate: artist_aggregate {
     aggregate {
       count
     }
@@ -2507,35 +2796,35 @@ export const SelectArtists = gql`
     ${Artist}`;
 export const InsertArtist = gql`
     mutation InsertArtist($artist: artist_insert_input!) {
-  insert_artist_one(object: $artist) {
+  insertArtistOne: insert_artist_one(object: $artist) {
     id
   }
 }
     `;
 export const SelectArtist = gql`
     query SelectArtist($id: Int!) {
-  artist_by_pk(id: $id) {
+  artistByPk: artist_by_pk(id: $id) {
     ...ArtistWithAlbums
   }
 }
     ${ArtistWithAlbums}`;
 export const DeleteArtist = gql`
     mutation DeleteArtist($id: Int!) {
-  delete_artist_by_pk(id: $id) {
+  deleteArtistByPk: delete_artist_by_pk(id: $id) {
     id
   }
 }
     `;
 export const UpdateArtist = gql`
     mutation UpdateArtist($id: Int!, $input: artist_set_input) {
-  update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
+  updateArtistByPk: update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
     id
   }
 }
     `;
 export const InsertReview = gql`
     mutation InsertReview($review: review_insert_input!) {
-  insert_review_one(object: $review) {
+  insertReviewOne: insert_review_one(object: $review) {
     id
   }
 }
@@ -2545,7 +2834,7 @@ export const SelectReviews = gql`
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
-  review_aggregate {
+  reviewAggregate: review_aggregate {
     aggregate {
       count
     }
@@ -2554,28 +2843,28 @@ export const SelectReviews = gql`
     ${ReviewWithAlbumAndArtist}`;
 export const SelectReview = gql`
     query SelectReview($id: Int!) {
-  review_by_pk(id: $id) {
+  reviewByPk: review_by_pk(id: $id) {
     ...ReviewWithAlbumAndArtist
   }
 }
     ${ReviewWithAlbumAndArtist}`;
 export const DeleteReview = gql`
     mutation DeleteReview($id: Int!) {
-  delete_review_by_pk(id: $id) {
+  deleteReviewByPk: delete_review_by_pk(id: $id) {
     album
   }
 }
     `;
 export const UpdateReview = gql`
     mutation UpdateReview($id: Int!, $input: review_set_input) {
-  update_review_by_pk(pk_columns: {id: $id}, _set: $input) {
+  updateReviewByPk: update_review_by_pk(pk_columns: {id: $id}, _set: $input) {
     id
   }
 }
     `;
 export const InsertVisit = gql`
     mutation InsertVisit($visit: visit_insert_input!) {
-  insert_visit_one(
+  insertVisitOne: insert_visit_one(
     object: $visit
     on_conflict: {constraint: unique_album_profile, update_columns: [updatedAt, createdAt], where: {createdAt: {_is_null: false}}}
   ) {
@@ -2588,7 +2877,7 @@ export const SelectVisits = gql`
   visit(limit: $limit, offset: $offset) {
     ...VisitWithAlbumAndArtist
   }
-  visit_aggregate {
+  visitAggregate: visit_aggregate {
     aggregate {
       count
     }
@@ -2669,12 +2958,19 @@ export const VisitWithAlbumAndArtistFragmentDoc = gql`
 }
     ${VisitFragmentDoc}
 ${AlbumWithArtistFragmentDoc}`;
+export const RandomAlbumsDocument = gql`
+    query RandomAlbums($limit: Int) {
+  randomAlbums: random_albums(limit: $limit) {
+    id
+  }
+}
+    `;
 export const SelectAlbumsDocument = gql`
     query SelectAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
     ...AlbumWithArtist
   }
-  album_aggregate {
+  albumAggregate: album_aggregate {
     aggregate {
       count
     }
@@ -2683,28 +2979,28 @@ export const SelectAlbumsDocument = gql`
     ${AlbumWithArtistFragmentDoc}`;
 export const InsertAlbumDocument = gql`
     mutation InsertAlbum($album: album_insert_input!) {
-  insert_album_one(object: $album) {
+  insertAlbumOne: insert_album_one(object: $album) {
     id
   }
 }
     `;
 export const SelectAlbumDocument = gql`
     query SelectAlbum($id: Int!) {
-  album_by_pk(id: $id) {
+  albumByPk: album_by_pk(id: $id) {
     ...AlbumWithArtistAndReviews
   }
 }
     ${AlbumWithArtistAndReviewsFragmentDoc}`;
 export const DeleteAlbumDocument = gql`
     mutation DeleteAlbum($id: Int!) {
-  delete_album_by_pk(id: $id) {
+  deleteAlbumByPk: delete_album_by_pk(id: $id) {
     artist
   }
 }
     `;
 export const UpdateAlbumDocument = gql`
     mutation UpdateAlbum($id: Int!, $input: album_set_input) {
-  update_album_by_pk(pk_columns: {id: $id}, _set: $input) {
+  updateAlbumByPk: update_album_by_pk(pk_columns: {id: $id}, _set: $input) {
     id
   }
 }
@@ -2714,7 +3010,7 @@ export const SelectArtistsDocument = gql`
   artist(limit: $limit, offset: $offset) {
     ...Artist
   }
-  artist_aggregate {
+  artistAggregate: artist_aggregate {
     aggregate {
       count
     }
@@ -2723,35 +3019,35 @@ export const SelectArtistsDocument = gql`
     ${ArtistFragmentDoc}`;
 export const InsertArtistDocument = gql`
     mutation InsertArtist($artist: artist_insert_input!) {
-  insert_artist_one(object: $artist) {
+  insertArtistOne: insert_artist_one(object: $artist) {
     id
   }
 }
     `;
 export const SelectArtistDocument = gql`
     query SelectArtist($id: Int!) {
-  artist_by_pk(id: $id) {
+  artistByPk: artist_by_pk(id: $id) {
     ...ArtistWithAlbums
   }
 }
     ${ArtistWithAlbumsFragmentDoc}`;
 export const DeleteArtistDocument = gql`
     mutation DeleteArtist($id: Int!) {
-  delete_artist_by_pk(id: $id) {
+  deleteArtistByPk: delete_artist_by_pk(id: $id) {
     id
   }
 }
     `;
 export const UpdateArtistDocument = gql`
     mutation UpdateArtist($id: Int!, $input: artist_set_input) {
-  update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
+  updateArtistByPk: update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
     id
   }
 }
     `;
 export const InsertReviewDocument = gql`
     mutation InsertReview($review: review_insert_input!) {
-  insert_review_one(object: $review) {
+  insertReviewOne: insert_review_one(object: $review) {
     id
   }
 }
@@ -2761,7 +3057,7 @@ export const SelectReviewsDocument = gql`
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
-  review_aggregate {
+  reviewAggregate: review_aggregate {
     aggregate {
       count
     }
@@ -2770,28 +3066,28 @@ export const SelectReviewsDocument = gql`
     ${ReviewWithAlbumAndArtistFragmentDoc}`;
 export const SelectReviewDocument = gql`
     query SelectReview($id: Int!) {
-  review_by_pk(id: $id) {
+  reviewByPk: review_by_pk(id: $id) {
     ...ReviewWithAlbumAndArtist
   }
 }
     ${ReviewWithAlbumAndArtistFragmentDoc}`;
 export const DeleteReviewDocument = gql`
     mutation DeleteReview($id: Int!) {
-  delete_review_by_pk(id: $id) {
+  deleteReviewByPk: delete_review_by_pk(id: $id) {
     album
   }
 }
     `;
 export const UpdateReviewDocument = gql`
     mutation UpdateReview($id: Int!, $input: review_set_input) {
-  update_review_by_pk(pk_columns: {id: $id}, _set: $input) {
+  updateReviewByPk: update_review_by_pk(pk_columns: {id: $id}, _set: $input) {
     id
   }
 }
     `;
 export const InsertVisitDocument = gql`
     mutation InsertVisit($visit: visit_insert_input!) {
-  insert_visit_one(
+  insertVisitOne: insert_visit_one(
     object: $visit
     on_conflict: {constraint: unique_album_profile, update_columns: [updatedAt, createdAt], where: {createdAt: {_is_null: false}}}
   ) {
@@ -2804,7 +3100,7 @@ export const SelectVisitsDocument = gql`
   visit(limit: $limit, offset: $offset) {
     ...VisitWithAlbumAndArtist
   }
-  visit_aggregate {
+  visitAggregate: visit_aggregate {
     aggregate {
       count
     }
@@ -2814,6 +3110,9 @@ export const SelectVisitsDocument = gql`
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<{ data?: R, errors?: Array<{ message: string; extensions?: unknown }> }>
 export function getSdk<C>(requester: Requester<C>) {
   return {
+    RandomAlbums(variables?: RandomAlbumsQueryVariables, options?: C): Promise<{ data?: RandomAlbumsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<RandomAlbumsQuery, RandomAlbumsQueryVariables>(RandomAlbumsDocument, variables, options);
+    },
     SelectAlbums(variables?: SelectAlbumsQueryVariables, options?: C): Promise<{ data?: SelectAlbumsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<SelectAlbumsQuery, SelectAlbumsQueryVariables>(SelectAlbumsDocument, variables, options);
     },

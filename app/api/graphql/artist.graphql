@@ -15,7 +15,7 @@ query SelectArtists($limit: Int, $offset: Int) {
   artist(limit: $limit, offset: $offset) {
     ...Artist
   }
-  artist_aggregate {
+  artistAggregate: artist_aggregate {
     aggregate {
       count
     }
@@ -23,25 +23,25 @@ query SelectArtists($limit: Int, $offset: Int) {
 }
 
 mutation InsertArtist($artist: artist_insert_input!) {
-  insert_artist_one(object: $artist) {
+  insertArtistOne: insert_artist_one(object: $artist) {
     id
   }
 }
 
 query SelectArtist($id: Int!) {
-  artist_by_pk(id: $id) {
+  artistByPk: artist_by_pk(id: $id) {
     ...ArtistWithAlbums
   }
 }
 
 mutation DeleteArtist($id: Int!) {
-  delete_artist_by_pk(id: $id) {
+  deleteArtistByPk: delete_artist_by_pk(id: $id) {
     id
   }
 }
 
 mutation UpdateArtist($id: Int!, $input: artist_set_input) {
-  update_artist_by_pk(pk_columns: { id: $id }, _set: $input) {
+  updateArtistByPk: update_artist_by_pk(pk_columns: { id: $id }, _set: $input) {
     id
   }
 }

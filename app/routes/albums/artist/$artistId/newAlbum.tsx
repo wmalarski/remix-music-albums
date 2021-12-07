@@ -31,7 +31,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const result = await graphqlSdk.InsertAlbum(validation.variables);
 
-  const id = result.data?.insert_album_one?.id;
+  const id = result.data?.insertAlbumOne?.id;
   if (!id || result.errors)
     return json<ActionData>({ fetcherErrors: result.errors });
   return redirect(routes.album(id));

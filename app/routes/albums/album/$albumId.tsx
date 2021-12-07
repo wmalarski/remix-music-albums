@@ -26,7 +26,7 @@ export const action: ActionFunction = async ({ params }) => {
 
   const result = await graphqlSdk.DeleteAlbum({ id: Number(params.albumId) });
 
-  const artist = result.data?.delete_album_by_pk?.artist;
+  const artist = result.data?.deleteAlbumByPk?.artist;
   if (!artist || result.errors)
     return json<FetcherActionData>({ fetcherErrors: result.errors });
   return redirect(routes.artist(artist));
@@ -46,7 +46,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  const albumFragment = result.data?.album_by_pk;
+  const albumFragment = result.data?.albumByPk;
   if (!albumFragment) throw new Response("Album Not Found", { status: 404 });
 
   return json<AlbumWithArtistAndReviewsFragment>(albumFragment);
