@@ -8,8 +8,8 @@ import {
   useActionData,
   useLoaderData,
 } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
-import { AlbumWithArtistAndReviewsFragment } from "~/api/types";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
+import { AlbumWithArtistAndReviewsFragment } from "~/api/types.server";
 import { Dialog, Divider, ErrorsList, Flex } from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
 import { HandleFunction, json, useRouteTransition } from "~/utils/remix";

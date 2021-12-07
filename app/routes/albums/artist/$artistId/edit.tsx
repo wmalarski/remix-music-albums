@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
-import { ArtistWithAlbumsFragment } from "~/api/types";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
+import { ArtistWithAlbumsFragment } from "~/api/types.server";
 import { ErrorsList } from "~/components";
 import {
   EditArtistForm,

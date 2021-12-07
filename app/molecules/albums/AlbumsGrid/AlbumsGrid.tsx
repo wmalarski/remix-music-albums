@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { AlbumWithArtistFragment } from "~/api/types";
+import { AlbumWithArtistFragment } from "~/api/types.server";
 import { Grid } from "~/components/Grid/Grid";
 import { AlbumsGridItem } from "./AlbumsGridItem/AlbumsGridItem";
 

@@ -1,11 +1,11 @@
 import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { useVirtual } from "react-virtual";
 import { ActionFunction, redirect, useActionData } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import {
   AlbumWithArtistAndReviewsFragment,
   ReviewWithAlbumAndArtistFragment,
-} from "~/api/types";
+} from "~/api/types.server";
 import { ErrorsList, Flex, Heading } from "~/components";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
 import {

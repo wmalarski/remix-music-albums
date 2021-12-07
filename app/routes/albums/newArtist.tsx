@@ -1,7 +1,7 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { Dialog, ErrorsList } from "~/components";
 import {
   NewArtistForm,

@@ -1,7 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
-import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
+import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Divider, Flex } from "~/components";
 import * as Styles from "./ReviewList.styles";
 import { ReviewListItem } from "./ReviewListItem/ReviewListItem";

@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
-import { graphqlSdk } from "~/api/fetcher";
-import { SelectAlbumsQuery } from "~/api/types";
+import { graphqlSdk } from "~/api/fetcher.server";
+import { SelectAlbumsQuery } from "~/api/types.server";
 import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { HandleFunction, json } from "~/utils/remix";

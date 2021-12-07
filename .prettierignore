@@ -3,4 +3,4 @@ package.json
 package-lock.json
 public
 node_modules
-app/api/types.ts
+app/api/types.server.ts

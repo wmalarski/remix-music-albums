@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
-import { AlbumWithArtistFragment } from "~/api/types";
+import { AlbumWithArtistFragment } from "~/api/types.server";
 import { Divider, Flex } from "~/components";
 import * as Styles from "./AlbumList.styles";
 import { AlbumListItem } from "./AlbumListItem/AlbumListItem";

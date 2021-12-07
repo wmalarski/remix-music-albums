@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ErrorsList } from "~/components";
 import {
   NewReviewForm,

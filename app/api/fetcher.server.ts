@@ -1,7 +1,7 @@
 import { fetch } from "cross-fetch";
 import { DocumentNode } from "graphql";
 import invariant from "tiny-invariant";
-import { getSdk, Requester } from "./types";
+import { getSdk, Requester } from "./types.server";
 
 type GraphqlApiConfig = {
   apiEndpoint: string;
@@ -75,5 +75,3 @@ export const jsonFetcher: Requester = async <TData, TVariables>(
 };
 
 export const graphqlSdk = getSdk(jsonFetcher);
-
-// export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<{ data?: R, errors?: Array<{ message: string; extensions: { path: string; code: string } }> }>

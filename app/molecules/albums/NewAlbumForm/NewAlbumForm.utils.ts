@@ -1,5 +1,5 @@
 import invariant from "tiny-invariant";
-import { InsertAlbumMutationVariables } from "~/api/types";
+import { InsertAlbumMutationVariables } from "~/api/types.server";
 
 export type NewAlbumFormResult =
   | {

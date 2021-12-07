@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
-import { VisitWithAlbumAndArtistFragment } from "~/api/types";
+import { VisitWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Flex, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 

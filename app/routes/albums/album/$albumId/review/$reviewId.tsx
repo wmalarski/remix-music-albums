@@ -6,8 +6,8 @@ import {
   useActionData,
   useLoaderData,
 } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
-import { ReviewWithAlbumAndArtistFragment } from "~/api/types";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
+import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { ErrorsList } from "~/components";
 import {
   EditReviewForm,

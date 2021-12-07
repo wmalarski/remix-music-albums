@@ -9,8 +9,8 @@ import {
   useLoaderData,
   useSearchParams,
 } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher";
-import { SelectReviewsQuery } from "~/api/types";
+import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
+import { SelectReviewsQuery } from "~/api/types.server";
 import { Dialog, ErrorsList, Heading } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
 import { HandleFunction, json, useRouteTransition } from "~/utils/remix";

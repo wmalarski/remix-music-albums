@@ -1,6 +1,9 @@
 import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { useVirtual } from "react-virtual";
-import { AlbumWithArtistFragment, ArtistWithAlbumsFragment } from "~/api/types";
+import {
+  AlbumWithArtistFragment,
+  ArtistWithAlbumsFragment,
+} from "~/api/types.server";
 import { Flex, Heading } from "~/components";
 import { AlbumList } from "~/molecules/albums";
 import { HandleFunction, useRouteLoaderData } from "~/utils/remix";

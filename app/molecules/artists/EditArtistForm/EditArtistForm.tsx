@@ -1,7 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { ArtistWithAlbumsFragment } from "~/api/types";
+import { ArtistWithAlbumsFragment } from "~/api/types.server";
 import { Button, Heading, TextInput } from "~/components";
 import { EditArtistFormResult } from "./EditArtistForm.utils";
 
