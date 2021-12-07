@@ -1,5 +1,8 @@
 export const routes = {
   home: "/",
+  auth: "/auth",
+  login: "/login",
+  logout: "/logout",
   albums: "/albums",
   reviews: "/albums/reviews",
   visits: "/albums/visits",
