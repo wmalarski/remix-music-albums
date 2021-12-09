@@ -1,5 +1,4 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import {
   ActionFunction,
   LoaderFunction,
@@ -7,10 +6,19 @@ import {
   redirect,
   useActionData,
   useLoaderData,
+  useNavigate,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ArtistWithAlbumsFragment } from "~/api/types.server";
-import { Dialog, Divider, ErrorsList, Flex } from "~/components";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogRoot,
+  Divider,
+  ErrorsList,
+  Flex,
+} from "~/components";
 import { ArtistDetails } from "~/molecules/artists";
 import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
@@ -49,19 +57,30 @@ const Artist = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const artist = useLoaderData<ArtistWithAlbumsFragment>();
   const transition = useRouteTransition();
+  const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(true);
+  const handleCloseClick = () => setIsOpen(false);
+  const handleOpenChange = () => navigate(routes.albums);
 
   return (
     <>
-      <Dialog>
-        <Flex direction="row">
-          <ArtistDetails artist={artist} transition={transition} />
-          <Divider orientation="vertical" />
-          <Outlet />
-        </Flex>
-        <Dialog.Close to={routes.albums}>
-          <Cross1Icon />
-        </Dialog.Close>
-      </Dialog>
+      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent>
+          <Flex direction="column">
+            <DialogHeader onClose={handleCloseClick}>
+              {artist.name}
+            </DialogHeader>
+            <DialogDescription>
+              <Flex direction="row">
+                <ArtistDetails artist={artist} transition={transition} />
+                <Divider orientation="vertical" />
+                <Outlet />
+              </Flex>
+            </DialogDescription>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );

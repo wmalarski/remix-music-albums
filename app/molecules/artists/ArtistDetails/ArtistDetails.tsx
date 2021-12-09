@@ -16,9 +16,6 @@ export const ArtistDetails = ({
 }: ArtistDetailsProps): ReactElement => {
   return (
     <Flex direction="column">
-      <StyledLink
-        to={routes.artist(artist.id)}
-      >{`Artist: ${artist.name}`}</StyledLink>
       <StyledLink to={routes.newAlbum(artist.id)}>New album</StyledLink>
       <StyledLink to={routes.editArtist(artist.id)}>Edit Artist</StyledLink>
       <Form method="delete">

@@ -1,5 +1,4 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import {
   ActionFunction,
   LoaderFunction,
@@ -7,10 +6,19 @@ import {
   redirect,
   useActionData,
   useLoaderData,
+  useNavigate,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { AlbumWithArtistAndReviewsFragment } from "~/api/types.server";
-import { Dialog, Divider, ErrorsList, Flex } from "~/components";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogRoot,
+  Divider,
+  ErrorsList,
+  Flex,
+} from "~/components";
 import { AlbumDetails } from "~/molecules/albums";
 import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
@@ -53,22 +61,33 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const Album = (): ReactElement => {
-  const loader = useLoaderData<AlbumWithArtistAndReviewsFragment>();
+  const album = useLoaderData<AlbumWithArtistAndReviewsFragment>();
   const action = useActionData<FetcherActionData>();
   const transition = useRouteTransition();
+  const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(true);
+  const handleCloseClick = () => setIsOpen(false);
+  const handleOpenChange = () => navigate(routes.albums);
 
   return (
     <>
-      <Dialog>
-        <Flex direction="row">
-          <AlbumDetails album={loader} transition={transition} />
-          <Divider orientation="vertical" />
-          <Outlet />
-        </Flex>
-        <Dialog.Close to={routes.albums}>
-          <Cross1Icon />
-        </Dialog.Close>
-      </Dialog>
+      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent>
+          <Flex direction="column">
+            <DialogHeader onClose={handleCloseClick}>
+              {album.title}
+            </DialogHeader>
+            <DialogDescription>
+              <Flex direction="row">
+                <AlbumDetails album={album} transition={transition} />
+                <Divider orientation="vertical" />
+                <Outlet />
+              </Flex>
+            </DialogDescription>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );

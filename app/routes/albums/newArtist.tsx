@@ -1,8 +1,14 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
-import { ReactElement } from "react";
-import { ActionFunction, redirect, useActionData } from "remix";
+import { ReactElement, useState } from "react";
+import { ActionFunction, redirect, useActionData, useNavigate } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { Dialog, ErrorsList } from "~/components";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogRoot,
+  ErrorsList,
+  Flex,
+} from "~/components";
 import {
   NewArtistForm,
   NewArtistFormResult,
@@ -37,15 +43,24 @@ export const action: ActionFunction = async ({ request }) => {
 const NewArtist = (): ReactElement => {
   const action = useActionData<ActionData>();
   const transition = useRouteTransition();
+  const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(true);
+  const handleCloseClick = () => setIsOpen(false);
+  const handleOpenChange = () => navigate(routes.albums);
 
   return (
     <>
-      <Dialog>
-        <NewArtistForm transition={transition} errors={action?.errors} />
-        <Dialog.Close to={routes.albums}>
-          <Cross1Icon />
-        </Dialog.Close>
-      </Dialog>
+      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent>
+          <Flex direction="column">
+            <DialogHeader onClose={handleCloseClick}>New artists</DialogHeader>
+            <DialogDescription>
+              <NewArtistForm transition={transition} errors={action?.errors} />
+            </DialogDescription>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );

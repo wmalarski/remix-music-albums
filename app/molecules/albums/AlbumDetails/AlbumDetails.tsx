@@ -17,9 +17,6 @@ export const AlbumDetails = ({
   return (
     <Flex direction="column">
       <Heading>
-        <StyledLink to={routes.album(album.id)}>{album.title}</StyledLink>
-      </Heading>
-      <Heading>
         <StyledLink to={routes.artist(album.artistByArtist.id)}>
           {album.artistByArtist.name}
         </StyledLink>

@@ -1,7 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { Button, Heading, TextInput } from "~/components";
+import { Button, TextInput } from "~/components";
 import { NewArtistFormResult } from "./NewArtistForm.utils";
 
 type NewArtistFormProps = {
@@ -15,7 +15,6 @@ export const NewArtistForm = ({
 }: NewArtistFormProps): ReactElement => {
   return (
     <Form method="post">
-      <Heading>New Artist</Heading>
       <label>
         Name: {errors?.name && <em>Name is required</em>}
         <TextInput type="text" name="name" />

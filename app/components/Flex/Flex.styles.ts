@@ -15,10 +15,15 @@ export const Container = styled("div", {
       1: { gap: "$1" },
       2: { gap: "$2" },
     },
+    justifyContent: {
+      flexStart: { justifyContent: "flex-start" },
+      spaceBetween: { justifyContent: "space-between" },
+    },
   },
 
   defaultVariants: {
     direction: "row",
     gap: 0.25,
+    justifyContent: "flexStart",
   },
 });

@@ -1,10 +1,20 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
-import { ReactElement, useCallback, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useVirtual } from "react-virtual";
-import { LoaderFunction, useLoaderData, useSearchParams } from "remix";
+import {
+  LoaderFunction,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from "remix";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectVisitsQuery } from "~/api/types.server";
-import { Dialog, Heading } from "~/components";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogRoot,
+  Flex,
+} from "~/components";
 import { VisitsList } from "~/molecules/visits";
 import { HandleFunction, json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
@@ -38,9 +48,14 @@ const Visits = (): ReactElement => {
   const query = useLoaderData<SelectVisitsQuery>();
   const [searchParams, setSearchParams] = useSearchParams();
   const { start } = getStartParam(searchParams);
-  const size = query.visitAggregate.aggregate?.count ?? 0;
+  const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(true);
+  const handleCloseClick = () => setIsOpen(false);
+  const handleOpenChange = () => navigate(routes.albums);
 
   const parentRef = useRef<HTMLDivElement>(null);
+  const size = query.visitAggregate.aggregate?.count ?? 0;
   const virtualizer = useVirtual({
     size,
     parentRef,
@@ -62,18 +77,21 @@ const Visits = (): ReactElement => {
   }, [start, neededStart, setSearchParams]);
 
   return (
-    <Dialog>
-      <Heading>Visits</Heading>
-      <VisitsList
-        ref={parentRef}
-        start={start}
-        virtualizer={virtualizer}
-        visits={query.visit}
-      />
-      <Dialog.Close to={routes.albums}>
-        <Cross1Icon />
-      </Dialog.Close>
-    </Dialog>
+    <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogContent>
+        <Flex direction="column">
+          <DialogHeader onClose={handleCloseClick}>Visits</DialogHeader>
+          <DialogDescription>
+            <VisitsList
+              ref={parentRef}
+              start={start}
+              virtualizer={virtualizer}
+              visits={query.visit}
+            />
+          </DialogDescription>
+        </Flex>
+      </DialogContent>
+    </DialogRoot>
   );
 };
 

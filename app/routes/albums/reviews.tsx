@@ -1,5 +1,4 @@
-import { Cross1Icon } from "@radix-ui/react-icons";
-import { ReactElement, useCallback, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useVirtual } from "react-virtual";
 import {
   ActionFunction,
@@ -7,11 +6,19 @@ import {
   redirect,
   useActionData,
   useLoaderData,
+  useNavigate,
   useSearchParams,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { SelectReviewsQuery } from "~/api/types.server";
-import { Dialog, ErrorsList, Heading } from "~/components";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogRoot,
+  ErrorsList,
+  Flex,
+} from "~/components";
 import { ReviewList } from "~/molecules/reviews";
 import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
@@ -65,9 +72,14 @@ const Reviews = (): ReactElement => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { start } = getStartParam(searchParams);
   const transition = useRouteTransition();
-  const size = query.reviewAggregate.aggregate?.count ?? 0;
+  const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(true);
+  const handleCloseClick = () => setIsOpen(false);
+  const handleOpenChange = () => navigate(routes.albums);
 
   const parentRef = useRef<HTMLDivElement>(null);
+  const size = query.reviewAggregate.aggregate?.count ?? 0;
   const virtualizer = useVirtual({
     size,
     parentRef,
@@ -90,19 +102,22 @@ const Reviews = (): ReactElement => {
 
   return (
     <>
-      <Dialog>
-        <Heading>Reviews</Heading>
-        <ReviewList
-          ref={parentRef}
-          start={start}
-          reviews={query.review}
-          transition={transition}
-          virtualizer={virtualizer}
-        />
-        <Dialog.Close to={routes.albums}>
-          <Cross1Icon />
-        </Dialog.Close>
-      </Dialog>
+      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent>
+          <Flex direction="column">
+            <DialogHeader onClose={handleCloseClick}>Reviews</DialogHeader>
+            <DialogDescription>
+              <ReviewList
+                ref={parentRef}
+                start={start}
+                reviews={query.review}
+                transition={transition}
+                virtualizer={virtualizer}
+              />
+            </DialogDescription>
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );
