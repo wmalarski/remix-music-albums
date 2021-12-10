@@ -1,6 +1,7 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
+import { frontCoverUrl } from "~/api/coverArt";
 import { AlbumWithArtistFragment } from "~/api/types.server";
 import { Button, Flex, Heading, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
@@ -21,6 +22,7 @@ export const AlbumDetails = ({
           {album.artistByArtist.name}
         </StyledLink>
       </Heading>
+      <img src={frontCoverUrl({ mBid: album.sid })} alt="" />
       <StyledLink to={routes.editAlbum(album.id)}>Edit Album</StyledLink>
       <StyledLink to={routes.newReview(album.id)}>New Review</StyledLink>
       <Form method="delete">

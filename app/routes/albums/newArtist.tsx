@@ -3,7 +3,6 @@ import { ActionFunction, redirect, useActionData, useNavigate } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import {
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogRoot,
   ErrorsList,
@@ -55,9 +54,7 @@ const NewArtist = (): ReactElement => {
         <DialogContent>
           <Flex direction="column">
             <DialogHeader onClose={handleCloseClick}>New artists</DialogHeader>
-            <DialogDescription>
-              <NewArtistForm transition={transition} errors={action?.errors} />
-            </DialogDescription>
+            <NewArtistForm transition={transition} errors={action?.errors} />
           </Flex>
         </DialogContent>
       </DialogRoot>

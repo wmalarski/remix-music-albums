@@ -8,13 +8,7 @@ import {
 } from "remix";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectVisitsQuery } from "~/api/types.server";
-import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogRoot,
-  Flex,
-} from "~/components";
+import { DialogContent, DialogHeader, DialogRoot, Flex } from "~/components";
 import { VisitsList } from "~/molecules/visits";
 import { HandleFunction, json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
@@ -81,14 +75,12 @@ const Visits = (): ReactElement => {
       <DialogContent>
         <Flex direction="column">
           <DialogHeader onClose={handleCloseClick}>Visits</DialogHeader>
-          <DialogDescription>
-            <VisitsList
-              ref={parentRef}
-              start={start}
-              virtualizer={virtualizer}
-              visits={query.visit}
-            />
-          </DialogDescription>
+          <VisitsList
+            ref={parentRef}
+            start={start}
+            virtualizer={virtualizer}
+            visits={query.visit}
+          />
         </Flex>
       </DialogContent>
     </DialogRoot>

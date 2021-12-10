@@ -12,7 +12,6 @@ import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ArtistWithAlbumsFragment } from "~/api/types.server";
 import {
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogRoot,
   Divider,
@@ -71,13 +70,11 @@ const Artist = (): ReactElement => {
             <DialogHeader onClose={handleCloseClick}>
               {artist.name}
             </DialogHeader>
-            <DialogDescription>
-              <Flex direction="row">
-                <ArtistDetails artist={artist} transition={transition} />
-                <Divider orientation="vertical" />
-                <Outlet />
-              </Flex>
-            </DialogDescription>
+            <Flex direction="row">
+              <ArtistDetails artist={artist} transition={transition} />
+              <Divider orientation="vertical" />
+              <Outlet />
+            </Flex>
           </Flex>
         </DialogContent>
       </DialogRoot>

@@ -13,7 +13,6 @@ import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { SelectReviewsQuery } from "~/api/types.server";
 import {
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogRoot,
   ErrorsList,
@@ -106,15 +105,13 @@ const Reviews = (): ReactElement => {
         <DialogContent>
           <Flex direction="column">
             <DialogHeader onClose={handleCloseClick}>Reviews</DialogHeader>
-            <DialogDescription>
-              <ReviewList
-                ref={parentRef}
-                start={start}
-                reviews={query.review}
-                transition={transition}
-                virtualizer={virtualizer}
-              />
-            </DialogDescription>
+            <ReviewList
+              ref={parentRef}
+              start={start}
+              reviews={query.review}
+              transition={transition}
+              virtualizer={virtualizer}
+            />
           </Flex>
         </DialogContent>
       </DialogRoot>
