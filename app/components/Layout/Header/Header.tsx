@@ -1,10 +1,15 @@
 import { ReactElement } from "react";
-import { StyledLink } from "~/components";
+import { Form } from "remix";
+import { Button, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 import { Logo } from "../Logo/Logo";
 import * as Styles from "./Header.styles";
 
-export const Header = (): ReactElement => {
+type HeaderProps = {
+  isAuthorized: boolean;
+};
+
+export const Header = ({ isAuthorized }: HeaderProps): ReactElement => {
   return (
     <Styles.Header>
       <Styles.Content>
@@ -28,6 +33,15 @@ export const Header = (): ReactElement => {
             <Styles.Li>
               <StyledLink to={routes.visits}>Visits</StyledLink>
             </Styles.Li>
+            {isAuthorized ? (
+              <Form action={routes.logout} method="post">
+                <Button>Logout</Button>
+              </Form>
+            ) : (
+              <form action={routes.auth} method="post">
+                <Button>Login with Auth0</Button>
+              </form>
+            )}
           </Styles.Ul>
         </nav>
       </Styles.Content>

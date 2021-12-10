@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
   useCatch,
 } from "remix";
-import { Divider, Flex, Layout } from "./components";
+import { Divider, Flex, Layout, LayoutFooter } from "./components";
 import { darkTheme, globalStyles } from "./styles/stitches.config";
 
 // https://remix.run/api/conventions#default-export
@@ -17,9 +17,7 @@ const App = (): ReactElement => {
   globalStyles();
   return (
     <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
+      <Outlet />
     </Document>
   );
 };
@@ -39,6 +37,7 @@ export const ErrorBoundary = ({ error }: { error: Error }): ReactElement => {
             users to see.
           </p>
         </Flex>
+        <LayoutFooter />
       </Layout>
     </Document>
   );
@@ -75,6 +74,7 @@ export const CatchBoundary = (): ReactElement => {
           {caught.status}: {caught.statusText}
         </h1>
         {message}
+        <LayoutFooter />
       </Layout>
     </Document>
   );

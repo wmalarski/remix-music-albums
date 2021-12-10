@@ -1,12 +1,12 @@
-import { styled } from "@stitches/react";
+import { styled } from "~/styles/stitches.config";
+import { Container } from "../Container/Container";
+import { Flex } from "../Flex/Flex";
 
-export const Main = styled("div", {
+export const Content = styled(Container, {
   flex: "1 1 100%",
 });
 
-export const App = styled("div", {
-  display: "flex",
-  flexDirection: "column",
+export const Root = styled(Flex, {
   minHeight: "calc(100vh - env(safe-area-inset-bottom))",
   "& > *": {
     width: "100%",

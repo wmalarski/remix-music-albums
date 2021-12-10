@@ -1,5 +1,4 @@
 import { ReactElement, ReactNode } from "react";
-import { Container } from "~/components";
 import { Footer } from "./Footer/Footer";
 import { Header } from "./Header/Header";
 import * as Styles from "./Layout.styles";
@@ -9,13 +8,11 @@ type LayoutProps = {
 };
 
 export const Layout = ({ children }: LayoutProps): ReactElement => {
-  return (
-    <Styles.App>
-      <Header />
-      <Styles.Main>
-        <Container>{children}</Container>
-      </Styles.Main>
-      <Footer />
-    </Styles.App>
-  );
+  return <Styles.Root direction="column">{children}</Styles.Root>;
 };
+
+export const LayoutContent = Styles.Content;
+
+export const LayoutHeader = Header;
+
+export const LayoutFooter = Footer;

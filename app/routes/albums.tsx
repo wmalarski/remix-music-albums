@@ -1,11 +1,23 @@
 import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
+import { authenticator, User } from "~/api/auth.server";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectAlbumsQuery } from "~/api/types.server";
-import { Divider, Page } from "~/components";
+import {
+  Divider,
+  Layout,
+  LayoutFooter,
+  LayoutHeader,
+  Page,
+} from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { HandleFunction, json } from "~/utils/remix";
 import { toNumber } from "~/utils/validation";
+
+type LoaderData = {
+  albums: SelectAlbumsQuery;
+  user: User | null;
+};
 
 export const meta: MetaFunction = () => {
   return {
@@ -18,7 +30,7 @@ export const handle: HandleFunction = () => {
   return { route: "albums" };
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
   const limit = toNumber(params.limit, 12);
   const offset = toNumber(params.offset, 0);
 
@@ -27,22 +39,29 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  return json<SelectAlbumsQuery>(
-    result.data ?? { album: [], albumAggregate: {} }
-  );
+  const user = await authenticator.isAuthenticated(request);
+
+  return json<LoaderData>({
+    albums: result.data ?? { album: [], albumAggregate: {} },
+    user,
+  });
 };
 
 const Albums = (): ReactElement => {
-  const query = useLoaderData<SelectAlbumsQuery>();
+  const data = useLoaderData<LoaderData>();
 
   return (
-    <Page>
-      <main>
-        <AlbumsGrid albums={query.album} />
-        <Divider />
-        <Outlet />
-      </main>
-    </Page>
+    <Layout>
+      <LayoutHeader isAuthorized={!!data.user} />
+      <Page>
+        <main>
+          <AlbumsGrid albums={data.albums.album} />
+          <Divider />
+          <Outlet />
+        </main>
+      </Page>
+      <LayoutFooter />
+    </Layout>
   );
 };
 

@@ -3,8 +3,6 @@ import { styled } from "~/styles/stitches.config";
 export const Page = styled("div", {
   "--gap": "1rem",
   "--space": "2rem",
-  display: "grid",
-  gridAutoRows: "min-content",
   gap: "var(--gap)",
   paddingTop: "var(--space)",
   paddingBottom: "var(--space)",
