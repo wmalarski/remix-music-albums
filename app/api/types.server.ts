@@ -2601,6 +2601,13 @@ export type UpdateArtistMutationVariables = Exact<{
 
 export type UpdateArtistMutation = { updateArtistByPk?: { id: number } | null | undefined };
 
+export type InsertProfileMutationVariables = Exact<{
+  profile: ProfileInsertInput;
+}>;
+
+
+export type InsertProfileMutation = { insertProfileOne?: { id: number } | null | undefined };
+
 export type ReviewFragment = { id: number, rate: any, text: string, createdAt: any };
 
 export type ReviewWithAlbumAndArtistFragment = { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } };
@@ -2818,6 +2825,16 @@ export const DeleteArtist = gql`
 export const UpdateArtist = gql`
     mutation UpdateArtist($id: Int!, $input: artist_set_input) {
   updateArtistByPk: update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
+    id
+  }
+}
+    `;
+export const InsertProfile = gql`
+    mutation InsertProfile($profile: profile_insert_input!) {
+  insertProfileOne: insert_profile_one(
+    object: $profile
+    on_conflict: {constraint: profile_user_id_key, update_columns: [updatedAt, role], where: {createdAt: {_is_null: false}}}
+  ) {
     id
   }
 }
@@ -3045,6 +3062,16 @@ export const UpdateArtistDocument = gql`
   }
 }
     `;
+export const InsertProfileDocument = gql`
+    mutation InsertProfile($profile: profile_insert_input!) {
+  insertProfileOne: insert_profile_one(
+    object: $profile
+    on_conflict: {constraint: profile_user_id_key, update_columns: [updatedAt, role], where: {createdAt: {_is_null: false}}}
+  ) {
+    id
+  }
+}
+    `;
 export const InsertReviewDocument = gql`
     mutation InsertReview($review: review_insert_input!) {
   insertReviewOne: insert_review_one(object: $review) {
@@ -3142,6 +3169,9 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     UpdateArtist(variables: UpdateArtistMutationVariables, options?: C): Promise<{ data?: UpdateArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdateArtistMutation, UpdateArtistMutationVariables>(UpdateArtistDocument, variables, options);
+    },
+    InsertProfile(variables: InsertProfileMutationVariables, options?: C): Promise<{ data?: InsertProfileMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<InsertProfileMutation, InsertProfileMutationVariables>(InsertProfileDocument, variables, options);
     },
     InsertReview(variables: InsertReviewMutationVariables, options?: C): Promise<{ data?: InsertReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<InsertReviewMutation, InsertReviewMutationVariables>(InsertReviewDocument, variables, options);

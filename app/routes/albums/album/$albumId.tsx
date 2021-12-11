@@ -25,11 +25,11 @@ import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 export const action: ActionFunction = async ({ params, request }) => {
-  const user = await authenticator.isAuthenticated(request);
-  if (!user) return loginRedirect(request);
-
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
+
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
 
   const result = await graphqlSdk.DeleteAlbum({ id: Number(params.albumId) });
 
@@ -39,15 +39,20 @@ export const action: ActionFunction = async ({ params, request }) => {
   return redirect(routes.artist(artist));
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
   if (!isNumber(params.albumId))
     throw new Response("Album Not Found", { status: 404 });
 
-  const profileId = 1; // TODO add profiles
+  const user = await authenticator.isAuthenticated(request);
+
   const albumId = Number(params.albumId);
   const [result] = await Promise.all([
     graphqlSdk.SelectAlbum({ id: albumId }),
-    graphqlSdk.InsertVisit({ visit: { album: albumId, profile: profileId } }),
+    user
+      ? graphqlSdk.InsertVisit({
+          visit: { album: albumId, profile: user.profileId },
+        })
+      : Promise.resolve(true),
   ]);
 
   if (result.errors)

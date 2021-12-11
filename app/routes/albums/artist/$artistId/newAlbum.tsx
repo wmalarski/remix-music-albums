@@ -17,15 +17,15 @@ type ActionData = FetcherActionData & {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const user = await authenticator.isAuthenticated(request);
-  if (!user) return loginRedirect(request);
-
   if (!isNumber(params.artistId))
     throw new Response("Not Found", { status: 404 });
 
   const artistId = Number(params.artistId);
   const formData = await request.formData();
   const validation = validateNewAlbum(formData, artistId);
+
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
 
   if (validation.errors) return json<ActionData>({ errors: validation.errors });
 

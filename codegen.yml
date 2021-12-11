@@ -2,10 +2,10 @@ overwrite: true
 schema:
   - ${GRAPHQL_API_ENDPOINT}:
       headers:
-        'x-hasura-admin-secret': ${GRAPHQL_API_ADMIN_SECRET}
+        "x-hasura-admin-secret": ${GRAPHQL_API_ADMIN_SECRET}
 documents: "app/api/**/*.graphql"
 generates:
-  app/api/types.server.server.ts:
+  app/api/types.server.ts:
     plugins:
       - "typescript"
       - "typescript-operations"

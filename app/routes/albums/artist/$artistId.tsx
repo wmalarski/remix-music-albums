@@ -25,13 +25,13 @@ import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 export const action: ActionFunction = async ({ params, request }) => {
-  const user = await authenticator.isAuthenticated(request);
-  if (!user) return loginRedirect(request);
-
   if (!isNumber(params.artistId))
     throw new Response("Not Found", { status: 404 });
 
   const artistId = Number(params.artistId);
+
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
 
   const result = await graphqlSdk.DeleteArtist({ id: artistId });
 

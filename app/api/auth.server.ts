@@ -7,6 +7,7 @@ import {
   sessionStorage,
 } from "~/api/session.server";
 import { routes } from "~/utils/routes";
+import { graphqlSdk } from "./fetcher.server";
 
 export type Role = "admin" | "user";
 
@@ -20,6 +21,7 @@ export type User = {
   picture: string;
   locale: string;
   claims: Claims;
+  profileId: number;
 };
 
 export const AuthStrategyName = "auth0";
@@ -51,12 +53,19 @@ const setupAuth0 = (): Authenticator<User> => {
         scope: AUTH0_SCOPE,
       },
       async (_accessToken, _refreshToken, _extra, profile): Promise<User> => {
+        const result = await graphqlSdk.InsertProfile({
+          profile: { role: "user", userId: profile.id },
+        });
+        const profileId = result.data?.insertProfileOne?.id;
+        if (!profileId) throw new Error(JSON.stringify(result.errors));
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const claims = (profile._json as any)["https://hasura.io/jwt/claims"];
         return {
           displayName: profile.displayName,
           picture: profile._json.picture,
           locale: profile._json.locale,
+          profileId,
           claims: {
             role: claims["x-hasura-default-role"],
             roles: claims["x-hasura-allowed-roles"],

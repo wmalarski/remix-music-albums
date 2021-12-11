@@ -17,19 +17,18 @@ type ActionData = FetcherActionData & {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const user = await authenticator.isAuthenticated(request);
-  if (!user) return loginRedirect(request);
-
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
-  const profileId = 1; // TODO add profiles
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
+
   const albumId = Number(params.albumId);
   const formData = await request.formData();
   const validation = validateNewReview({
     formData,
     albumId,
-    profileId,
+    profileId: user.profileId,
   });
 
   if (validation.errors) return json<ActionData>({ errors: validation.errors });

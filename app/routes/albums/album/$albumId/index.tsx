@@ -14,9 +14,6 @@ import { isNumber } from "~/utils/validation";
 const DATA_OVER_SCAN = 5;
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const user = await authenticator.isAuthenticated(request);
-  if (!user) return loginRedirect(request);
-
   if (!isNumber(params.albumId))
     throw new Response("Album Not Found", { status: 404 });
 
@@ -25,6 +22,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   if (!isNumber(reviewId))
     throw new Response("Review Not Found", { status: 404 });
+
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
 
   const result = await graphqlSdk.DeleteReview({ id: Number(reviewId) });
 

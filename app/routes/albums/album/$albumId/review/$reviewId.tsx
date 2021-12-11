@@ -24,9 +24,6 @@ type ActionData = FetcherActionData & {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const user = await authenticator.isAuthenticated(request);
-  if (!user) return loginRedirect(request);
-
   if (!isNumber(params.reviewId) || !isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
@@ -36,6 +33,9 @@ export const action: ActionFunction = async ({ request, params }) => {
   const validation = validateEditReview({ reviewId, formData });
 
   if (validation.errors) return json<ActionData>({ errors: validation.errors });
+
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
 
   const result = await graphqlSdk.UpdateReview(validation.variables);
   if (result.errors) return json<ActionData>({ fetcherErrors: result.errors });
