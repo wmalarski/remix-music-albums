@@ -1,8 +1,5 @@
-import { ReactElement } from "react";
-import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
-import { authenticator, User } from "~/api/auth.server";
-import { Page } from "~/components";
-import { Footer, Header, Layout } from "~/molecules/layout";
+import { LoaderFunction, MetaFunction, redirect } from "remix";
+import { routes } from "~/utils/routes";
 
 export const meta: MetaFunction = () => {
   return {
@@ -11,23 +8,6 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const loader: LoaderFunction = ({ request }) => {
-  return authenticator.isAuthenticated(request);
+export const loader: LoaderFunction = () => {
+  return redirect(routes.albums);
 };
-
-const Index = (): ReactElement => {
-  const user = useLoaderData<User>();
-
-  return (
-    <Layout>
-      <Header isAuthorized={!!user} />
-      <Page>
-        <main>Index</main>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
-      </Page>
-      <Footer />
-    </Layout>
-  );
-};
-
-export default Index;

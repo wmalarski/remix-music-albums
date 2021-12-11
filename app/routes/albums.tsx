@@ -41,7 +41,7 @@ const Albums = (): ReactElement => {
 
   return (
     <Layout>
-      <Header isAuthorized={!!data.user} />
+      <Header user={data.user} />
       <Page>
         <main>
           <AlbumsGrid albums={data.albums.randomAlbums} />

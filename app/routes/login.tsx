@@ -21,7 +21,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 const Login = (): ReactElement => {
   return (
     <Layout>
-      <Header isAuthorized={false} />
+      <Header />
       <Page>
         <form action={routes.auth} method="post">
           <button>Login with Auth0</button>

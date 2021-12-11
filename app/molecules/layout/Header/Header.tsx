@@ -1,42 +1,26 @@
 import { ReactElement } from "react";
-import { Form } from "remix";
-import { Button, StyledLink } from "~/components";
+import { User } from "~/api/auth.server";
+import { Button } from "~/components";
 import { routes } from "~/utils/routes";
-import { Logo } from "../Logo/Logo";
 import * as Styles from "./Header.styles";
+import { Logo } from "./Logo/Logo";
+import { ProfileDropdown } from "./ProfileDropdown/ProfileDropdown";
 
 type HeaderProps = {
-  isAuthorized: boolean;
+  user?: User | null;
 };
 
-export const Header = ({ isAuthorized }: HeaderProps): ReactElement => {
+export const Header = ({ user }: HeaderProps): ReactElement => {
   return (
     <Styles.Header>
       <Styles.Content>
-        <Styles.HomeLink to={routes.home} title="Remix">
+        <Styles.HomeLink to={routes.albums} title="Remix">
           <Logo />
         </Styles.HomeLink>
         <nav aria-label="Main navigation">
           <Styles.Ul>
-            <Styles.Li>
-              <StyledLink to={routes.home}>Home</StyledLink>
-            </Styles.Li>
-            <Styles.Li>
-              <StyledLink to={routes.albums}>Albums</StyledLink>
-            </Styles.Li>
-            <Styles.Li>
-              <StyledLink to={routes.newArtist}>New Artist</StyledLink>
-            </Styles.Li>
-            <Styles.Li>
-              <StyledLink to={routes.reviews}>Reviews</StyledLink>
-            </Styles.Li>
-            <Styles.Li>
-              <StyledLink to={routes.visits}>Visits</StyledLink>
-            </Styles.Li>
-            {isAuthorized ? (
-              <Form action={routes.logout} method="post">
-                <Button>Logout</Button>
-              </Form>
+            {user ? (
+              <ProfileDropdown user={user} />
             ) : (
               <form action={routes.auth} method="post">
                 <Button>Login with Auth0</Button>
