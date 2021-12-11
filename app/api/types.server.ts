@@ -1454,6 +1454,8 @@ export type QueryRootVisitByPkArgs = {
 /** columns and relationships of "random_albums" */
 export type RandomAlbums = {
   artist?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  artistByArtist?: Maybe<Artist>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   sid?: Maybe<Scalars['String']>;
@@ -1503,6 +1505,7 @@ export type RandomAlbumsBoolExp = {
   _not?: InputMaybe<RandomAlbumsBoolExp>;
   _or?: InputMaybe<Array<RandomAlbumsBoolExp>>;
   artist?: InputMaybe<IntComparisonExp>;
+  artistByArtist?: InputMaybe<ArtistBoolExp>;
   createdAt?: InputMaybe<TimestamptzComparisonExp>;
   id?: InputMaybe<IntComparisonExp>;
   sid?: InputMaybe<StringComparisonExp>;
@@ -1521,6 +1524,7 @@ export type RandomAlbumsIncInput = {
 /** input type for inserting data into table "random_albums" */
 export type RandomAlbumsInsertInput = {
   artist?: InputMaybe<Scalars['Int']>;
+  artistByArtist?: InputMaybe<ArtistObjRelInsertInput>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['Int']>;
   sid?: InputMaybe<Scalars['String']>;
@@ -1562,6 +1566,7 @@ export type RandomAlbumsMutationResponse = {
 /** Ordering options when selecting data from "random_albums". */
 export type RandomAlbumsOrderBy = {
   artist?: InputMaybe<OrderBy>;
+  artistByArtist?: InputMaybe<ArtistOrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   sid?: InputMaybe<OrderBy>;
@@ -2516,12 +2521,14 @@ export type AlbumWithArtistFragment = { id: number, sid: string, title: string, 
 
 export type AlbumWithArtistAndReviewsFragment = { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid?: string | null | undefined, name: string } };
 
+export type RandomAlbumWithArtistFragment = { id?: number | null | undefined, sid?: string | null | undefined, title?: string | null | undefined, year?: number | null | undefined, artistByArtist?: { id: number, sid?: string | null | undefined, name: string } | null | undefined };
+
 export type RandomAlbumsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type RandomAlbumsQuery = { randomAlbums: Array<{ id?: number | null | undefined }> };
+export type RandomAlbumsQuery = { randomAlbums: Array<{ id?: number | null | undefined, sid?: string | null | undefined, title?: string | null | undefined, year?: number | null | undefined, artistByArtist?: { id: number, sid?: string | null | undefined, name: string } | null | undefined }> };
 
 export type SelectAlbumsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2709,6 +2716,17 @@ export const AlbumWithArtistAndReviews = gql`
 }
     ${AlbumWithArtist}
 ${Review}`;
+export const RandomAlbumWithArtist = gql`
+    fragment RandomAlbumWithArtist on random_albums {
+  id
+  sid
+  title
+  year
+  artistByArtist {
+    ...Artist
+  }
+}
+    ${Artist}`;
 export const ArtistWithAlbums = gql`
     fragment ArtistWithAlbums on artist {
   ...Artist
@@ -2745,10 +2763,10 @@ ${AlbumWithArtist}`;
 export const RandomAlbums = gql`
     query RandomAlbums($limit: Int) {
   randomAlbums: random_albums(limit: $limit) {
-    id
+    ...RandomAlbumWithArtist
   }
 }
-    `;
+    ${RandomAlbumWithArtist}`;
 export const SelectAlbums = gql`
     query SelectAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {
@@ -2942,6 +2960,17 @@ export const AlbumWithArtistAndReviewsFragmentDoc = gql`
 }
     ${AlbumWithArtistFragmentDoc}
 ${ReviewFragmentDoc}`;
+export const RandomAlbumWithArtistFragmentDoc = gql`
+    fragment RandomAlbumWithArtist on random_albums {
+  id
+  sid
+  title
+  year
+  artistByArtist {
+    ...Artist
+  }
+}
+    ${ArtistFragmentDoc}`;
 export const ArtistWithAlbumsFragmentDoc = gql`
     fragment ArtistWithAlbums on artist {
   ...Artist
@@ -2978,10 +3007,10 @@ ${AlbumWithArtistFragmentDoc}`;
 export const RandomAlbumsDocument = gql`
     query RandomAlbums($limit: Int) {
   randomAlbums: random_albums(limit: $limit) {
-    id
+    ...RandomAlbumWithArtist
   }
 }
-    `;
+    ${RandomAlbumWithArtistFragmentDoc}`;
 export const SelectAlbumsDocument = gql`
     query SelectAlbums($limit: Int, $offset: Int) {
   album(limit: $limit, offset: $offset) {

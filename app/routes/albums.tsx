@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
 import { authenticator, User } from "~/api/auth.server";
 import { graphqlSdk } from "~/api/fetcher.server";
-import { SelectAlbumsQuery } from "~/api/types.server";
+import { RandomAlbumsQuery } from "~/api/types.server";
 import {
   Divider,
   Layout,
@@ -12,12 +12,13 @@ import {
 } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { json } from "~/utils/remix";
-import { toNumber } from "~/utils/validation";
 
 type LoaderData = {
-  albums: SelectAlbumsQuery;
+  albums: RandomAlbumsQuery;
   user: User | null;
 };
+
+const randomAlbumLimit = 16;
 
 export const meta: MetaFunction = () => {
   return {
@@ -26,11 +27,8 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const limit = toNumber(params.limit, 12);
-  const offset = toNumber(params.offset, 0);
-
-  const result = await graphqlSdk.SelectAlbums({ limit, offset });
+export const loader: LoaderFunction = async ({ request }) => {
+  const result = await graphqlSdk.RandomAlbums({ limit: randomAlbumLimit });
 
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
@@ -38,7 +36,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const user = await authenticator.isAuthenticated(request);
 
   return json<LoaderData>({
-    albums: result.data ?? { album: [], albumAggregate: {} },
+    albums: result.data ?? { randomAlbums: [] },
     user,
   });
 };
@@ -51,7 +49,7 @@ const Albums = (): ReactElement => {
       <LayoutHeader isAuthorized={!!data.user} />
       <Page>
         <main>
-          <AlbumsGrid albums={data.albums.album} />
+          <AlbumsGrid albums={data.albums.randomAlbums} />
           <Divider />
           <Outlet />
         </main>

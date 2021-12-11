@@ -1,16 +1,17 @@
 import { ReactElement } from "react";
 import { frontCoverUrl } from "~/api/coverArt";
-import { AlbumWithArtistFragment } from "~/api/types.server";
+import { RandomAlbumWithArtistFragment } from "~/api/types.server";
 import { Flex, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
 type AlbumsGridItemProps = {
-  album: AlbumWithArtistFragment;
+  album: RandomAlbumWithArtistFragment;
 };
 
 export const AlbumsGridItem = ({
   album,
-}: AlbumsGridItemProps): ReactElement => {
+}: AlbumsGridItemProps): ReactElement | null => {
+  if (!album.id || !album.sid) return null;
   return (
     <StyledLink to={routes.album(album.id)}>
       <Flex>

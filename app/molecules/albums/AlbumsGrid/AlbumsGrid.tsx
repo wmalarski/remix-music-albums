@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
-import { AlbumWithArtistFragment } from "~/api/types.server";
+import { RandomAlbumWithArtistFragment } from "~/api/types.server";
 import { Grid } from "~/components/Grid/Grid";
 import { AlbumsGridItem } from "./AlbumsGridItem/AlbumsGridItem";
 
 type AlbumsGridProps = {
-  albums?: AlbumWithArtistFragment[];
+  albums?: RandomAlbumWithArtistFragment[];
 };
 
 export const AlbumsGrid = ({ albums }: AlbumsGridProps): ReactElement => {
