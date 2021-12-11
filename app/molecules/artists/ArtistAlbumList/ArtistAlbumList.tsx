@@ -2,18 +2,18 @@ import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
 import { AlbumWithArtistFragment } from "~/api/types.server";
 import { Divider, Flex } from "~/components";
-import * as Styles from "./AlbumList.styles";
-import { AlbumListItem } from "./AlbumListItem/AlbumListItem";
+import * as Styles from "./ArtistAlbumList.styles";
+import { ArtistAlbumListItem } from "./ArtistAlbumListItem/ArtistAlbumListItem";
 
-type AlbumListProps = {
+type ArtistAlbumListProps = {
   start: number;
   albums?: AlbumWithArtistFragment[];
   virtualizer: ReturnType<typeof useVirtual>;
 };
 
-export const AlbumList = forwardRef(
+export const ArtistAlbumList = forwardRef(
   (
-    { albums, start, virtualizer }: AlbumListProps,
+    { albums, start, virtualizer }: ArtistAlbumListProps,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (
@@ -27,7 +27,9 @@ export const AlbumList = forwardRef(
           {virtualizer.virtualItems.map((row) => {
             const album = albums?.[row.index - start];
             if (!album) return null;
-            return <AlbumListItem key={album.id} album={album} row={row} />;
+            return (
+              <ArtistAlbumListItem key={album.id} album={album} row={row} />
+            );
           })}
         </Flex>
       </Styles.StyledScroll>
@@ -35,4 +37,4 @@ export const AlbumList = forwardRef(
   }
 );
 
-AlbumList.displayName = "AlbumList";
+ArtistAlbumList.displayName = "ArtistAlbumList";

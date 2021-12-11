@@ -1,3 +1,4 @@
+export * from "./ArtistAlbumList/ArtistAlbumList";
 export * from "./ArtistDetails/ArtistDetails";
 export * from "./EditArtistForm/EditArtistForm";
 export * from "./EditArtistForm/EditArtistForm.utils";

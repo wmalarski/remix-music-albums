@@ -5,7 +5,7 @@ import {
   ArtistWithAlbumsFragment,
 } from "~/api/types.server";
 import { Flex, Heading } from "~/components";
-import { AlbumList } from "~/molecules/albums";
+import { ArtistAlbumList } from "~/molecules/artists";
 import { HandleFunction, useRouteLoaderData } from "~/utils/remix";
 
 const DATA_OVER_SCAN = 5;
@@ -35,7 +35,7 @@ const ArtistAlbums = (): ReactElement => {
   return (
     <Flex direction="column">
       <Heading>Albums</Heading>
-      <AlbumList albums={albums} start={0} virtualizer={virtualizer} />
+      <ArtistAlbumList albums={albums} start={0} virtualizer={virtualizer} />
     </Flex>
   );
 };

@@ -5,15 +5,15 @@ import { AlbumWithArtistFragment } from "~/api/types.server";
 import { Flex, Heading, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
-type AlbumListItemProps = {
+type ArtistAlbumListItemProps = {
   row: VirtualItem;
   album: AlbumWithArtistFragment;
 };
 
-export const AlbumListItem = ({
+export const ArtistAlbumListItem = ({
   album,
   row,
-}: AlbumListItemProps): ReactElement => {
+}: ArtistAlbumListItemProps): ReactElement => {
   return (
     <Flex
       ref={row.measureRef}
