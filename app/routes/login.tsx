@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, redirect } from "remix";
 import { authenticator } from "~/api/auth.server";
-import { Layout, LayoutFooter, LayoutHeader, Page } from "~/components";
+import { Page } from "~/components";
+import { Footer, Header, Layout } from "~/molecules/layout";
 import { routes } from "~/utils/routes";
 
 export const meta: MetaFunction = () => {
@@ -20,13 +21,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 const Login = (): ReactElement => {
   return (
     <Layout>
-      <LayoutHeader isAuthorized={false} />
+      <Header isAuthorized={false} />
       <Page>
         <form action={routes.auth} method="post">
           <button>Login with Auth0</button>
         </form>
       </Page>
-      <LayoutFooter />
+      <Footer />
     </Layout>
   );
 };

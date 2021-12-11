@@ -3,14 +3,9 @@ import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
 import { authenticator, User } from "~/api/auth.server";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { RandomAlbumsQuery } from "~/api/types.server";
-import {
-  Divider,
-  Layout,
-  LayoutFooter,
-  LayoutHeader,
-  Page,
-} from "~/components";
+import { Divider, Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
+import { Footer, Header, Layout } from "~/molecules/layout";
 import { json } from "~/utils/remix";
 
 type LoaderData = {
@@ -46,7 +41,7 @@ const Albums = (): ReactElement => {
 
   return (
     <Layout>
-      <LayoutHeader isAuthorized={!!data.user} />
+      <Header isAuthorized={!!data.user} />
       <Page>
         <main>
           <AlbumsGrid albums={data.albums.randomAlbums} />
@@ -54,7 +49,7 @@ const Albums = (): ReactElement => {
           <Outlet />
         </main>
       </Page>
-      <LayoutFooter />
+      <Footer />
     </Layout>
   );
 };

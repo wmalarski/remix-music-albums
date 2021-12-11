@@ -1,6 +1,6 @@
 import { styled } from "~/styles/stitches.config";
-import { Container } from "../Container/Container";
-import { Flex } from "../Flex/Flex";
+import { Container } from "../../../components/Container/Container";
+import { Flex } from "../../../components/Flex/Flex";
 
 export const Content = styled(Container, {
   flex: "1 1 100%",
