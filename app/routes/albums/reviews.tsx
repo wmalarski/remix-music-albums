@@ -19,7 +19,7 @@ import {
   Flex,
 } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
-import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
+import { json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getScrollStart } from "~/utils/scroll";
 import { isNumber } from "~/utils/validation";
@@ -30,10 +30,6 @@ const DATA_OVER_SCAN = 5;
 const getStartParam = (searchParams: URLSearchParams) => ({
   start: Number(searchParams.get("startReviews") || "0"),
 });
-
-export const handle: HandleFunction = () => {
-  return { route: "reviews" };
-};
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();

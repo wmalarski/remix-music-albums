@@ -1,21 +1,21 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { AlbumFragment } from "~/api/types.server";
 import { Button, Heading, TextInput } from "~/components";
+import { useAlbumRoot } from "..";
 import { EditAlbumFormResult } from "./EditAlbumForm.utils";
 
 type EditAlbumFormProps = {
   transition: Transition;
   errors: EditAlbumFormResult["errors"];
-  album?: AlbumFragment | null;
 };
 
 export const EditAlbumForm = ({
   transition,
   errors,
-  album,
 }: EditAlbumFormProps): ReactElement => {
+  const album = useAlbumRoot();
+
   return (
     <Form method="post">
       <Heading>Edit Album</Heading>

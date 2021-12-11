@@ -8,16 +8,12 @@ import {
   NewReviewFormResult,
   validateNewReview,
 } from "~/molecules/reviews";
-import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
+import { json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 type ActionData = FetcherActionData & {
   errors?: NewReviewFormResult["errors"];
-};
-
-export const handle: HandleFunction = () => {
-  return { route: "newReview" };
 };
 
 export const action: ActionFunction = async ({ request, params }) => {

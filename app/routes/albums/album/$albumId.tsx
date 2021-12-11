@@ -19,14 +19,10 @@ import {
   ErrorsList,
   Flex,
 } from "~/components";
-import { AlbumDetails } from "~/molecules/albums";
-import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
+import { AlbumDetails, AlbumRoot } from "~/molecules/albums";
+import { json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
-
-export const handle: HandleFunction = () => {
-  return { route: "album" };
-};
 
 export const action: ActionFunction = async ({ params, request }) => {
   const user = await authenticator.isAuthenticated(request);
@@ -74,7 +70,7 @@ const Album = (): ReactElement => {
   const handleOpenChange = () => navigate(routes.albums);
 
   return (
-    <>
+    <AlbumRoot album={album}>
       <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
         <DialogContent>
           <Flex direction="column">
@@ -90,7 +86,7 @@ const Album = (): ReactElement => {
         </DialogContent>
       </DialogRoot>
       <ErrorsList errors={action?.fetcherErrors} />
-    </>
+    </AlbumRoot>
   );
 };
 

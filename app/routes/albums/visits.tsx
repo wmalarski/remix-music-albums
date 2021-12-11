@@ -10,7 +10,7 @@ import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectVisitsQuery } from "~/api/types.server";
 import { DialogContent, DialogHeader, DialogRoot, Flex } from "~/components";
 import { VisitsList } from "~/molecules/visits";
-import { HandleFunction, json } from "~/utils/remix";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getScrollStart } from "~/utils/scroll";
 
@@ -20,10 +20,6 @@ const DATA_OVER_SCAN = 5;
 const getStartParam = (searchParams: URLSearchParams) => ({
   start: Number(searchParams.get("startVisits") || "0"),
 });
-
-export const handle: HandleFunction = () => {
-  return { route: "visits" };
-};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { start } = getStartParam(new URL(request.url).searchParams);

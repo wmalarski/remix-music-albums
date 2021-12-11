@@ -11,7 +11,7 @@ import {
   Page,
 } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
-import { HandleFunction, json } from "~/utils/remix";
+import { json } from "~/utils/remix";
 import { toNumber } from "~/utils/validation";
 
 type LoaderData = {
@@ -24,10 +24,6 @@ export const meta: MetaFunction = () => {
     title: "Remix Albums",
     description: "Welcome to remix!",
   };
-};
-
-export const handle: HandleFunction = () => {
-  return { route: "albums" };
 };
 
 export const loader: LoaderFunction = async ({ params, request }) => {

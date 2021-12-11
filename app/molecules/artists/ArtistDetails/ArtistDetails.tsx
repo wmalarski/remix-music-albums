@@ -1,19 +1,19 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { ArtistFragment } from "~/api/types.server";
 import { Button, Flex, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
+import { useArtistRoot } from "..";
 
 type ArtistDetailsProps = {
-  artist: ArtistFragment;
   transition: Transition;
 };
 
 export const ArtistDetails = ({
-  artist,
   transition,
 }: ArtistDetailsProps): ReactElement => {
+  const artist = useArtistRoot();
+
   return (
     <Flex direction="column">
       <StyledLink to={routes.newAlbum(artist.id)}>New album</StyledLink>

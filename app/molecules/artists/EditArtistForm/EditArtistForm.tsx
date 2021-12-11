@@ -1,21 +1,21 @@
 import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { ArtistWithAlbumsFragment } from "~/api/types.server";
 import { Button, Heading, TextInput } from "~/components";
+import { useArtistRoot } from "../ArtistRoot/ArtistRoot";
 import { EditArtistFormResult } from "./EditArtistForm.utils";
 
 type EditArtistFormProps = {
   errors: EditArtistFormResult["errors"];
   transition: Transition;
-  artist: ArtistWithAlbumsFragment;
 };
 
 export const EditArtistForm = ({
-  artist,
   errors,
   transition,
 }: EditArtistFormProps): ReactElement => {
+  const artist = useArtistRoot();
+
   return (
     <Form method="post">
       <Heading>Edit Artist</Heading>

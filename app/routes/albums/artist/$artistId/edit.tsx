@@ -2,28 +2,18 @@ import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { ArtistWithAlbumsFragment } from "~/api/types.server";
 import { ErrorsList } from "~/components";
 import {
   EditArtistForm,
   EditArtistFormResult,
   validateEditArtist,
 } from "~/molecules/artists";
-import {
-  HandleFunction,
-  json,
-  useRouteLoaderData,
-  useRouteTransition,
-} from "~/utils/remix";
+import { json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 type ActionData = FetcherActionData & {
   errors?: EditArtistFormResult["errors"];
-};
-
-export const handle: HandleFunction = () => {
-  return { route: "editArtist" };
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -46,17 +36,12 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 const EditAlbum = (): ReactElement => {
-  const artist = useRouteLoaderData<ArtistWithAlbumsFragment>("artist");
   const action = useActionData<ActionData>();
   const transition = useRouteTransition();
 
   return (
     <>
-      <EditArtistForm
-        transition={transition}
-        errors={action?.errors}
-        artist={artist}
-      />
+      <EditArtistForm transition={transition} errors={action?.errors} />
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );

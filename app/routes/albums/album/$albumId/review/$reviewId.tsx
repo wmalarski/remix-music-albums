@@ -15,16 +15,12 @@ import {
   EditReviewFormResult,
   validateEditReview,
 } from "~/molecules/reviews";
-import { HandleFunction, json, useRouteTransition } from "~/utils/remix";
+import { json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 type ActionData = FetcherActionData & {
   errors?: EditReviewFormResult["errors"];
-};
-
-export const handle: HandleFunction = () => {
-  return { route: "editReview" };
 };
 
 export const action: ActionFunction = async ({ request, params }) => {

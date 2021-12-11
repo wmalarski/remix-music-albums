@@ -3,26 +3,15 @@ import { useVirtual } from "react-virtual";
 import { ActionFunction, redirect, useActionData } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import {
-  AlbumWithArtistAndReviewsFragment,
-  ReviewWithAlbumAndArtistFragment,
-} from "~/api/types.server";
+import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { ErrorsList, Flex, Heading } from "~/components";
+import { useAlbumRoot } from "~/molecules/albums";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
-import {
-  HandleFunction,
-  json,
-  useRouteLoaderData,
-  useRouteTransition,
-} from "~/utils/remix";
+import { json, useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
 const DATA_OVER_SCAN = 5;
-
-export const handle: HandleFunction = () => {
-  return { route: "album/index" };
-};
 
 export const action: ActionFunction = async ({ request, params }) => {
   const user = await authenticator.isAuthenticated(request);
@@ -46,7 +35,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
-  const album = useRouteLoaderData<AlbumWithArtistAndReviewsFragment>("album");
+  const album = useAlbumRoot();
   const transition = useRouteTransition();
 
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {

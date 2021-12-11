@@ -1,21 +1,13 @@
 import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { useVirtual } from "react-virtual";
-import {
-  AlbumWithArtistFragment,
-  ArtistWithAlbumsFragment,
-} from "~/api/types.server";
+import { AlbumWithArtistFragment } from "~/api/types.server";
 import { Flex, Heading } from "~/components";
-import { ArtistAlbumList } from "~/molecules/artists";
-import { HandleFunction, useRouteLoaderData } from "~/utils/remix";
+import { ArtistAlbumList, useArtistRoot } from "~/molecules/artists";
 
 const DATA_OVER_SCAN = 5;
 
-export const handle: HandleFunction = () => {
-  return { route: "artist/index" };
-};
-
 const ArtistAlbums = (): ReactElement => {
-  const artist = useRouteLoaderData<ArtistWithAlbumsFragment>("artist");
+  const artist = useArtistRoot();
 
   const albums = useMemo<AlbumWithArtistFragment[]>(() => {
     const { albums: artistAlbums, ...artistByArtist } = artist;
