@@ -22,8 +22,10 @@ export const {
       brand4: "hsl(0, 0%, 70%)",
       brand7: "hsl(0, 0%, 15%)",
       brand11: "hsl(0, 0%, 10%)",
+      white1: "hsl(0, 100%, 90%)",
       white4: "hsl(0, 100%, 70%)",
       white7: "hsl(0, 100%, 15%)",
+      white9: "hsl(0, 100%, 12%)",
       white11: "hsl(0, 100%, 10%)",
     },
     fontSizes: {
