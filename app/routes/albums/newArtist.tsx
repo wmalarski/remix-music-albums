@@ -1,5 +1,6 @@
 import { ReactElement, useState } from "react";
 import { ActionFunction, redirect, useActionData, useNavigate } from "remix";
+import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import {
   DialogContent,
@@ -25,6 +26,9 @@ export const handle: HandleFunction = () => {
 };
 
 export const action: ActionFunction = async ({ request }) => {
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
+
   const formData = await request.formData();
   const validation = validateNewArtist(formData);
 

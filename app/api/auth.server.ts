@@ -1,6 +1,12 @@
+import { redirect } from "remix";
 import { Auth0Strategy, Authenticator } from "remix-auth";
 import invariant from "tiny-invariant";
-import { sessionStorage } from "~/api/session.server";
+import {
+  commitSession,
+  getSession,
+  sessionStorage,
+} from "~/api/session.server";
+import { routes } from "~/utils/routes";
 
 export type Role = "admin" | "user";
 
@@ -65,3 +71,10 @@ const setupAuth0 = (): Authenticator<User> => {
 };
 
 export const authenticator = setupAuth0();
+
+export const loginRedirect = async (request: Request): Promise<Response> => {
+  const session = await getSession(request);
+  session.set("route", request.url);
+  const commit = await commitSession(session);
+  return redirect(routes.login, { headers: { "Set-Cookie": commit } });
+};

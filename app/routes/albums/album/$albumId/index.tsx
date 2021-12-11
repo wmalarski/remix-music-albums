@@ -1,6 +1,7 @@
 import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { useVirtual } from "react-virtual";
 import { ActionFunction, redirect, useActionData } from "remix";
+import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import {
   AlbumWithArtistAndReviewsFragment,
@@ -24,6 +25,9 @@ export const handle: HandleFunction = () => {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
+
   if (!isNumber(params.albumId))
     throw new Response("Album Not Found", { status: 404 });
 

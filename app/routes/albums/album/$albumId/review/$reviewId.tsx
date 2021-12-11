@@ -6,6 +6,7 @@ import {
   useActionData,
   useLoaderData,
 } from "remix";
+import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { ErrorsList } from "~/components";
@@ -27,6 +28,9 @@ export const handle: HandleFunction = () => {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
+
   if (!isNumber(params.reviewId) || !isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
