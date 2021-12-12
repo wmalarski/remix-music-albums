@@ -2656,6 +2656,18 @@ export type UpdateReviewMutationVariables = Exact<{
 
 export type UpdateReviewMutation = { updateReviewByPk?: { id: number } | null | undefined };
 
+export type SearchAlbumFragment = { id: number, title: string };
+
+export type SearchArtistFragment = { id: number, name: string };
+
+export type SearchQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  query?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type SearchQuery = { album: Array<{ id: number, title: string }>, artist: Array<{ id: number, name: string }> };
+
 export type VisitFragment = { id: number, createdAt: any };
 
 export type VisitWithAlbumAndArtistFragment = { id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } };
@@ -2745,6 +2757,18 @@ export const ReviewWithAlbumAndArtist = gql`
 }
     ${Review}
 ${AlbumWithArtist}`;
+export const SearchAlbum = gql`
+    fragment SearchAlbum on album {
+  id
+  title
+}
+    `;
+export const SearchArtist = gql`
+    fragment SearchArtist on artist {
+  id
+  name
+}
+    `;
 export const Visit = gql`
     fragment Visit on visit {
   id
@@ -2897,6 +2921,17 @@ export const UpdateReview = gql`
   }
 }
     `;
+export const Search = gql`
+    query Search($limit: Int, $query: String) {
+  album(limit: $limit, where: {title: {_ilike: $query}}) {
+    ...SearchAlbum
+  }
+  artist(limit: $limit, where: {name: {_ilike: $query}}) {
+    ...SearchArtist
+  }
+}
+    ${SearchAlbum}
+${SearchArtist}`;
 export const InsertVisit = gql`
     mutation InsertVisit($visit: visit_insert_input!) {
   insertVisitOne: insert_visit_one(
@@ -2989,6 +3024,18 @@ export const ReviewWithAlbumAndArtistFragmentDoc = gql`
 }
     ${ReviewFragmentDoc}
 ${AlbumWithArtistFragmentDoc}`;
+export const SearchAlbumFragmentDoc = gql`
+    fragment SearchAlbum on album {
+  id
+  title
+}
+    `;
+export const SearchArtistFragmentDoc = gql`
+    fragment SearchArtist on artist {
+  id
+  name
+}
+    `;
 export const VisitFragmentDoc = gql`
     fragment Visit on visit {
   id
@@ -3141,6 +3188,17 @@ export const UpdateReviewDocument = gql`
   }
 }
     `;
+export const SearchDocument = gql`
+    query Search($limit: Int, $query: String) {
+  album(limit: $limit, where: {title: {_ilike: $query}}) {
+    ...SearchAlbum
+  }
+  artist(limit: $limit, where: {name: {_ilike: $query}}) {
+    ...SearchArtist
+  }
+}
+    ${SearchAlbumFragmentDoc}
+${SearchArtistFragmentDoc}`;
 export const InsertVisitDocument = gql`
     mutation InsertVisit($visit: visit_insert_input!) {
   insertVisitOne: insert_visit_one(
@@ -3216,6 +3274,9 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     UpdateReview(variables: UpdateReviewMutationVariables, options?: C): Promise<{ data?: UpdateReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdateReviewMutation, UpdateReviewMutationVariables>(UpdateReviewDocument, variables, options);
+    },
+    Search(variables?: SearchQueryVariables, options?: C): Promise<{ data?: SearchQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SearchQuery, SearchQueryVariables>(SearchDocument, variables, options);
     },
     InsertVisit(variables: InsertVisitMutationVariables, options?: C): Promise<{ data?: InsertVisitMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<InsertVisitMutation, InsertVisitMutationVariables>(InsertVisitDocument, variables, options);
