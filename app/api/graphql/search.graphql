@@ -1,9 +1,14 @@
 fragment SearchAlbum on album {
+  __typename
   id
   title
+  artistByArtist {
+    name
+  }
 }
 
 fragment SearchArtist on artist {
+  __typename
   id
   name
 }

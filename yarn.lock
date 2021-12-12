@@ -1347,7 +1347,7 @@
     "@radix-ui/react-use-size" "0.1.0"
     "@radix-ui/rect" "0.1.1"
 
-"@radix-ui/react-portal@0.1.2":
+"@radix-ui/react-portal@0.1.2", "@radix-ui/react-portal@^0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-portal/-/react-portal-0.1.2.tgz#a47059fe04ead0749d879818a7cbe9e7c751c4d5"
   integrity sha512-rLSe5aeJ7yWD6CuUyg+U9wCoMLleRyxQS67eqALzLW7zk0glB5q5x2ihAEjocZH2Tng9v5QkYaLyh2+sO3TMRA==

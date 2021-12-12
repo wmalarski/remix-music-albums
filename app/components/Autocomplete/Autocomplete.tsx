@@ -2,15 +2,18 @@ import { styled } from "@stitches/react";
 
 export const Autocomplete = styled("div", {
   position: "relative",
+  display: "flex",
+  flexDirection: "column",
 });
 
 export const AutocompleteTrigger = styled("div", {
-  display: "inline-block",
+  display: "flex",
+  flexDirection: "row",
   marginLeft: "5px",
 });
 
 export const AutocompleteContent = styled("ul", {
-  maxHeight: 80,
+  maxHeight: "80vh",
   maxWidth: 300,
   overflowY: "scroll",
   backgroundColor: "$dialogBackground",
@@ -56,7 +59,7 @@ export const AutocompleteItem = styled("li", {
   },
 });
 
-export const AutocompleteLabel = styled("label", {
+export const AutocompleteLabel = styled("p", {
   paddingLeft: 25,
   fontSize: 12,
   lineHeight: "25px",

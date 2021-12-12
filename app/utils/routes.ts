@@ -6,6 +6,7 @@ export const routes = {
   albums: "/albums",
   reviews: "/albums/reviews",
   visits: "/albums/visits",
+  search: "/albums/search",
   artist: (artistId: number): string => `/albums/artist/${artistId}`,
   editArtist: (artistId: number): string => `/albums/artist/${artistId}/edit`,
   album: (albumId: number): string => `/albums/album/${albumId}`,

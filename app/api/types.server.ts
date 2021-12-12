@@ -2656,9 +2656,9 @@ export type UpdateReviewMutationVariables = Exact<{
 
 export type UpdateReviewMutation = { updateReviewByPk?: { id: number } | null | undefined };
 
-export type SearchAlbumFragment = { id: number, title: string };
+export type SearchAlbumFragment = { __typename: 'album', id: number, title: string, artistByArtist: { name: string } };
 
-export type SearchArtistFragment = { id: number, name: string };
+export type SearchArtistFragment = { __typename: 'artist', id: number, name: string };
 
 export type SearchQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2666,7 +2666,7 @@ export type SearchQueryVariables = Exact<{
 }>;
 
 
-export type SearchQuery = { album: Array<{ id: number, title: string }>, artist: Array<{ id: number, name: string }> };
+export type SearchQuery = { album: Array<{ __typename: 'album', id: number, title: string, artistByArtist: { name: string } }>, artist: Array<{ __typename: 'artist', id: number, name: string }> };
 
 export type VisitFragment = { id: number, createdAt: any };
 
@@ -2759,12 +2759,17 @@ export const ReviewWithAlbumAndArtist = gql`
 ${AlbumWithArtist}`;
 export const SearchAlbum = gql`
     fragment SearchAlbum on album {
+  __typename
   id
   title
+  artistByArtist {
+    name
+  }
 }
     `;
 export const SearchArtist = gql`
     fragment SearchArtist on artist {
+  __typename
   id
   name
 }
@@ -3026,12 +3031,17 @@ export const ReviewWithAlbumAndArtistFragmentDoc = gql`
 ${AlbumWithArtistFragmentDoc}`;
 export const SearchAlbumFragmentDoc = gql`
     fragment SearchAlbum on album {
+  __typename
   id
   title
+  artistByArtist {
+    name
+  }
 }
     `;
 export const SearchArtistFragmentDoc = gql`
     fragment SearchArtist on artist {
+  __typename
   id
   name
 }
