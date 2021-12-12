@@ -1,3 +1,4 @@
+export * from "./Autocomplete/Autocomplete";
 export * from "./Button/Button";
 export * from "./Container/Container";
 export * from "./Dialog/Dialog";

@@ -13,7 +13,7 @@ type LoaderData = {
   user: User | null;
 };
 
-const randomAlbumLimit = 16;
+const randomAlbumLimit = 2;
 
 export const meta: MetaFunction = () => {
   return {

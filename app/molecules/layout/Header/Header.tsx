@@ -5,6 +5,7 @@ import { routes } from "~/utils/routes";
 import * as Styles from "./Header.styles";
 import { Logo } from "./Logo/Logo";
 import { ProfileDropdown } from "./ProfileDropdown/ProfileDropdown";
+import { Search } from "./Search/Search";
 
 type HeaderProps = {
   user?: User | null;
@@ -17,6 +18,7 @@ export const Header = ({ user }: HeaderProps): ReactElement => {
         <Styles.HomeLink to={routes.albums} title="Remix">
           <Logo />
         </Styles.HomeLink>
+        <Search />
         <nav aria-label="Main navigation">
           <Styles.Ul>
             {user ? (

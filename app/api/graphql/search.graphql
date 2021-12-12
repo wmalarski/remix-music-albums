@@ -1,0 +1,18 @@
+fragment SearchAlbum on album {
+  id
+  title
+}
+
+fragment SearchArtist on artist {
+  id
+  name
+}
+
+query Search($limit: Int, $query: String) {
+  album(limit: $limit, where: { title: { _ilike: $query } }) {
+    ...SearchAlbum
+  }
+  artist(limit: $limit, where: { name: { _ilike: $query } }) {
+    ...SearchArtist
+  }
+}
