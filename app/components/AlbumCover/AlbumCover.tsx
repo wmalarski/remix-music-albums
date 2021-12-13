@@ -3,15 +3,13 @@ import { frontCoverUrl } from "~/api/coverArt";
 import { RandomAlbumWithArtistFragment } from "~/api/types.server";
 import { Text } from "~/components";
 import { routes } from "~/utils/routes";
-import * as Styles from "./AlbumsGridItem.styles";
+import * as Styles from "./AlbumCover.styles";
 
-type AlbumsGridItemProps = {
+type AlbumCoverProps = {
   album: RandomAlbumWithArtistFragment;
 };
 
-export const AlbumsGridItem = ({
-  album,
-}: AlbumsGridItemProps): ReactElement | null => {
+export const AlbumCover = ({ album }: AlbumCoverProps): ReactElement | null => {
   const [isHovering, setIsHovering] = useState(false);
 
   if (!album.id || !album.sid) return null;
