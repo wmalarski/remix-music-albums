@@ -3,7 +3,7 @@ import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
 import { authenticator, User } from "~/api/auth.server";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { RandomAlbumsQuery } from "~/api/types.server";
-import { Divider, Page } from "~/components";
+import { Page } from "~/components";
 import { AlbumsGrid } from "~/molecules/albums";
 import { Footer, Header, Layout } from "~/molecules/layout";
 import { json } from "~/utils/remix";
@@ -13,7 +13,7 @@ type LoaderData = {
   user: User | null;
 };
 
-const randomAlbumLimit = 2;
+const randomAlbumLimit = 16;
 
 export const meta: MetaFunction = () => {
   return {
@@ -45,7 +45,6 @@ const Albums = (): ReactElement => {
       <Page>
         <main>
           <AlbumsGrid albums={data.albums.randomAlbums} />
-          <Divider />
           <Outlet />
         </main>
       </Page>

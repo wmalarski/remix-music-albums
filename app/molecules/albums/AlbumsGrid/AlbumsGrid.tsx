@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { RandomAlbumWithArtistFragment } from "~/api/types.server";
-import { Grid } from "~/components/Grid/Grid";
+import * as Styles from "./AlbumsGrid.styles";
 import { AlbumsGridItem } from "./AlbumsGridItem/AlbumsGridItem";
 
 type AlbumsGridProps = {
@@ -9,10 +9,10 @@ type AlbumsGridProps = {
 
 export const AlbumsGrid = ({ albums }: AlbumsGridProps): ReactElement => {
   return (
-    <Grid>
+    <Styles.Container>
       {albums?.map((album) => (
         <AlbumsGridItem key={album.id} album={album} />
       ))}
-    </Grid>
+    </Styles.Container>
   );
 };

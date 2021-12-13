@@ -7,7 +7,7 @@ export const Content = styled(Container, {
 });
 
 export const Root = styled(Flex, {
-  minHeight: "calc(100vh - env(safe-area-inset-bottom))",
+  // minHeight: "calc(100vh - env(safe-area-inset-bottom))",
   "& > *": {
     width: "100%",
   },
