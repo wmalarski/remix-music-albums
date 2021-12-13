@@ -1,4 +1,3 @@
-export * from "./AlbumDetails/AlbumDetails";
 export * from "./AlbumRoot/AlbumRoot";
 export * from "./AlbumsGrid/AlbumsGrid";
 export * from "./EditAlbumForm/EditAlbumForm";

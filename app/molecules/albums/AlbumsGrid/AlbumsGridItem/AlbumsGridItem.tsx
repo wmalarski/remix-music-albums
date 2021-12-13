@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
 import { frontCoverUrl } from "~/api/coverArt";
 import { RandomAlbumWithArtistFragment } from "~/api/types.server";
-import { Heading } from "~/components";
+import { Text } from "~/components";
 import { routes } from "~/utils/routes";
 import * as Styles from "./AlbumsGridItem.styles";
 
@@ -34,9 +34,10 @@ export const AlbumsGridItem = ({
       />
       {isHovering && (
         <Styles.Overlay>
-          <Heading size="small" fontWeight="bold">
+          <Text size="medium" fontWeight="bold">
             {label}
-          </Heading>
+          </Text>
+          {!!album.year && <Text size="small">{album.year}</Text>}
         </Styles.Overlay>
       )}
     </Styles.Container>

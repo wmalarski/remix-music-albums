@@ -12,4 +12,6 @@ export * from "./IconButton/IconButton";
 export * from "./Page/Page";
 export * from "./Scroll/Scroll";
 export * from "./StyledLink/StyledLink";
+export * from "./Tabs/Tabs";
+export * from "./Text/Text";
 export * from "./TextInput/TextInput";

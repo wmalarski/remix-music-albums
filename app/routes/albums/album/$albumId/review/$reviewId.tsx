@@ -5,11 +5,12 @@ import {
   redirect,
   useActionData,
   useLoaderData,
+  useLocation,
 } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
-import { ErrorsList } from "~/components";
+import { ErrorsList, TabsContent } from "~/components";
 import {
   EditReviewForm,
   EditReviewFormResult,
@@ -62,16 +63,17 @@ const EditReview = (): ReactElement => {
   const review = useLoaderData<ReviewWithAlbumAndArtistFragment>();
   const action = useActionData<ActionData>();
   const transition = useRouteTransition();
+  const location = useLocation();
 
   return (
-    <>
+    <TabsContent value={location.pathname}>
       <EditReviewForm
         transition={transition}
         errors={action?.errors}
         review={review}
       />
       <ErrorsList errors={action?.fetcherErrors} />
-    </>
+    </TabsContent>
   );
 };
 

@@ -1,10 +1,10 @@
 import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { useVirtual } from "react-virtual";
-import { ActionFunction, redirect, useActionData } from "remix";
+import { ActionFunction, redirect, useActionData, useLocation } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
-import { ErrorsList, Flex, Heading } from "~/components";
+import { ErrorsList, TabsContent } from "~/components";
 import { useAlbumRoot } from "~/molecules/albums";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
 import { json, useRouteTransition } from "~/utils/remix";
@@ -37,6 +37,7 @@ const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const album = useAlbumRoot();
   const transition = useRouteTransition();
+  const location = useLocation();
 
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
     if (!album) return [];
@@ -55,20 +56,17 @@ const AlbumReviews = (): ReactElement => {
   });
 
   return (
-    <>
-      <Flex direction="column">
-        <Heading size="medium">Reviews</Heading>
-        <AlbumReviewsList
-          ref={parentRef}
-          albumId={album.id}
-          reviews={reviews}
-          transition={transition}
-          start={0}
-          virtualizer={virtualizer}
-        />
-      </Flex>
+    <TabsContent value={location.pathname}>
+      <AlbumReviewsList
+        ref={parentRef}
+        albumId={album.id}
+        reviews={reviews}
+        transition={transition}
+        start={0}
+        virtualizer={virtualizer}
+      />
       <ErrorsList errors={action?.fetcherErrors} />
-    </>
+    </TabsContent>
   );
 };
 

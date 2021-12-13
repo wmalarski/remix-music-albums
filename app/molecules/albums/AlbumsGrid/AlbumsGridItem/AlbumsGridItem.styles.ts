@@ -19,5 +19,8 @@ export const Overlay = styled("div", {
   background:
     "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 20%, rgba(255,255,255,0) 100%)",
   display: "flex",
-  alignItems: "end",
+  alignItems: "left",
+  justifyContent: "end",
+  flexDirection: "column",
+  padding: "0.5rem",
 });

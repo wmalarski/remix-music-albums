@@ -19,11 +19,16 @@ export const Container = styled("div", {
       flexStart: { justifyContent: "flex-start" },
       spaceBetween: { justifyContent: "space-between" },
     },
+    alignItems: {
+      center: { alignItems: "center" },
+      stretch: { alignItems: "stretch" },
+    },
   },
 
   defaultVariants: {
     direction: "row",
     gap: 0.25,
     justifyContent: "flexStart",
+    alignItems: "stretch",
   },
 });

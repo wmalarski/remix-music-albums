@@ -1,9 +1,10 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { keyframes, styled } from "@stitches/react";
 import { ReactElement } from "react";
-import { Button } from "../Button/Button";
 import { Flex } from "../Flex/Flex";
+import { IconButton } from "../IconButton/IconButton";
 
 const overlayShow = keyframes({
   "0%": { opacity: 0 },
@@ -43,8 +44,6 @@ export const DialogContent = styled(DialogPrimitive.Content, {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "90vw",
-  maxWidth: "450px",
   maxHeight: "85vh",
   padding: 25,
   "@media (prefers-reduced-motion: no-preference)": {
@@ -73,12 +72,14 @@ export const DialogHeader = ({
 }: DialogPrimitive.DialogTitleProps & {
   onClose: DialogPrimitive.DialogCloseProps["onClick"];
 }): ReactElement => (
-  <Flex direction="row" justifyContent="spaceBetween">
+  <Flex direction="row" justifyContent="spaceBetween" alignItems="center">
     <DialogTitle {...props} />
     <DialogClose onClick={onClose} asChild>
-      <Button onClick={onClose}>
-        <Cross1Icon />
-      </Button>
+      <IconButton onClick={onClose}>
+        <AccessibleIcon label="Close dialog">
+          <Cross1Icon />
+        </AccessibleIcon>
+      </IconButton>
     </DialogClose>
   </Flex>
 );
