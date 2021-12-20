@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import {
   ActionFunction,
   LoaderFunction,
@@ -6,20 +6,13 @@ import {
   redirect,
   useActionData,
   useLoaderData,
-  useNavigate,
 } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ArtistWithAlbumsFragment } from "~/api/types.server";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogRoot,
-  ErrorsList,
-  Flex,
-} from "~/components";
-import { ArtistDetails, ArtistRoot } from "~/molecules/artists";
-import { json, useRouteTransition } from "~/utils/remix";
+import { ErrorsList } from "~/components";
+import { ArtistDialog, ArtistRoot } from "~/molecules/artists";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -54,28 +47,12 @@ export const loader: LoaderFunction = async ({ params }) => {
 const Artist = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const artist = useLoaderData<ArtistWithAlbumsFragment>();
-  const transition = useRouteTransition();
-  const navigate = useNavigate();
-
-  const [isOpen, setIsOpen] = useState(true);
-  const handleCloseClick = () => setIsOpen(false);
-  const handleOpenChange = () => navigate(routes.albums);
 
   return (
     <ArtistRoot artist={artist}>
-      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
-        <DialogContent>
-          <Flex direction="column">
-            <DialogHeader onClose={handleCloseClick}>
-              {artist.name}
-            </DialogHeader>
-            <Flex direction="row">
-              <ArtistDetails transition={transition} />
-              <Outlet />
-            </Flex>
-          </Flex>
-        </DialogContent>
-      </DialogRoot>
+      <ArtistDialog>
+        <Outlet />
+      </ArtistDialog>
       <ErrorsList errors={action?.fetcherErrors} />
     </ArtistRoot>
   );

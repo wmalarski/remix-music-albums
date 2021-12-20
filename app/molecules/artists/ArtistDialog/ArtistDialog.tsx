@@ -1,15 +1,15 @@
 import { ReactElement, ReactNode, useState } from "react";
 import { useNavigate } from "remix";
 import { DialogContent, DialogHeader, DialogRoot, Flex } from "~/components";
+import { ArtistDetails } from "~/molecules/artists";
 import { routes } from "~/utils/routes";
-import { AlbumDetails } from "./AlbumDetails/AlbumDetails";
-import { AlbumTabs } from "./AlbumTabs/AlbumTabs";
+import { ArtistTabs } from "./ArtistTabs/ArtistTabs";
 
-type AlbumDialogProps = {
+type Props = {
   children: ReactNode;
 };
 
-export const AlbumDialog = ({ children }: AlbumDialogProps): ReactElement => {
+export const ArtistDialog = ({ children }: Props): ReactElement => {
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -21,9 +21,9 @@ export const AlbumDialog = ({ children }: AlbumDialogProps): ReactElement => {
       <DialogContent>
         <Flex direction="column">
           <DialogHeader onClose={handleCloseClick} />
-          <Flex direction="row" gap={2}>
-            <AlbumDetails />
-            <AlbumTabs>{children}</AlbumTabs>
+          <Flex direction="row">
+            <ArtistDetails />
+            <ArtistTabs>{children}</ArtistTabs>
           </Flex>
         </Flex>
       </DialogContent>
