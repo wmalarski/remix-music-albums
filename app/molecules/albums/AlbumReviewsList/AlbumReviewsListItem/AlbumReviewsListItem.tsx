@@ -1,24 +1,24 @@
-import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
 import { ReviewFragment } from "~/api/types.server";
 import { Button, Flex, StyledLink } from "~/components";
+import { useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 
 type Props = {
   row: VirtualItem;
   albumId: number;
   review: ReviewFragment;
-  transition: Transition;
 };
 
 export const AlbumReviewsListItem = ({
   row,
   albumId,
   review,
-  transition,
 }: Props): ReactElement => {
+  const transition = useRouteTransition();
+
   return (
     <Flex
       ref={row.measureRef}

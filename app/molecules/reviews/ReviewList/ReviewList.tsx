@@ -1,4 +1,3 @@
-import { Transition } from "@remix-run/react/transition";
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
@@ -9,13 +8,12 @@ import { ReviewListItem } from "./ReviewListItem/ReviewListItem";
 type Props = {
   start: number;
   reviews?: ReviewWithAlbumAndArtistFragment[];
-  transition: Transition;
   virtualizer: ReturnType<typeof useVirtual>;
 };
 
 export const ReviewList = forwardRef(
   (
-    { start, reviews, transition, virtualizer }: Props,
+    { start, reviews, virtualizer }: Props,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (
@@ -30,14 +28,7 @@ export const ReviewList = forwardRef(
             const review = reviews?.[row.index - start];
             if (!review) return null;
 
-            return (
-              <ReviewListItem
-                key={review.id}
-                review={review}
-                transition={transition}
-                row={row}
-              />
-            );
+            return <ReviewListItem key={review.id} review={review} row={row} />;
           })}
         </Flex>
       </Styles.StyledScroll>

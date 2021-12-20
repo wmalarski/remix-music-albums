@@ -1,17 +1,18 @@
-import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { Button, Heading, TextInput } from "~/components";
+import { useRouteTransition } from "~/utils/remix";
 import { useArtistRoot } from "../ArtistRoot/ArtistRoot";
 import { EditArtistFormResult } from "./EditArtistForm.utils";
 
 type Props = {
   errors: EditArtistFormResult["errors"];
-  transition: Transition;
 };
 
-export const EditArtistForm = ({ errors, transition }: Props): ReactElement => {
+export const EditArtistForm = ({ errors }: Props): ReactElement => {
   const artist = useArtistRoot();
+
+  const transition = useRouteTransition();
 
   return (
     <Form method="post">

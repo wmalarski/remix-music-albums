@@ -1,21 +1,18 @@
-import { Transition } from "@remix-run/react/transition";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Button, Heading, TextInput } from "~/components";
+import { useRouteTransition } from "~/utils/remix";
 import { EditReviewFormResult } from "./EditReviewForm.utils";
 
 type Props = {
-  transition?: Transition;
   errors?: EditReviewFormResult["errors"];
   review: ReviewWithAlbumAndArtistFragment;
 };
 
-export const EditReviewForm = ({
-  errors,
-  transition,
-  review,
-}: Props): ReactElement => {
+export const EditReviewForm = ({ errors, review }: Props): ReactElement => {
+  const transition = useRouteTransition();
+
   return (
     <Form method="post">
       <Heading>Edit review</Heading>

@@ -1,30 +1,24 @@
-import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { useVirtual } from "react-virtual";
-import {
-  LoaderFunction,
-  useLoaderData,
-  useNavigate,
-  useSearchParams,
-} from "remix";
+import { ReactElement, useCallback, useRef, useState } from "react";
+import { LoaderFunction, useLoaderData, useNavigate } from "remix";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectVisitsQuery } from "~/api/types.server";
 import { DialogContent, DialogHeader, DialogRoot, Flex } from "~/components";
 import { VisitsList } from "~/molecules/visits";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { getScrollStart } from "~/utils/scroll";
-
-const LIMIT = 20;
-const DATA_OVER_SCAN = 5;
-
-const getStartParam = (searchParams: URLSearchParams) => ({
-  start: Number(searchParams.get("startVisits") || "0"),
-});
+import {
+  getRequestStart,
+  scrollConfig,
+  useScrollNavigation,
+} from "~/utils/scroll";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { start } = getStartParam(new URL(request.url).searchParams);
+  const start = getRequestStart(request);
 
-  const result = await graphqlSdk.SelectVisits({ limit: LIMIT, offset: start });
+  const result = await graphqlSdk.SelectVisits({
+    limit: scrollConfig.limit,
+    offset: start,
+  });
 
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
@@ -36,8 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const Visits = (): ReactElement => {
   const query = useLoaderData<SelectVisitsQuery>();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { start } = getStartParam(searchParams);
+
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -46,25 +39,13 @@ const Visits = (): ReactElement => {
 
   const parentRef = useRef<HTMLDivElement>(null);
   const size = query.visitAggregate.aggregate?.count ?? 0;
-  const virtualizer = useVirtual({
+
+  const { start, virtualizer } = useScrollNavigation({
     size,
     parentRef,
     estimateSize: useCallback(() => 300, []),
     initialRect: { width: 100, height: 40 },
-    overscan: DATA_OVER_SCAN,
   });
-
-  const neededStart = getScrollStart({
-    items: virtualizer.virtualItems,
-    limit: LIMIT,
-    overScan: DATA_OVER_SCAN,
-    start: start,
-  });
-
-  useEffect(() => {
-    if (neededStart === start) return;
-    setSearchParams({ start: String(neededStart) });
-  }, [start, neededStart, setSearchParams]);
 
   return (
     <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>

@@ -1,18 +1,28 @@
-import { VirtualItem } from "react-virtual";
+import { useEffect } from "react";
+import { Options, useVirtual, VirtualItem } from "react-virtual";
+import { useSearchParams } from "remix";
+
+export const scrollConfig = {
+  limit: 20,
+  overscan: 5,
+};
+
+export const getSearchStart = (searchParams: URLSearchParams): number =>
+  Number(searchParams.get("start") || "0");
+
+export const getRequestStart = (request: Request): number =>
+  getSearchStart(new URL(request.url).searchParams);
 
 type GetScrollStartArgs = {
   start: number;
-  limit: number;
-  overScan: number;
   items: VirtualItem[];
 };
 
 export const getScrollStart = ({
   start,
-  limit,
-  overScan,
   items,
 }: GetScrollStartArgs): number => {
+  const { limit, overscan } = scrollConfig;
   const middleCount = Math.ceil(limit / 2);
 
   const firstVirtualItem = items.at(0);
@@ -26,12 +36,43 @@ export const getScrollStart = ({
   const last = lastVirtualItem.index;
 
   if (first < start) {
-    const lowerStart = Math.floor((first - middleCount) / overScan) * overScan;
+    const lowerStart = Math.floor((first - middleCount) / overscan) * overscan;
     return Math.max(lowerStart, 0);
   } else if (last > start + limit) {
-    const upperStart = Math.ceil((last - middleCount) / overScan) * overScan;
+    const upperStart = Math.ceil((last - middleCount) / overscan) * overscan;
     return Math.max(upperStart, 0);
   }
 
   return start;
+};
+
+type UseScrollNavigationArgs<T> = Options<T>;
+
+type UseScrollNavigationReturn = {
+  start: number;
+  virtualizer: ReturnType<typeof useVirtual>;
+};
+
+export const useScrollNavigation = <T>(
+  args: UseScrollNavigationArgs<T>
+): UseScrollNavigationReturn => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const start = getSearchStart(searchParams);
+
+  const virtualizer = useVirtual({
+    overscan: scrollConfig.overscan,
+    ...args,
+  });
+
+  const neededStart = getScrollStart({
+    items: virtualizer.virtualItems,
+    start,
+  });
+
+  useEffect(() => {
+    if (neededStart === start) return;
+    setSearchParams({ start: String(neededStart) });
+  }, [setSearchParams, start, neededStart]);
+
+  return { start, virtualizer };
 };

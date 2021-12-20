@@ -14,7 +14,7 @@ import {
   NewArtistFormResult,
   validateNewArtist,
 } from "~/molecules/artists";
-import { json, useRouteTransition } from "~/utils/remix";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 
 type ActionData = FetcherActionData & {
@@ -41,7 +41,6 @@ export const action: ActionFunction = async ({ request }) => {
 
 const NewArtist = (): ReactElement => {
   const action = useActionData<ActionData>();
-  const transition = useRouteTransition();
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -54,7 +53,7 @@ const NewArtist = (): ReactElement => {
         <DialogContent>
           <Flex direction="column">
             <DialogHeader onClose={handleCloseClick}>New artists</DialogHeader>
-            <NewArtistForm transition={transition} errors={action?.errors} />
+            <NewArtistForm errors={action?.errors} />
           </Flex>
         </DialogContent>
       </DialogRoot>

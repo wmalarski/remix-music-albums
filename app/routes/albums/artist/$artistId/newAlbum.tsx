@@ -8,7 +8,7 @@ import {
   NewAlbumFormResult,
   validateNewAlbum,
 } from "~/molecules/albums";
-import { json, useRouteTransition } from "~/utils/remix";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -39,12 +39,12 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const NewAlbum = (): ReactElement => {
   const action = useActionData<ActionData>();
-  const transition = useRouteTransition();
+
   const location = useLocation();
 
   return (
     <TabsContent value={location.pathname}>
-      <NewAlbumForm transition={transition} errors={action?.errors} />
+      <NewAlbumForm errors={action?.errors} />
       <ErrorsList errors={action?.fetcherErrors} />
     </TabsContent>
   );

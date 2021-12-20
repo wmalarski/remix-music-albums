@@ -1,5 +1,4 @@
-import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
-import { useVirtual } from "react-virtual";
+import { ReactElement, useCallback, useRef, useState } from "react";
 import {
   ActionFunction,
   LoaderFunction,
@@ -7,7 +6,6 @@ import {
   useActionData,
   useLoaderData,
   useNavigate,
-  useSearchParams,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { SelectReviewsQuery } from "~/api/types.server";
@@ -19,17 +17,14 @@ import {
   Flex,
 } from "~/components";
 import { ReviewList } from "~/molecules/reviews";
-import { json, useRouteTransition } from "~/utils/remix";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { getScrollStart } from "~/utils/scroll";
+import {
+  getRequestStart,
+  scrollConfig,
+  useScrollNavigation,
+} from "~/utils/scroll";
 import { isNumber } from "~/utils/validation";
-
-const LIMIT = 20;
-const DATA_OVER_SCAN = 5;
-
-const getStartParam = (searchParams: URLSearchParams) => ({
-  start: Number(searchParams.get("startReviews") || "0"),
-});
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -46,10 +41,10 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const { start } = getStartParam(new URL(request.url).searchParams);
+  const start = getRequestStart(request);
 
   const result = await graphqlSdk.SelectReviews({
-    limit: LIMIT,
+    limit: scrollConfig.limit,
     offset: start,
   });
 
@@ -64,9 +59,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 const Reviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const query = useLoaderData<SelectReviewsQuery>();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { start } = getStartParam(searchParams);
-  const transition = useRouteTransition();
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(true);
@@ -75,25 +67,13 @@ const Reviews = (): ReactElement => {
 
   const parentRef = useRef<HTMLDivElement>(null);
   const size = query.reviewAggregate.aggregate?.count ?? 0;
-  const virtualizer = useVirtual({
+
+  const { start, virtualizer } = useScrollNavigation({
     size,
     parentRef,
     estimateSize: useCallback(() => 300, []),
     initialRect: { width: 100, height: 40 },
-    overscan: DATA_OVER_SCAN,
   });
-
-  const neededStart = getScrollStart({
-    items: virtualizer.virtualItems,
-    limit: LIMIT,
-    overScan: DATA_OVER_SCAN,
-    start: start,
-  });
-
-  useEffect(() => {
-    if (neededStart === start) return;
-    setSearchParams({ start: String(neededStart) });
-  }, [start, neededStart, setSearchParams]);
 
   return (
     <>
@@ -105,7 +85,6 @@ const Reviews = (): ReactElement => {
               ref={parentRef}
               start={start}
               reviews={query.review}
-              transition={transition}
               virtualizer={virtualizer}
             />
           </Flex>

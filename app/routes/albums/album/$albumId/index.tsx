@@ -7,7 +7,7 @@ import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { ErrorsList, TabsContent } from "~/components";
 import { useAlbumRoot } from "~/molecules/albums";
 import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
-import { json, useRouteTransition } from "~/utils/remix";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -36,7 +36,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const album = useAlbumRoot();
-  const transition = useRouteTransition();
   const location = useLocation();
 
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
@@ -61,7 +60,6 @@ const AlbumReviews = (): ReactElement => {
         ref={parentRef}
         albumId={album.id}
         reviews={reviews}
-        transition={transition}
         start={0}
         virtualizer={virtualizer}
       />
