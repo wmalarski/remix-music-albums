@@ -3,13 +3,11 @@ import { ReactElement } from "react";
 import { FetcherError } from "~/api/fetcher.server";
 import * as Styles from "./ErrorsList.styles";
 
-type ErrorsListProps = {
+type Props = {
   errors?: FetcherError[];
 };
 
-export const ErrorsList = ({
-  errors,
-}: ErrorsListProps): ReactElement | null => {
+export const ErrorsList = ({ errors }: Props): ReactElement | null => {
   return errors ? (
     <Portal.Root>
       <Styles.Root direction="column">

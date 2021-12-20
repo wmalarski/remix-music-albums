@@ -5,7 +5,7 @@ import { Divider, Flex } from "~/components";
 import * as Styles from "./ArtistAlbumList.styles";
 import { ArtistAlbumListItem } from "./ArtistAlbumListItem/ArtistAlbumListItem";
 
-type ArtistAlbumListProps = {
+type Props = {
   start: number;
   albums?: AlbumWithArtistFragment[];
   virtualizer: ReturnType<typeof useVirtual>;
@@ -13,7 +13,7 @@ type ArtistAlbumListProps = {
 
 export const ArtistAlbumList = forwardRef(
   (
-    { albums, start, virtualizer }: ArtistAlbumListProps,
+    { albums, start, virtualizer }: Props,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (

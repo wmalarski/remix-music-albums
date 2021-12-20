@@ -4,11 +4,11 @@ import { Tabs, TabsList, TabsTrigger } from "~/components";
 import { routes } from "~/utils/routes";
 import { useAlbumRoot } from "../..";
 
-type AlbumTabsProps = {
+type Props = {
   children: ReactNode;
 };
 
-export const AlbumTabs = ({ children }: AlbumTabsProps): ReactElement => {
+export const AlbumTabs = ({ children }: Props): ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
 

@@ -3,11 +3,11 @@ import { RandomAlbumWithArtistFragment } from "~/api/types.server";
 import { AlbumCover } from "../../../components/AlbumCover/AlbumCover";
 import * as Styles from "./AlbumsGrid.styles";
 
-type AlbumsGridProps = {
+type Props = {
   albums?: RandomAlbumWithArtistFragment[];
 };
 
-export const AlbumsGrid = ({ albums }: AlbumsGridProps): ReactElement => {
+export const AlbumsGrid = ({ albums }: Props): ReactElement => {
   return (
     <Styles.Container>
       {albums?.map((album) => (

@@ -6,7 +6,7 @@ import { Divider, Flex } from "~/components";
 import * as Styles from "./ReviewList.styles";
 import { ReviewListItem } from "./ReviewListItem/ReviewListItem";
 
-type ReviewListProps = {
+type Props = {
   start: number;
   reviews?: ReviewWithAlbumAndArtistFragment[];
   transition: Transition;
@@ -15,7 +15,7 @@ type ReviewListProps = {
 
 export const ReviewList = forwardRef(
   (
-    { start, reviews, transition, virtualizer }: ReviewListProps,
+    { start, reviews, transition, virtualizer }: Props,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (

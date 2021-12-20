@@ -6,7 +6,7 @@ import { Flex } from "~/components";
 import * as Styles from "./AlbumReviewsList.styles";
 import { AlbumReviewsListItem } from "./AlbumReviewsListItem/AlbumReviewsListItem";
 
-type AlbumReviewsListProps = {
+type Props = {
   albumId: number;
   reviews?: ReviewFragment[];
   start: number;
@@ -16,7 +16,7 @@ type AlbumReviewsListProps = {
 
 export const AlbumReviewsList = forwardRef(
   (
-    { albumId, reviews, transition, start, virtualizer }: AlbumReviewsListProps,
+    { albumId, reviews, transition, start, virtualizer }: Props,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (

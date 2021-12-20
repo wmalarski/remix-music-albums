@@ -5,11 +5,11 @@ import { routes } from "~/utils/routes";
 import { AlbumDetails } from "./AlbumDetails/AlbumDetails";
 import { AlbumTabs } from "./AlbumTabs/AlbumTabs";
 
-type AlbumDialogProps = {
+type Props = {
   children: ReactNode;
 };
 
-export const AlbumDialog = ({ children }: AlbumDialogProps): ReactElement => {
+export const AlbumDialog = ({ children }: Props): ReactElement => {
   const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(true);

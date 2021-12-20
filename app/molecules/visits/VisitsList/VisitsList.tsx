@@ -5,7 +5,7 @@ import { Divider, Flex } from "~/components";
 import * as Styles from "./VisitsList.styles";
 import { VisitsListItem } from "./VisitsListItem/VisitsListItem";
 
-type VisitsListProps = {
+type Props = {
   start: number;
   visits?: VisitWithAlbumAndArtistFragment[];
   virtualizer: ReturnType<typeof useVirtual>;
@@ -13,7 +13,7 @@ type VisitsListProps = {
 
 export const VisitsList = forwardRef(
   (
-    { visits, start, virtualizer }: VisitsListProps,
+    { visits, start, virtualizer }: Props,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (

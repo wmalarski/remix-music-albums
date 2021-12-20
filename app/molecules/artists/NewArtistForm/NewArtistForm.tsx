@@ -4,15 +4,12 @@ import { Form } from "remix";
 import { Button, TextInput } from "~/components";
 import { NewArtistFormResult } from "./NewArtistForm.utils";
 
-type NewArtistFormProps = {
+type Props = {
   errors: NewArtistFormResult["errors"];
   transition: Transition;
 };
 
-export const NewArtistForm = ({
-  errors,
-  transition,
-}: NewArtistFormProps): ReactElement => {
+export const NewArtistForm = ({ errors, transition }: Props): ReactElement => {
   return (
     <Form method="post">
       <label>

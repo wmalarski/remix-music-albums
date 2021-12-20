@@ -4,11 +4,11 @@ import { Tabs, TabsList, TabsTrigger } from "~/components";
 import { routes } from "~/utils/routes";
 import { useArtistRoot } from "../../ArtistRoot/ArtistRoot";
 
-type ArtistTabsProps = {
+type Props = {
   children: ReactNode;
 };
 
-export const ArtistTabs = ({ children }: ArtistTabsProps): ReactElement => {
+export const ArtistTabs = ({ children }: Props): ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
 

@@ -4,15 +4,12 @@ import { AlbumWithArtistFragment } from "~/api/types.server";
 import { AlbumCover } from "~/components";
 import * as Styles from "./ArtistAlbumListItem.styles";
 
-type ArtistAlbumListItemProps = {
+type Props = {
   row: VirtualItem;
   album: AlbumWithArtistFragment;
 };
 
-export const ArtistAlbumListItem = ({
-  album,
-  row,
-}: ArtistAlbumListItemProps): ReactElement => {
+export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
   return (
     <Styles.Container
       ref={row.measureRef}

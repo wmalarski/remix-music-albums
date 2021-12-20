@@ -11,15 +11,12 @@ export const useAlbumRoot = (): AlbumRootValue => {
   return value;
 };
 
-type AlbumRootProps = {
+type Props = {
   album: AlbumWithArtistAndReviewsFragment;
   children: ReactNode;
 };
 
-export const AlbumRoot = ({
-  children,
-  album,
-}: AlbumRootProps): ReactElement => {
+export const AlbumRoot = ({ children, album }: Props): ReactElement => {
   return (
     <AlbumRootContext.Provider value={album}>
       {children}

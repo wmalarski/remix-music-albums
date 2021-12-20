@@ -4,15 +4,12 @@ import { VisitWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Flex, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
-type VisitsListItemProps = {
+type Props = {
   row: VirtualItem;
   visit: VisitWithAlbumAndArtistFragment;
 };
 
-export const VisitsListItem = ({
-  visit,
-  row,
-}: VisitsListItemProps): ReactElement => {
+export const VisitsListItem = ({ visit, row }: Props): ReactElement => {
   return (
     <Flex
       ref={row.measureRef}

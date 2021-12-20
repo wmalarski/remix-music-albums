@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "~/components";
 
-type SearchAutocompleteProps = {
+type Props = {
   data?: SearchQuery;
   onInputValueChange: (inputValue?: string) => void;
   onSelectedAlbumChange: (id: number) => void;
@@ -23,7 +23,7 @@ export const SearchAutocomplete = ({
   onInputValueChange,
   onSelectedAlbumChange,
   onSelectedArtistChange,
-}: SearchAutocompleteProps): ReactElement => {
+}: Props): ReactElement => {
   const artistShift = data?.album.length ?? 0;
   const inputItems = [...(data?.album ?? []), ...(data?.artist ?? [])];
 

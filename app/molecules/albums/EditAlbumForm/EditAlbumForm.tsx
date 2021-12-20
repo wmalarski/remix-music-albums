@@ -5,15 +5,12 @@ import { Button, Heading, TextInput } from "~/components";
 import { useAlbumRoot } from "..";
 import { EditAlbumFormResult } from "./EditAlbumForm.utils";
 
-type EditAlbumFormProps = {
+type Props = {
   transition: Transition;
   errors: EditAlbumFormResult["errors"];
 };
 
-export const EditAlbumForm = ({
-  transition,
-  errors,
-}: EditAlbumFormProps): ReactElement => {
+export const EditAlbumForm = ({ transition, errors }: Props): ReactElement => {
   const album = useAlbumRoot();
 
   return (

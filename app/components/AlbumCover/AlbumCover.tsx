@@ -5,11 +5,11 @@ import { Text } from "~/components";
 import { routes } from "~/utils/routes";
 import * as Styles from "./AlbumCover.styles";
 
-type AlbumCoverProps = {
+type Props = {
   album: RandomAlbumWithArtistFragment;
 };
 
-export const AlbumCover = ({ album }: AlbumCoverProps): ReactElement | null => {
+export const AlbumCover = ({ album }: Props): ReactElement | null => {
   const [isHovering, setIsHovering] = useState(false);
 
   if (!album.id || !album.sid) return null;

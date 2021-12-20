@@ -14,13 +14,11 @@ import {
 } from "~/components";
 import { routes } from "~/utils/routes";
 
-type ProfileDropdownProps = {
+type Props = {
   user: User;
 };
 
-export const ProfileDropdown = ({
-  user,
-}: ProfileDropdownProps): ReactElement => {
+export const ProfileDropdown = ({ user }: Props): ReactElement => {
   const submit = useSubmit();
 
   const handleLogoutClick = () =>

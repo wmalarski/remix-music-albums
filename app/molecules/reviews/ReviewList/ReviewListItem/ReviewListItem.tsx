@@ -6,7 +6,7 @@ import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Button, Flex, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
 
-type ReviewListItemProps = {
+type Props = {
   row: VirtualItem;
   review: ReviewWithAlbumAndArtistFragment;
   transition: Transition;
@@ -16,7 +16,7 @@ export const ReviewListItem = ({
   row,
   review,
   transition,
-}: ReviewListItemProps): ReactElement => {
+}: Props): ReactElement => {
   return (
     <Flex
       ref={row.measureRef}

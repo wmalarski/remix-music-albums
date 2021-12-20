@@ -5,15 +5,12 @@ import { Button, Heading, TextInput } from "~/components";
 import { useArtistRoot } from "../ArtistRoot/ArtistRoot";
 import { EditArtistFormResult } from "./EditArtistForm.utils";
 
-type EditArtistFormProps = {
+type Props = {
   errors: EditArtistFormResult["errors"];
   transition: Transition;
 };
 
-export const EditArtistForm = ({
-  errors,
-  transition,
-}: EditArtistFormProps): ReactElement => {
+export const EditArtistForm = ({ errors, transition }: Props): ReactElement => {
   const artist = useArtistRoot();
 
   return (

@@ -11,15 +11,12 @@ export const useArtistRoot = (): ArtistRootValue => {
   return value;
 };
 
-type ArtistRootProps = {
+type Props = {
   artist: ArtistWithAlbumsFragment;
   children: ReactNode;
 };
 
-export const ArtistRoot = ({
-  children,
-  artist,
-}: ArtistRootProps): ReactElement => {
+export const ArtistRoot = ({ children, artist }: Props): ReactElement => {
   return (
     <ArtistRootContext.Provider value={artist}>
       {children}

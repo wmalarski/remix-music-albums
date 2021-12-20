@@ -5,7 +5,7 @@ import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Button, Heading, TextInput } from "~/components";
 import { EditReviewFormResult } from "./EditReviewForm.utils";
 
-type EditReviewFormProps = {
+type Props = {
   transition?: Transition;
   errors?: EditReviewFormResult["errors"];
   review: ReviewWithAlbumAndArtistFragment;
@@ -15,7 +15,7 @@ export const EditReviewForm = ({
   errors,
   transition,
   review,
-}: EditReviewFormProps): ReactElement => {
+}: Props): ReactElement => {
   return (
     <Form method="post">
       <Heading>Edit review</Heading>

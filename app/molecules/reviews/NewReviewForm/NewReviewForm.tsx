@@ -4,15 +4,12 @@ import { Form } from "remix";
 import { Button, Heading, TextInput } from "~/components";
 import { NewReviewFormResult } from "./NewReviewForm.utils";
 
-type NewReviewFormProps = {
+type Props = {
   transition?: Transition;
   errors?: NewReviewFormResult["errors"];
 };
 
-export const NewReviewForm = ({
-  errors,
-  transition,
-}: NewReviewFormProps): ReactElement => {
+export const NewReviewForm = ({ errors, transition }: Props): ReactElement => {
   return (
     <Form method="post">
       <Heading>Review album</Heading>

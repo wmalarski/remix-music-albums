@@ -7,11 +7,11 @@ import { Logo } from "./Logo/Logo";
 import { ProfileDropdown } from "./ProfileDropdown/ProfileDropdown";
 import { Search } from "./Search/Search";
 
-type HeaderProps = {
+type Props = {
   user?: User | null;
 };
 
-export const Header = ({ user }: HeaderProps): ReactElement => {
+export const Header = ({ user }: Props): ReactElement => {
   return (
     <Styles.Header>
       <Styles.Content>
