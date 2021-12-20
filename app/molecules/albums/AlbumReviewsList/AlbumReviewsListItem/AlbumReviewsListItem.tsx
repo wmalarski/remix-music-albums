@@ -5,18 +5,16 @@ import { ReviewFragment } from "~/api/types.server";
 import { Button, Flex, StyledLink } from "~/components";
 import { useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
+import { useAlbumRoot } from "../../AlbumRoot/AlbumRoot";
 
 type Props = {
   row: VirtualItem;
-  albumId: number;
   review: ReviewFragment;
 };
 
-export const AlbumReviewsListItem = ({
-  row,
-  albumId,
-  review,
-}: Props): ReactElement => {
+export const AlbumReviewsListItem = ({ row, review }: Props): ReactElement => {
+  const album = useAlbumRoot();
+
   const transition = useRouteTransition();
 
   return (
@@ -28,7 +26,7 @@ export const AlbumReviewsListItem = ({
       <p>{review.rate}</p>
       <p>{review.text}</p>
       <p>{review.createdAt}</p>
-      <StyledLink to={routes.editReview(albumId, review.id)}>
+      <StyledLink to={routes.editReview(album.id, review.id)}>
         Edit review
       </StyledLink>
       <Form method="delete">

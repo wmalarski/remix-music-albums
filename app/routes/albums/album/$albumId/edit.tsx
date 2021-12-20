@@ -36,6 +36,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const EditAlbum = (): ReactElement => {
   const action = useActionData<ActionData>();
+
   const location = useLocation();
 
   return (

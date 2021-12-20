@@ -36,6 +36,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const album = useAlbumRoot();
+
   const location = useLocation();
 
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
@@ -58,7 +59,6 @@ const AlbumReviews = (): ReactElement => {
     <TabsContent value={location.pathname}>
       <AlbumReviewsList
         ref={parentRef}
-        albumId={album.id}
         reviews={reviews}
         start={0}
         virtualizer={virtualizer}

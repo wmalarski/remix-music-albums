@@ -6,7 +6,6 @@ import * as Styles from "./AlbumReviewsList.styles";
 import { AlbumReviewsListItem } from "./AlbumReviewsListItem/AlbumReviewsListItem";
 
 type Props = {
-  albumId: number;
   reviews?: ReviewFragment[];
   start: number;
   virtualizer: ReturnType<typeof useVirtual>;
@@ -14,7 +13,7 @@ type Props = {
 
 export const AlbumReviewsList = forwardRef(
   (
-    { albumId, reviews, start, virtualizer }: Props,
+    { reviews, start, virtualizer }: Props,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (
@@ -24,12 +23,7 @@ export const AlbumReviewsList = forwardRef(
             const review = reviews?.[row.index - start];
             if (!review) return null;
             return (
-              <AlbumReviewsListItem
-                key={review.id}
-                albumId={albumId}
-                review={review}
-                row={row}
-              />
+              <AlbumReviewsListItem key={review.id} review={review} row={row} />
             );
           })}
         </Flex>
