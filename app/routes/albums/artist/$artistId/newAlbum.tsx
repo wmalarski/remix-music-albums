@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
-import { ActionFunction, redirect, useActionData } from "remix";
+import { ActionFunction, redirect, useActionData, useLocation } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { ErrorsList } from "~/components";
+import { ErrorsList, TabsContent } from "~/components";
 import {
   NewAlbumForm,
   NewAlbumFormResult,
@@ -40,12 +40,13 @@ export const action: ActionFunction = async ({ request, params }) => {
 const NewAlbum = (): ReactElement => {
   const action = useActionData<ActionData>();
   const transition = useRouteTransition();
+  const location = useLocation();
 
   return (
-    <>
+    <TabsContent value={location.pathname}>
       <NewAlbumForm transition={transition} errors={action?.errors} />
       <ErrorsList errors={action?.fetcherErrors} />
-    </>
+    </TabsContent>
   );
 };
 

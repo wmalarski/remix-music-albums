@@ -1,13 +1,15 @@
 import { ReactElement, useCallback, useMemo, useRef } from "react";
 import { useVirtual } from "react-virtual";
+import { useLocation } from "remix";
 import { AlbumWithArtistFragment } from "~/api/types.server";
-import { Flex, Heading } from "~/components";
+import { Flex, Heading, TabsContent } from "~/components";
 import { ArtistAlbumList, useArtistRoot } from "~/molecules/artists";
 
 const DATA_OVER_SCAN = 5;
 
 const ArtistAlbums = (): ReactElement => {
   const artist = useArtistRoot();
+  const location = useLocation();
 
   const albums = useMemo<AlbumWithArtistFragment[]>(() => {
     const { albums: artistAlbums, ...artistByArtist } = artist;
@@ -25,10 +27,12 @@ const ArtistAlbums = (): ReactElement => {
   });
 
   return (
-    <Flex direction="column">
-      <Heading>Albums</Heading>
-      <ArtistAlbumList albums={albums} start={0} virtualizer={virtualizer} />
-    </Flex>
+    <TabsContent value={location.pathname}>
+      <Flex direction="column">
+        <Heading>Albums</Heading>
+        <ArtistAlbumList albums={albums} start={0} virtualizer={virtualizer} />
+      </Flex>
+    </TabsContent>
   );
 };
 
