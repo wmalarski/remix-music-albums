@@ -1,16 +1,12 @@
-import { ReactElement, useCallback, useRef, useState } from "react";
-import { LoaderFunction, useLoaderData, useNavigate } from "remix";
+import { ReactElement } from "react";
+import { LoaderFunction, useLoaderData } from "remix";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectVisitsQuery } from "~/api/types.server";
 import { DialogContent, DialogHeader, DialogRoot, Flex } from "~/components";
-import { VisitsList } from "~/molecules/visits";
-import { json } from "~/utils/remix";
+import { VisitsScroll } from "~/molecules/visits";
+import { json, useIsOpen } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import {
-  getRequestStart,
-  scrollConfig,
-  useScrollNavigation,
-} from "~/utils/scroll";
+import { getRequestStart, scrollConfig } from "~/utils/scroll";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const start = getRequestStart(request);
@@ -31,33 +27,14 @@ export const loader: LoaderFunction = async ({ request }) => {
 const Visits = (): ReactElement => {
   const query = useLoaderData<SelectVisitsQuery>();
 
-  const navigate = useNavigate();
-
-  const [isOpen, setIsOpen] = useState(true);
-  const handleCloseClick = () => setIsOpen(false);
-  const handleOpenChange = () => navigate(routes.albums);
-
-  const parentRef = useRef<HTMLDivElement>(null);
-  const size = query.visitAggregate.aggregate?.count ?? 0;
-
-  const { start, virtualizer } = useScrollNavigation({
-    size,
-    parentRef,
-    estimateSize: useCallback(() => 300, []),
-    initialRect: { width: 100, height: 40 },
-  });
+  const { isOpen, onClose, onOpen } = useIsOpen(routes.albums);
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+    <DialogRoot open={isOpen} onOpenChange={onOpen}>
       <DialogContent>
         <Flex direction="column">
-          <DialogHeader onClose={handleCloseClick}>Visits</DialogHeader>
-          <VisitsList
-            ref={parentRef}
-            start={start}
-            virtualizer={virtualizer}
-            visits={query.visit}
-          />
+          <DialogHeader onClose={onClose}>Visits</DialogHeader>
+          <VisitsScroll query={query} />
         </Flex>
       </DialogContent>
     </DialogRoot>

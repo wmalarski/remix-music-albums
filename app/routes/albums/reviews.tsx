@@ -1,11 +1,10 @@
-import { ReactElement, useCallback, useRef, useState } from "react";
+import { ReactElement } from "react";
 import {
   ActionFunction,
   LoaderFunction,
   redirect,
   useActionData,
   useLoaderData,
-  useNavigate,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { SelectReviewsQuery } from "~/api/types.server";
@@ -16,14 +15,10 @@ import {
   ErrorsList,
   Flex,
 } from "~/components";
-import { ReviewList } from "~/molecules/reviews";
-import { json } from "~/utils/remix";
+import { ReviewScroll } from "~/molecules/reviews";
+import { json, useIsOpen } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import {
-  getRequestStart,
-  scrollConfig,
-  useScrollNavigation,
-} from "~/utils/scroll";
+import { getRequestStart, scrollConfig } from "~/utils/scroll";
 import { isNumber } from "~/utils/validation";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -59,34 +54,16 @@ export const loader: LoaderFunction = async ({ request }) => {
 const Reviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const query = useLoaderData<SelectReviewsQuery>();
-  const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(true);
-  const handleCloseClick = () => setIsOpen(false);
-  const handleOpenChange = () => navigate(routes.albums);
-
-  const parentRef = useRef<HTMLDivElement>(null);
-  const size = query.reviewAggregate.aggregate?.count ?? 0;
-
-  const { start, virtualizer } = useScrollNavigation({
-    size,
-    parentRef,
-    estimateSize: useCallback(() => 300, []),
-    initialRect: { width: 100, height: 40 },
-  });
+  const { isOpen, onClose, onOpen } = useIsOpen(routes.albums);
 
   return (
     <>
-      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogRoot open={isOpen} onOpenChange={onOpen}>
         <DialogContent>
           <Flex direction="column">
-            <DialogHeader onClose={handleCloseClick}>Reviews</DialogHeader>
-            <ReviewList
-              ref={parentRef}
-              start={start}
-              reviews={query.review}
-              virtualizer={virtualizer}
-            />
+            <DialogHeader onClose={onClose}>Reviews</DialogHeader>
+            <ReviewScroll query={query} />
           </Flex>
         </DialogContent>
       </DialogRoot>

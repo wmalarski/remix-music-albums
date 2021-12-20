@@ -1,1 +1,1 @@
-export * from "./VisitsList/VisitsList";
+export * from "./VisitsScroll/VisitsScroll";

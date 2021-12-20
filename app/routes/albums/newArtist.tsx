@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
-import { ActionFunction, redirect, useActionData, useNavigate } from "remix";
+import { ReactElement } from "react";
+import { ActionFunction, redirect, useActionData } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import {
@@ -14,7 +14,7 @@ import {
   NewArtistFormResult,
   validateNewArtist,
 } from "~/molecules/artists";
-import { json } from "~/utils/remix";
+import { json, useIsOpen } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 
 type ActionData = FetcherActionData & {
@@ -41,18 +41,15 @@ export const action: ActionFunction = async ({ request }) => {
 
 const NewArtist = (): ReactElement => {
   const action = useActionData<ActionData>();
-  const navigate = useNavigate();
 
-  const [isOpen, setIsOpen] = useState(true);
-  const handleCloseClick = () => setIsOpen(false);
-  const handleOpenChange = () => navigate(routes.albums);
+  const { isOpen, onClose, onOpen } = useIsOpen(routes.albums);
 
   return (
     <>
-      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogRoot open={isOpen} onOpenChange={onOpen}>
         <DialogContent>
           <Flex direction="column">
-            <DialogHeader onClose={handleCloseClick}>New artists</DialogHeader>
+            <DialogHeader onClose={onClose}>New artists</DialogHeader>
             <NewArtistForm errors={action?.errors} />
           </Flex>
         </DialogContent>
