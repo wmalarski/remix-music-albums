@@ -1,35 +1,18 @@
-import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
-import { TrashIcon } from "@radix-ui/react-icons";
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import {
   ActionFunction,
-  Form,
   LoaderFunction,
   Outlet,
   redirect,
   useActionData,
   useLoaderData,
-  useLocation,
-  useNavigate,
 } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
-import { frontCoverUrl } from "~/api/coverArt";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { AlbumWithArtistAndReviewsFragment } from "~/api/types.server";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogRoot,
-  ErrorsList,
-  Flex,
-  Heading,
-  IconButton,
-  StyledLink,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "~/components";
+import { ErrorsList } from "~/components";
 import { AlbumRoot } from "~/molecules/albums";
+import { AlbumDialog } from "~/molecules/albums/AlbumDialog/AlbumDialog";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
@@ -77,56 +60,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 const Album = (): ReactElement => {
   const album = useLoaderData<AlbumWithArtistAndReviewsFragment>();
   const action = useActionData<FetcherActionData>();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const [isOpen, setIsOpen] = useState(true);
-  const handleCloseClick = () => setIsOpen(false);
-  const handleOpenChange = () => navigate(routes.albums);
-  const handleTabChange = (value: string) => navigate(value);
 
   return (
     <AlbumRoot album={album}>
-      <DialogRoot open={isOpen} onOpenChange={handleOpenChange}>
-        <DialogContent>
-          <Flex direction="column">
-            <DialogHeader onClose={handleCloseClick}>
-              <Flex direction="row" alignItems="center" gap="1">
-                <Heading size="small">{album.title}</Heading>
-                <StyledLink to={routes.artist(album.artistByArtist.id)}>
-                  <Heading size="small2">{album.artistByArtist.name}</Heading>
-                </StyledLink>
-                <Form method="delete">
-                  <IconButton type="submit">
-                    <AccessibleIcon label="Delete album">
-                      <TrashIcon />
-                    </AccessibleIcon>
-                  </IconButton>
-                </Form>
-              </Flex>
-            </DialogHeader>
-            <Flex direction="row" gap={2}>
-              <Flex direction="column">
-                <img src={frontCoverUrl({ mBid: album.sid })} alt="" />
-              </Flex>
-              <Tabs value={location.pathname} onValueChange={handleTabChange}>
-                <TabsList aria-label="Manage your account">
-                  <TabsTrigger value={routes.album(album.id)}>
-                    Reviews
-                  </TabsTrigger>
-                  <TabsTrigger value={routes.newReview(album.id)}>
-                    New Review
-                  </TabsTrigger>
-                  <TabsTrigger value={routes.editAlbum(album.id)}>
-                    Edit Album
-                  </TabsTrigger>
-                </TabsList>
-                <Outlet />
-              </Tabs>
-            </Flex>
-          </Flex>
-        </DialogContent>
-      </DialogRoot>
+      <AlbumDialog>
+        <Outlet />
+      </AlbumDialog>
       <ErrorsList errors={action?.fetcherErrors} />
     </AlbumRoot>
   );

@@ -25,7 +25,6 @@ export const TabsTrigger = styled(TabsPrimitive.Trigger, {
   justifyContent: "center",
   fontSize: 15,
   lineHeight: 1,
-  color: "$brand11",
   userSelect: "none",
   "&:first-child": { borderTopLeftRadius: 6 },
   "&:last-child": { borderTopRightRadius: 6 },

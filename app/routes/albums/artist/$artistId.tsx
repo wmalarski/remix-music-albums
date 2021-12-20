@@ -15,7 +15,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogRoot,
-  Divider,
   ErrorsList,
   Flex,
 } from "~/components";
@@ -72,7 +71,6 @@ const Artist = (): ReactElement => {
             </DialogHeader>
             <Flex direction="row">
               <ArtistDetails transition={transition} />
-              <Divider orientation="vertical" />
               <Outlet />
             </Flex>
           </Flex>
