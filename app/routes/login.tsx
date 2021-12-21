@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, redirect } from "remix";
-import { authenticator } from "~/api/auth.server";
 import { Page } from "~/components";
 import { Footer, Header, Layout } from "~/modules/layout";
+import { authenticator } from "~/services/auth.server";
 import { routes } from "~/utils/routes";
 
 export const meta: MetaFunction = () => {

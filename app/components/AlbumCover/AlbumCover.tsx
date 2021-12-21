@@ -1,7 +1,7 @@
 import { ReactElement, useState } from "react";
-import { frontCoverUrl } from "~/api/coverArt";
-import { RandomAlbumWithArtistFragment } from "~/api/types.server";
 import { Text } from "~/components";
+import { frontCoverUrl } from "~/services/coverArt";
+import { RandomAlbumWithArtistFragment } from "~/services/types.server";
 import { routes } from "~/utils/routes";
 import * as Styles from "./AlbumCover.styles";
 

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { RandomAlbumWithArtistFragment } from "~/api/types.server";
+import { RandomAlbumWithArtistFragment } from "~/services/types.server";
 import { AlbumCover } from "../../../components/AlbumCover/AlbumCover";
 import * as Styles from "./AlbumsGrid.styles";
 

@@ -5,5 +5,5 @@ public
 node_modules
 build
 public/build
-app/api/types.server.ts
+app/services/types.server.ts
 scripts/*

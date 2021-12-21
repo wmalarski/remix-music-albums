@@ -1,5 +1,5 @@
 import { ReactElement, useCallback, useRef } from "react";
-import { SelectReviewsQuery } from "~/api/types.server";
+import { SelectReviewsQuery } from "~/services/types.server";
 import { useScrollNavigation } from "~/utils/scroll";
 import { AlbumReviewsList } from "./AlbumReviewsList/AlbumReviewsList";
 

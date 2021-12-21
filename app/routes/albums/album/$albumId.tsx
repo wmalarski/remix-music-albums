@@ -7,12 +7,12 @@ import {
   useActionData,
   useLoaderData,
 } from "remix";
-import { authenticator, loginRedirect } from "~/api/auth.server";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { AlbumWithArtistFragment } from "~/api/types.server";
 import { ErrorsList, Flex } from "~/components";
 import { AlbumDetails, AlbumRoot, AlbumTabs } from "~/modules/albums";
 import { NavigationDialog } from "~/modules/layout";
+import { authenticator, loginRedirect } from "~/services/auth.server";
+import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
+import { AlbumWithArtistFragment } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";

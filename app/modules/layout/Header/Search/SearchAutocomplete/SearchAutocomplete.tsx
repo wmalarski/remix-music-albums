@@ -1,6 +1,5 @@
 import { useCombobox } from "downshift";
 import { ReactElement } from "react";
-import { SearchQuery } from "~/api/types.server";
 import {
   Autocomplete,
   AutocompleteContent,
@@ -10,6 +9,7 @@ import {
   IconButton,
   TextInput,
 } from "~/components";
+import { SearchQuery } from "~/services/types.server";
 
 type Props = {
   data?: SearchQuery;

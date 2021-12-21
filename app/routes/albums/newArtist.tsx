@@ -1,7 +1,5 @@
 import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData } from "remix";
-import { authenticator, loginRedirect } from "~/api/auth.server";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ErrorsList } from "~/components";
 import {
   NewArtistForm,
@@ -9,6 +7,8 @@ import {
   validateNewArtist,
 } from "~/modules/artists";
 import { NavigationDialog } from "~/modules/layout";
+import { authenticator, loginRedirect } from "~/services/auth.server";
+import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 

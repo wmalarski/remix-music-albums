@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData, useLocation } from "remix";
-import { graphqlSdk } from "~/api/fetcher.server";
-import { SelectAlbumsQuery } from "~/api/types.server";
 import { Flex, Heading, TabsContent } from "~/components";
 import { ArtistAlbumScroll } from "~/modules/artists";
+import { graphqlSdk } from "~/services/fetcher.server";
+import { SelectAlbumsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";
 import { isNumber } from "~/utils/validation";

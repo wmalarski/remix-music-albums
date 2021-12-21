@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
-import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Divider, Flex } from "~/components";
+import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";
 import * as Styles from "./ReviewList.styles";
 import { ReviewListItem } from "./ReviewListItem/ReviewListItem";
 

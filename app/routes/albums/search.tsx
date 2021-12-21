@@ -1,6 +1,6 @@
 import { LoaderFunction } from "remix";
-import { graphqlSdk } from "~/api/fetcher.server";
-import { SearchQuery } from "~/api/types.server";
+import { graphqlSdk } from "~/services/fetcher.server";
+import { SearchQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 
 export const loader: LoaderFunction = async ({ request }) => {

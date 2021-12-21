@@ -1,6 +1,6 @@
 import * as Portal from "@radix-ui/react-portal";
 import { ReactElement } from "react";
-import { FetcherError } from "~/api/fetcher.server";
+import { FetcherError } from "~/services/fetcher.server";
 import * as Styles from "./ErrorsList.styles";
 
 type Props = {

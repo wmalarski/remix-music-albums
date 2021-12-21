@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
-import { ReviewFragment } from "~/api/types.server";
 import { Button, Flex, StyledLink } from "~/components";
+import { ReviewFragment } from "~/services/types.server";
 import { useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { useAlbumRoot } from "../../../AlbumRoot/AlbumRoot";

@@ -1,7 +1,7 @@
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
-import { VisitWithAlbumAndArtistFragment } from "~/api/types.server";
 import { Divider, Flex } from "~/components";
+import { VisitWithAlbumAndArtistFragment } from "~/services/types.server";
 import * as Styles from "./VisitsList.styles";
 import { VisitsListItem } from "./VisitsListItem/VisitsListItem";
 

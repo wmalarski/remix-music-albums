@@ -1,5 +1,5 @@
 import { ReactElement, useCallback, useRef } from "react";
-import { SelectVisitsQuery } from "~/api/types.server";
+import { SelectVisitsQuery } from "~/services/types.server";
 import { useScrollNavigation } from "~/utils/scroll";
 import { VisitsList } from "./VisitsList/VisitsList";
 

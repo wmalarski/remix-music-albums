@@ -1,5 +1,5 @@
 import { ActionFunction, LoaderFunction, redirect } from "remix";
-import { authenticator, AuthStrategyName } from "~/api/auth.server";
+import { authenticator, AuthStrategyName } from "~/services/auth.server";
 import { routes } from "~/utils/routes";
 
 export const action: ActionFunction = async ({ request }) => {

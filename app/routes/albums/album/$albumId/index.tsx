@@ -7,11 +7,11 @@ import {
   useLoaderData,
   useLocation,
 } from "remix";
-import { authenticator, loginRedirect } from "~/api/auth.server";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { SelectReviewsQuery } from "~/api/types.server";
 import { ErrorsList, TabsContent } from "~/components";
 import { AlbumReviewsScroll } from "~/modules/albums";
+import { authenticator, loginRedirect } from "~/services/auth.server";
+import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
+import { SelectReviewsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";

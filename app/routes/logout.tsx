@@ -1,5 +1,5 @@
 import { ActionFunction, json, LoaderFunction, redirect } from "remix";
-import { destroySession, getSession } from "~/api/session.server";
+import { destroySession, getSession } from "~/services/session.server";
 import { routes } from "~/utils/routes";
 
 export const action: ActionFunction = async ({ request }) => {

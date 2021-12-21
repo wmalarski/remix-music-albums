@@ -1,5 +1,5 @@
 import { createContext, ReactElement, ReactNode, useContext } from "react";
-import { ArtistFragment } from "~/api/types.server";
+import { ArtistFragment } from "~/services/types.server";
 
 const ArtistRootContext = createContext<ArtistFragment | null>(null);
 

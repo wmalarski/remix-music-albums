@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData, useLocation } from "remix";
-import { authenticator, loginRedirect } from "~/api/auth.server";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { ErrorsList, TabsContent } from "~/components";
 import {
   EditAlbumForm,
   EditAlbumFormResult,
   validateEditAlbum,
 } from "~/modules/albums";
+import { authenticator, loginRedirect } from "~/services/auth.server";
+import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";

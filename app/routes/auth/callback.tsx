@@ -1,6 +1,6 @@
 import { LoaderFunction } from "remix";
-import { authenticator, AuthStrategyName } from "~/api/auth.server";
-import { getSession } from "~/api/session.server";
+import { authenticator, AuthStrategyName } from "~/services/auth.server";
+import { getSession } from "~/services/session.server";
 import { routes } from "~/utils/routes";
 
 export const loader: LoaderFunction = async ({ request }) => {

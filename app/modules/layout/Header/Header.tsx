@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import { User } from "~/api/auth.server";
 import { Button } from "~/components";
+import { User } from "~/services/auth.server";
 import { routes } from "~/utils/routes";
 import * as Styles from "./Header.styles";
 import { Logo } from "./Logo/Logo";

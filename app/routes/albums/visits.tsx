@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData } from "remix";
-import { graphqlSdk } from "~/api/fetcher.server";
-import { SelectVisitsQuery } from "~/api/types.server";
 import { NavigationDialog } from "~/modules/layout";
 import { VisitsScroll } from "~/modules/visits";
+import { graphqlSdk } from "~/services/fetcher.server";
+import { SelectVisitsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";

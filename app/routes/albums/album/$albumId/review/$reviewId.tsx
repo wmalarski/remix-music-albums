@@ -7,15 +7,15 @@ import {
   useLoaderData,
   useLocation,
 } from "remix";
-import { authenticator, loginRedirect } from "~/api/auth.server";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
 import { ErrorsList, TabsContent } from "~/components";
 import {
   EditReviewForm,
   EditReviewFormResult,
   validateEditReview,
 } from "~/modules/reviews";
+import { authenticator, loginRedirect } from "~/services/auth.server";
+import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
+import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";

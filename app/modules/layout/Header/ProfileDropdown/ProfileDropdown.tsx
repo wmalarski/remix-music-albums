@@ -1,7 +1,6 @@
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Link, useSubmit } from "remix";
-import { User } from "~/api/auth.server";
 import {
   DropdownMenu,
   DropdownMenuArrow,
@@ -12,6 +11,7 @@ import {
   DropdownMenuTrigger,
   IconButton,
 } from "~/components";
+import { User } from "~/services/auth.server";
 import { routes } from "~/utils/routes";
 
 type Props = {

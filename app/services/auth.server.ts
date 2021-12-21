@@ -5,7 +5,7 @@ import {
   commitSession,
   getSession,
   sessionStorage,
-} from "~/api/session.server";
+} from "~/services/session.server";
 import { routes } from "~/utils/routes";
 import { graphqlSdk } from "./fetcher.server";
 

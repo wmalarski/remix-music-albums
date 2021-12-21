@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
-import { AlbumFragment } from "~/api/types.server";
 import { AlbumCover } from "~/components";
+import { AlbumFragment } from "~/services/types.server";
 import * as Styles from "./ArtistAlbumListItem.styles";
 
 type Props = {

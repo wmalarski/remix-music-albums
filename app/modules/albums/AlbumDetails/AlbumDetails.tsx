@@ -2,8 +2,8 @@ import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { frontCoverUrl } from "~/api/coverArt";
 import { Flex, Heading, IconButton, StyledLink } from "~/components";
+import { frontCoverUrl } from "~/services/coverArt";
 import { routes } from "~/utils/routes";
 import { useAlbumRoot } from "..";
 

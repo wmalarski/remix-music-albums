@@ -6,11 +6,11 @@ import {
   useActionData,
   useLoaderData,
 } from "remix";
-import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { SelectReviewsWithInfoQuery } from "~/api/types.server";
 import { ErrorsList } from "~/components";
 import { NavigationDialog } from "~/modules/layout";
 import { ReviewScroll } from "~/modules/reviews";
+import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
+import { SelectReviewsWithInfoQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";

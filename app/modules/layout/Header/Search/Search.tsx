@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { useFetcher, useNavigate } from "remix";
-import { SearchQuery } from "~/api/types.server";
+import { SearchQuery } from "~/services/types.server";
 import { useCallbackDebounce } from "~/utils/debounce";
 import { routes } from "~/utils/routes";
 import { SearchAutocomplete } from "./SearchAutocomplete/SearchAutocomplete";

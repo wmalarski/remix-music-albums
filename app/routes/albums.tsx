@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
-import { authenticator, User } from "~/api/auth.server";
-import { graphqlSdk } from "~/api/fetcher.server";
-import { RandomAlbumsQuery } from "~/api/types.server";
 import { Page } from "~/components";
 import { AlbumsGrid } from "~/modules/albums";
 import { Footer, Header, Layout } from "~/modules/layout";
+import { authenticator, User } from "~/services/auth.server";
+import { graphqlSdk } from "~/services/fetcher.server";
+import { RandomAlbumsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 
 type LoaderData = {

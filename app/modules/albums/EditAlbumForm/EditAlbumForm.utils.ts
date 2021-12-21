@@ -1,5 +1,5 @@
 import invariant from "tiny-invariant";
-import { UpdateAlbumMutationVariables } from "~/api/types.server";
+import { UpdateAlbumMutationVariables } from "~/services/types.server";
 
 export type EditAlbumFormResult =
   | {
