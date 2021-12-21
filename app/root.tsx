@@ -9,7 +9,7 @@ import {
   useCatch,
 } from "remix";
 import { Divider, Flex } from "./components";
-import { Footer, Layout } from "./molecules/layout";
+import { Footer, Layout } from "./modules/layout";
 import { darkTheme, globalStyles } from "./styles/stitches.config";
 
 // https://remix.run/api/conventions#default-export

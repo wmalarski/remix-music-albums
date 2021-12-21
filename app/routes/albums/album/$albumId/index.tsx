@@ -11,7 +11,7 @@ import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { SelectReviewsQuery } from "~/api/types.server";
 import { ErrorsList, TabsContent } from "~/components";
-import { AlbumReviewsScroll } from "~/molecules/albums";
+import { AlbumReviewsScroll } from "~/modules/albums";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";

@@ -4,8 +4,8 @@ import { authenticator, User } from "~/api/auth.server";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { RandomAlbumsQuery } from "~/api/types.server";
 import { Page } from "~/components";
-import { AlbumsGrid } from "~/molecules/albums";
-import { Footer, Header, Layout } from "~/molecules/layout";
+import { AlbumsGrid } from "~/modules/albums";
+import { Footer, Header, Layout } from "~/modules/layout";
 import { json } from "~/utils/remix";
 
 type LoaderData = {

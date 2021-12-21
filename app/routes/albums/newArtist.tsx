@@ -7,8 +7,8 @@ import {
   NewArtistForm,
   NewArtistFormResult,
   validateNewArtist,
-} from "~/molecules/artists";
-import { NavigationDialog } from "~/molecules/layout";
+} from "~/modules/artists";
+import { NavigationDialog } from "~/modules/layout";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 

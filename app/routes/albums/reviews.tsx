@@ -9,8 +9,8 @@ import {
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { SelectReviewsWithInfoQuery } from "~/api/types.server";
 import { ErrorsList } from "~/components";
-import { NavigationDialog } from "~/molecules/layout";
-import { ReviewScroll } from "~/molecules/reviews";
+import { NavigationDialog } from "~/modules/layout";
+import { ReviewScroll } from "~/modules/reviews";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";

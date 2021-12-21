@@ -7,7 +7,7 @@ import {
   EditArtistForm,
   EditArtistFormResult,
   validateEditArtist,
-} from "~/molecules/artists";
+} from "~/modules/artists";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";

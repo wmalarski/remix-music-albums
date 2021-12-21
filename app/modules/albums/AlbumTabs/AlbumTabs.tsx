@@ -2,7 +2,7 @@ import { ReactElement, ReactNode } from "react";
 import { useLocation, useNavigate } from "remix";
 import { Tabs, TabsList, TabsTrigger } from "~/components";
 import { routes } from "~/utils/routes";
-import { useAlbumRoot } from "../..";
+import { useAlbumRoot } from "../AlbumRoot/AlbumRoot";
 
 type Props = {
   children: ReactNode;

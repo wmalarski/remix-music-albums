@@ -3,7 +3,7 @@ import { LoaderFunction, useLoaderData, useLocation } from "remix";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectAlbumsQuery } from "~/api/types.server";
 import { Flex, Heading, TabsContent } from "~/components";
-import { ArtistAlbumScroll } from "~/molecules/artists";
+import { ArtistAlbumScroll } from "~/modules/artists";
 import { json } from "~/utils/remix";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";
 import { isNumber } from "~/utils/validation";

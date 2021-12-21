@@ -7,7 +7,7 @@ import {
   NewAlbumForm,
   NewAlbumFormResult,
   validateNewAlbum,
-} from "~/molecules/albums";
+} from "~/modules/albums";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";

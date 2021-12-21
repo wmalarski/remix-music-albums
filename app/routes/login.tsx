@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, redirect } from "remix";
 import { authenticator } from "~/api/auth.server";
 import { Page } from "~/components";
-import { Footer, Header, Layout } from "~/molecules/layout";
+import { Footer, Header, Layout } from "~/modules/layout";
 import { routes } from "~/utils/routes";
 
 export const meta: MetaFunction = () => {

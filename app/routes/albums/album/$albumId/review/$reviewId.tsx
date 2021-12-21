@@ -15,7 +15,7 @@ import {
   EditReviewForm,
   EditReviewFormResult,
   validateEditReview,
-} from "~/molecules/reviews";
+} from "~/modules/reviews";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
