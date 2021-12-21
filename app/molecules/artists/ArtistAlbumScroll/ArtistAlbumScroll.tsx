@@ -1,15 +1,15 @@
 import { ReactElement, useCallback, useRef } from "react";
-import { SelectReviewsWithInfoQuery } from "~/api/types.server";
+import { SelectAlbumsQuery } from "~/api/types.server";
 import { useScrollNavigation } from "~/utils/scroll";
-import { ReviewList } from "./ReviewList/ReviewList";
+import { ArtistAlbumList } from "..";
 
 type Props = {
-  query: SelectReviewsWithInfoQuery;
+  query: SelectAlbumsQuery;
 };
 
-export const ReviewScroll = ({ query }: Props): ReactElement => {
+export const ArtistAlbumScroll = ({ query }: Props): ReactElement => {
   const parentRef = useRef<HTMLDivElement>(null);
-  const size = query.reviewAggregate.aggregate?.count ?? 0;
+  const size = query.albumAggregate.aggregate?.count ?? 0;
 
   const { start, virtualizer } = useScrollNavigation({
     size,
@@ -19,10 +19,10 @@ export const ReviewScroll = ({ query }: Props): ReactElement => {
   });
 
   return (
-    <ReviewList
+    <ArtistAlbumList
       ref={parentRef}
       start={start}
-      reviews={query.review}
+      albums={query.album}
       virtualizer={virtualizer}
     />
   );

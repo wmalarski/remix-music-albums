@@ -7,7 +7,7 @@ import {
   useLoaderData,
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { SelectReviewsQuery } from "~/api/types.server";
+import { SelectReviewsWithInfoQuery } from "~/api/types.server";
 import { ErrorsList, NavigationDialog } from "~/components";
 import { ReviewScroll } from "~/molecules/reviews";
 import { json } from "~/utils/remix";
@@ -32,7 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
 export const loader: LoaderFunction = async ({ request }) => {
   const start = getRequestStart(request);
 
-  const result = await graphqlSdk.SelectReviews({
+  const result = await graphqlSdk.SelectReviewsWithInfo({
     limit: scrollConfig.limit,
     offset: start,
   });
@@ -40,14 +40,14 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (result.errors)
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
-  return json<SelectReviewsQuery>(
+  return json<SelectReviewsWithInfoQuery>(
     result.data ?? { review: [], reviewAggregate: {} }
   );
 };
 
 const Reviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
-  const query = useLoaderData<SelectReviewsQuery>();
+  const query = useLoaderData<SelectReviewsWithInfoQuery>();
 
   return (
     <>

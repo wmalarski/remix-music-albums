@@ -9,7 +9,7 @@ import {
 } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { ArtistWithAlbumsFragment } from "~/api/types.server";
+import { ArtistFragment } from "~/api/types.server";
 import { ErrorsList } from "~/components";
 import { ArtistDialog, ArtistRoot } from "~/molecules/artists";
 import { json } from "~/utils/remix";
@@ -41,12 +41,12 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const artistFragment = result.data?.artistByPk;
   if (!artistFragment) throw new Response("Not Found", { status: 404 });
-  return json<ArtistWithAlbumsFragment>(artistFragment);
+  return json<ArtistFragment>(artistFragment);
 };
 
 const Artist = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
-  const artist = useLoaderData<ArtistWithAlbumsFragment>();
+  const artist = useLoaderData<ArtistFragment>();
 
   return (
     <ArtistRoot artist={artist}>

@@ -4,13 +4,6 @@ fragment Artist on artist {
   name
 }
 
-fragment ArtistWithAlbums on artist {
-  ...Artist
-  albums {
-    ...Album
-  }
-}
-
 query SelectArtists($limit: Int, $offset: Int) {
   artist(limit: $limit, offset: $offset) {
     ...Artist
@@ -30,7 +23,7 @@ mutation InsertArtist($artist: artist_insert_input!) {
 
 query SelectArtist($id: Int!) {
   artistByPk: artist_by_pk(id: $id) {
-    ...ArtistWithAlbums
+    ...Artist
   }
 }
 

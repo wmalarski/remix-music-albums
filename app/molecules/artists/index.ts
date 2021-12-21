@@ -1,4 +1,5 @@
-export * from "./ArtistAlbumList/ArtistAlbumList";
+export * from "./ArtistAlbumScroll/ArtistAlbumList/ArtistAlbumList";
+export * from "./ArtistAlbumScroll/ArtistAlbumScroll";
 export * from "./ArtistDialog/ArtistDetails/ArtistDetails";
 export * from "./ArtistDialog/ArtistDialog";
 export * from "./ArtistRoot/ArtistRoot";

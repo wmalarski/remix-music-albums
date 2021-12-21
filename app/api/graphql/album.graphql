@@ -12,13 +12,6 @@ fragment AlbumWithArtist on album {
   }
 }
 
-fragment AlbumWithArtistAndReviews on album {
-  ...AlbumWithArtist
-  reviews {
-    ...Review
-  }
-}
-
 fragment RandomAlbumWithArtist on random_albums {
   id
   sid
@@ -35,9 +28,9 @@ query RandomAlbums($limit: Int) {
   }
 }
 
-query SelectAlbums($limit: Int, $offset: Int) {
-  album(limit: $limit, offset: $offset) {
-    ...AlbumWithArtist
+query SelectAlbums($limit: Int, $offset: Int, $where: album_bool_exp) {
+  album(limit: $limit, offset: $offset, where: $where) {
+    ...Album
   }
   albumAggregate: album_aggregate {
     aggregate {
@@ -54,7 +47,7 @@ mutation InsertAlbum($album: album_insert_input!) {
 
 query SelectAlbum($id: Int!) {
   albumByPk: album_by_pk(id: $id) {
-    ...AlbumWithArtistAndReviews
+    ...AlbumWithArtist
   }
 }
 

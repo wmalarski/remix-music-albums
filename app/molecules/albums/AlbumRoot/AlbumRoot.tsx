@@ -1,18 +1,16 @@
 import { createContext, ReactElement, ReactNode, useContext } from "react";
-import { AlbumWithArtistAndReviewsFragment } from "~/api/types.server";
+import { AlbumWithArtistFragment } from "~/api/types.server";
 
-type AlbumRootValue = AlbumWithArtistAndReviewsFragment;
+const AlbumRootContext = createContext<AlbumWithArtistFragment | null>(null);
 
-const AlbumRootContext = createContext<AlbumRootValue | null>(null);
-
-export const useAlbumRoot = (): AlbumRootValue => {
+export const useAlbumRoot = (): AlbumWithArtistFragment => {
   const value = useContext(AlbumRootContext);
   if (!value) throw new Error("AlbumRootContext not initialized");
   return value;
 };
 
 type Props = {
-  album: AlbumWithArtistAndReviewsFragment;
+  album: AlbumWithArtistFragment;
   children: ReactNode;
 };
 

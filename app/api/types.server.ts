@@ -2519,8 +2519,6 @@ export type AlbumFragment = { id: number, sid: string, title: string, year: numb
 
 export type AlbumWithArtistFragment = { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } };
 
-export type AlbumWithArtistAndReviewsFragment = { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid?: string | null | undefined, name: string } };
-
 export type RandomAlbumWithArtistFragment = { id?: number | null | undefined, sid?: string | null | undefined, title?: string | null | undefined, year?: number | null | undefined, artistByArtist?: { id: number, sid?: string | null | undefined, name: string } | null | undefined };
 
 export type RandomAlbumsQueryVariables = Exact<{
@@ -2533,10 +2531,11 @@ export type RandomAlbumsQuery = { randomAlbums: Array<{ id?: number | null | und
 export type SelectAlbumsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<AlbumBoolExp>;
 }>;
 
 
-export type SelectAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } }>, albumAggregate: { aggregate?: { count: number } | null | undefined } };
+export type SelectAlbumsQuery = { album: Array<{ id: number, sid: string, title: string, year: number }>, albumAggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type InsertAlbumMutationVariables = Exact<{
   album: AlbumInsertInput;
@@ -2550,7 +2549,7 @@ export type SelectAlbumQueryVariables = Exact<{
 }>;
 
 
-export type SelectAlbumQuery = { albumByPk?: { id: number, sid: string, title: string, year: number, reviews: Array<{ id: number, rate: any, text: string, createdAt: any }>, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } | null | undefined };
+export type SelectAlbumQuery = { albumByPk?: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } | null | undefined };
 
 export type DeleteAlbumMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -2568,8 +2567,6 @@ export type UpdateAlbumMutationVariables = Exact<{
 export type UpdateAlbumMutation = { updateAlbumByPk?: { id: number } | null | undefined };
 
 export type ArtistFragment = { id: number, sid?: string | null | undefined, name: string };
-
-export type ArtistWithAlbumsFragment = { id: number, sid?: string | null | undefined, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> };
 
 export type SelectArtistsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -2591,7 +2588,7 @@ export type SelectArtistQueryVariables = Exact<{
 }>;
 
 
-export type SelectArtistQuery = { artistByPk?: { id: number, sid?: string | null | undefined, name: string, albums: Array<{ id: number, sid: string, title: string, year: number }> } | null | undefined };
+export type SelectArtistQuery = { artistByPk?: { id: number, sid?: string | null | undefined, name: string } | null | undefined };
 
 export type DeleteArtistMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -2629,10 +2626,19 @@ export type InsertReviewMutation = { insertReviewOne?: { id: number } | null | u
 export type SelectReviewsQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ReviewBoolExp>;
 }>;
 
 
-export type SelectReviewsQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } }>, reviewAggregate: { aggregate?: { count: number } | null | undefined } };
+export type SelectReviewsQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any }>, reviewAggregate: { aggregate?: { count: number } | null | undefined } };
+
+export type SelectReviewsWithInfoQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type SelectReviewsWithInfoQuery = { review: Array<{ id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } }>, reviewAggregate: { aggregate?: { count: number } | null | undefined } };
 
 export type SelectReviewQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -2687,14 +2693,6 @@ export type SelectVisitsQueryVariables = Exact<{
 
 export type SelectVisitsQuery = { visit: Array<{ id: number, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } }>, visitAggregate: { aggregate?: { count: number } | null | undefined } };
 
-export const Album = gql`
-    fragment Album on album {
-  id
-  sid
-  title
-  year
-}
-    `;
 export const Artist = gql`
     fragment Artist on artist {
   id
@@ -2702,32 +2700,6 @@ export const Artist = gql`
   name
 }
     `;
-export const AlbumWithArtist = gql`
-    fragment AlbumWithArtist on album {
-  ...Album
-  artistByArtist {
-    ...Artist
-  }
-}
-    ${Album}
-${Artist}`;
-export const Review = gql`
-    fragment Review on review {
-  id
-  rate
-  text
-  createdAt
-}
-    `;
-export const AlbumWithArtistAndReviews = gql`
-    fragment AlbumWithArtistAndReviews on album {
-  ...AlbumWithArtist
-  reviews {
-    ...Review
-  }
-}
-    ${AlbumWithArtist}
-${Review}`;
 export const RandomAlbumWithArtist = gql`
     fragment RandomAlbumWithArtist on random_albums {
   id
@@ -2739,15 +2711,31 @@ export const RandomAlbumWithArtist = gql`
   }
 }
     ${Artist}`;
-export const ArtistWithAlbums = gql`
-    fragment ArtistWithAlbums on artist {
-  ...Artist
-  albums {
-    ...Album
+export const Review = gql`
+    fragment Review on review {
+  id
+  rate
+  text
+  createdAt
+}
+    `;
+export const Album = gql`
+    fragment Album on album {
+  id
+  sid
+  title
+  year
+}
+    `;
+export const AlbumWithArtist = gql`
+    fragment AlbumWithArtist on album {
+  ...Album
+  artistByArtist {
+    ...Artist
   }
 }
-    ${Artist}
-${Album}`;
+    ${Album}
+${Artist}`;
 export const ReviewWithAlbumAndArtist = gql`
     fragment ReviewWithAlbumAndArtist on review {
   ...Review
@@ -2797,9 +2785,9 @@ export const RandomAlbums = gql`
 }
     ${RandomAlbumWithArtist}`;
 export const SelectAlbums = gql`
-    query SelectAlbums($limit: Int, $offset: Int) {
-  album(limit: $limit, offset: $offset) {
-    ...AlbumWithArtist
+    query SelectAlbums($limit: Int, $offset: Int, $where: album_bool_exp) {
+  album(limit: $limit, offset: $offset, where: $where) {
+    ...Album
   }
   albumAggregate: album_aggregate {
     aggregate {
@@ -2807,7 +2795,7 @@ export const SelectAlbums = gql`
     }
   }
 }
-    ${AlbumWithArtist}`;
+    ${Album}`;
 export const InsertAlbum = gql`
     mutation InsertAlbum($album: album_insert_input!) {
   insertAlbumOne: insert_album_one(object: $album) {
@@ -2818,10 +2806,10 @@ export const InsertAlbum = gql`
 export const SelectAlbum = gql`
     query SelectAlbum($id: Int!) {
   albumByPk: album_by_pk(id: $id) {
-    ...AlbumWithArtistAndReviews
+    ...AlbumWithArtist
   }
 }
-    ${AlbumWithArtistAndReviews}`;
+    ${AlbumWithArtist}`;
 export const DeleteAlbum = gql`
     mutation DeleteAlbum($id: Int!) {
   deleteAlbumByPk: delete_album_by_pk(id: $id) {
@@ -2858,10 +2846,10 @@ export const InsertArtist = gql`
 export const SelectArtist = gql`
     query SelectArtist($id: Int!) {
   artistByPk: artist_by_pk(id: $id) {
-    ...ArtistWithAlbums
+    ...Artist
   }
 }
-    ${ArtistWithAlbums}`;
+    ${Artist}`;
 export const DeleteArtist = gql`
     mutation DeleteArtist($id: Int!) {
   deleteArtistByPk: delete_artist_by_pk(id: $id) {
@@ -2894,7 +2882,19 @@ export const InsertReview = gql`
 }
     `;
 export const SelectReviews = gql`
-    query SelectReviews($limit: Int, $offset: Int) {
+    query SelectReviews($limit: Int, $offset: Int, $where: review_bool_exp) {
+  review(limit: $limit, offset: $offset, where: $where) {
+    ...Review
+  }
+  reviewAggregate: review_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+    ${Review}`;
+export const SelectReviewsWithInfo = gql`
+    query SelectReviewsWithInfo($limit: Int, $offset: Int) {
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
@@ -2959,14 +2959,6 @@ export const SelectVisits = gql`
   }
 }
     ${VisitWithAlbumAndArtist}`;
-export const AlbumFragmentDoc = gql`
-    fragment Album on album {
-  id
-  sid
-  title
-  year
-}
-    `;
 export const ArtistFragmentDoc = gql`
     fragment Artist on artist {
   id
@@ -2974,32 +2966,6 @@ export const ArtistFragmentDoc = gql`
   name
 }
     `;
-export const AlbumWithArtistFragmentDoc = gql`
-    fragment AlbumWithArtist on album {
-  ...Album
-  artistByArtist {
-    ...Artist
-  }
-}
-    ${AlbumFragmentDoc}
-${ArtistFragmentDoc}`;
-export const ReviewFragmentDoc = gql`
-    fragment Review on review {
-  id
-  rate
-  text
-  createdAt
-}
-    `;
-export const AlbumWithArtistAndReviewsFragmentDoc = gql`
-    fragment AlbumWithArtistAndReviews on album {
-  ...AlbumWithArtist
-  reviews {
-    ...Review
-  }
-}
-    ${AlbumWithArtistFragmentDoc}
-${ReviewFragmentDoc}`;
 export const RandomAlbumWithArtistFragmentDoc = gql`
     fragment RandomAlbumWithArtist on random_albums {
   id
@@ -3011,15 +2977,31 @@ export const RandomAlbumWithArtistFragmentDoc = gql`
   }
 }
     ${ArtistFragmentDoc}`;
-export const ArtistWithAlbumsFragmentDoc = gql`
-    fragment ArtistWithAlbums on artist {
-  ...Artist
-  albums {
-    ...Album
+export const ReviewFragmentDoc = gql`
+    fragment Review on review {
+  id
+  rate
+  text
+  createdAt
+}
+    `;
+export const AlbumFragmentDoc = gql`
+    fragment Album on album {
+  id
+  sid
+  title
+  year
+}
+    `;
+export const AlbumWithArtistFragmentDoc = gql`
+    fragment AlbumWithArtist on album {
+  ...Album
+  artistByArtist {
+    ...Artist
   }
 }
-    ${ArtistFragmentDoc}
-${AlbumFragmentDoc}`;
+    ${AlbumFragmentDoc}
+${ArtistFragmentDoc}`;
 export const ReviewWithAlbumAndArtistFragmentDoc = gql`
     fragment ReviewWithAlbumAndArtist on review {
   ...Review
@@ -3069,9 +3051,9 @@ export const RandomAlbumsDocument = gql`
 }
     ${RandomAlbumWithArtistFragmentDoc}`;
 export const SelectAlbumsDocument = gql`
-    query SelectAlbums($limit: Int, $offset: Int) {
-  album(limit: $limit, offset: $offset) {
-    ...AlbumWithArtist
+    query SelectAlbums($limit: Int, $offset: Int, $where: album_bool_exp) {
+  album(limit: $limit, offset: $offset, where: $where) {
+    ...Album
   }
   albumAggregate: album_aggregate {
     aggregate {
@@ -3079,7 +3061,7 @@ export const SelectAlbumsDocument = gql`
     }
   }
 }
-    ${AlbumWithArtistFragmentDoc}`;
+    ${AlbumFragmentDoc}`;
 export const InsertAlbumDocument = gql`
     mutation InsertAlbum($album: album_insert_input!) {
   insertAlbumOne: insert_album_one(object: $album) {
@@ -3090,10 +3072,10 @@ export const InsertAlbumDocument = gql`
 export const SelectAlbumDocument = gql`
     query SelectAlbum($id: Int!) {
   albumByPk: album_by_pk(id: $id) {
-    ...AlbumWithArtistAndReviews
+    ...AlbumWithArtist
   }
 }
-    ${AlbumWithArtistAndReviewsFragmentDoc}`;
+    ${AlbumWithArtistFragmentDoc}`;
 export const DeleteAlbumDocument = gql`
     mutation DeleteAlbum($id: Int!) {
   deleteAlbumByPk: delete_album_by_pk(id: $id) {
@@ -3130,10 +3112,10 @@ export const InsertArtistDocument = gql`
 export const SelectArtistDocument = gql`
     query SelectArtist($id: Int!) {
   artistByPk: artist_by_pk(id: $id) {
-    ...ArtistWithAlbums
+    ...Artist
   }
 }
-    ${ArtistWithAlbumsFragmentDoc}`;
+    ${ArtistFragmentDoc}`;
 export const DeleteArtistDocument = gql`
     mutation DeleteArtist($id: Int!) {
   deleteArtistByPk: delete_artist_by_pk(id: $id) {
@@ -3166,7 +3148,19 @@ export const InsertReviewDocument = gql`
 }
     `;
 export const SelectReviewsDocument = gql`
-    query SelectReviews($limit: Int, $offset: Int) {
+    query SelectReviews($limit: Int, $offset: Int, $where: review_bool_exp) {
+  review(limit: $limit, offset: $offset, where: $where) {
+    ...Review
+  }
+  reviewAggregate: review_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+    ${ReviewFragmentDoc}`;
+export const SelectReviewsWithInfoDocument = gql`
+    query SelectReviewsWithInfo($limit: Int, $offset: Int) {
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }
@@ -3275,6 +3269,9 @@ export function getSdk<C>(requester: Requester<C>) {
     },
     SelectReviews(variables?: SelectReviewsQueryVariables, options?: C): Promise<{ data?: SelectReviewsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<SelectReviewsQuery, SelectReviewsQueryVariables>(SelectReviewsDocument, variables, options);
+    },
+    SelectReviewsWithInfo(variables?: SelectReviewsWithInfoQueryVariables, options?: C): Promise<{ data?: SelectReviewsWithInfoQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+      return requester<SelectReviewsWithInfoQuery, SelectReviewsWithInfoQueryVariables>(SelectReviewsWithInfoDocument, variables, options);
     },
     SelectReview(variables: SelectReviewQueryVariables, options?: C): Promise<{ data?: SelectReviewQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<SelectReviewQuery, SelectReviewQueryVariables>(SelectReviewDocument, variables, options);

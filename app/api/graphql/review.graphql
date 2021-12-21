@@ -18,7 +18,18 @@ mutation InsertReview($review: review_insert_input!) {
   }
 }
 
-query SelectReviews($limit: Int, $offset: Int) {
+query SelectReviews($limit: Int, $offset: Int, $where: review_bool_exp) {
+  review(limit: $limit, offset: $offset, where: $where) {
+    ...Review
+  }
+  reviewAggregate: review_aggregate {
+    aggregate {
+      count
+    }
+  }
+}
+
+query SelectReviewsWithInfo($limit: Int, $offset: Int) {
   review(limit: $limit, offset: $offset) {
     ...ReviewWithAlbumAndArtist
   }

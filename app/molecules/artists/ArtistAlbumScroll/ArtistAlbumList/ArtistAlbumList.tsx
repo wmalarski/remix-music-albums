@@ -1,13 +1,13 @@
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
-import { AlbumWithArtistFragment } from "~/api/types.server";
+import { AlbumFragment } from "~/api/types.server";
 import { Divider, Flex } from "~/components";
 import * as Styles from "./ArtistAlbumList.styles";
 import { ArtistAlbumListItem } from "./ArtistAlbumListItem/ArtistAlbumListItem";
 
 type Props = {
   start: number;
-  albums?: AlbumWithArtistFragment[];
+  albums?: AlbumFragment[];
   virtualizer: ReturnType<typeof useVirtual>;
 };
 

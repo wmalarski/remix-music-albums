@@ -14,6 +14,7 @@
     "tsc": "tsc --noEmit",
     "======== TYPES ========": "",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml dotenv_config_path=.env",
+    "======== STORYBOOK ========": "",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

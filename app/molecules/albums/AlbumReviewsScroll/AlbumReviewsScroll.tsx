@@ -1,13 +1,13 @@
 import { ReactElement, useCallback, useRef } from "react";
-import { SelectReviewsWithInfoQuery } from "~/api/types.server";
+import { SelectReviewsQuery } from "~/api/types.server";
 import { useScrollNavigation } from "~/utils/scroll";
-import { ReviewList } from "./ReviewList/ReviewList";
+import { AlbumReviewsList } from "./AlbumReviewsList/AlbumReviewsList";
 
 type Props = {
-  query: SelectReviewsWithInfoQuery;
+  query: SelectReviewsQuery;
 };
 
-export const ReviewScroll = ({ query }: Props): ReactElement => {
+export const AlbumReviewsScroll = ({ query }: Props): ReactElement => {
   const parentRef = useRef<HTMLDivElement>(null);
   const size = query.reviewAggregate.aggregate?.count ?? 0;
 
@@ -19,7 +19,7 @@ export const ReviewScroll = ({ query }: Props): ReactElement => {
   });
 
   return (
-    <ReviewList
+    <AlbumReviewsList
       ref={parentRef}
       start={start}
       reviews={query.review}

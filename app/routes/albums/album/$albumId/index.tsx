@@ -1,17 +1,21 @@
-import { ReactElement, useCallback, useMemo, useRef } from "react";
-import { useVirtual } from "react-virtual";
-import { ActionFunction, redirect, useActionData, useLocation } from "remix";
+import { ReactElement } from "react";
+import {
+  ActionFunction,
+  LoaderFunction,
+  redirect,
+  useActionData,
+  useLoaderData,
+  useLocation,
+} from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { ReviewWithAlbumAndArtistFragment } from "~/api/types.server";
+import { SelectReviewsQuery } from "~/api/types.server";
 import { ErrorsList, TabsContent } from "~/components";
-import { useAlbumRoot } from "~/molecules/albums";
-import { AlbumReviewsList } from "~/molecules/albums/AlbumReviewsList/AlbumReviewsList";
+import { AlbumReviewsScroll } from "~/molecules/albums";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
+import { getRequestStart, scrollConfig } from "~/utils/scroll";
 import { isNumber } from "~/utils/validation";
-
-const DATA_OVER_SCAN = 5;
 
 export const action: ActionFunction = async ({ request, params }) => {
   if (!isNumber(params.albumId))
@@ -33,34 +37,35 @@ export const action: ActionFunction = async ({ request, params }) => {
   return redirect(routes.album(Number(params.albumId)));
 };
 
+export const loader: LoaderFunction = async ({ request, params }) => {
+  if (!isNumber(params.albumId))
+    throw new Response("Not Found", { status: 404 });
+
+  const albumId = Number(params.albumId);
+  const start = getRequestStart(request);
+
+  const result = await graphqlSdk.SelectReviews({
+    limit: scrollConfig.limit,
+    offset: start,
+    where: { album: { _eq: albumId } },
+  });
+
+  if (result.errors)
+    throw new Response(JSON.stringify(result.errors), { status: 500 });
+
+  return json<SelectReviewsQuery>(
+    result.data ?? { review: [], reviewAggregate: {} }
+  );
+};
+
 const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
+  const query = useLoaderData<SelectReviewsQuery>();
   const location = useLocation();
-
-  const album = useAlbumRoot();
-  const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
-    if (!album) return [];
-    const { reviews: albumReviews, ...albumByAlbum } = album;
-    return albumReviews?.map((review) => ({ ...review, albumByAlbum }));
-  }, [album]);
-
-  const parentRef = useRef<HTMLDivElement>(null);
-  const virtualizer = useVirtual({
-    size: reviews.length,
-    parentRef,
-    estimateSize: useCallback(() => 300, []),
-    initialRect: { width: 100, height: 40 },
-    overscan: DATA_OVER_SCAN,
-  });
 
   return (
     <TabsContent value={location.pathname}>
-      <AlbumReviewsList
-        ref={parentRef}
-        reviews={reviews}
-        start={0}
-        virtualizer={virtualizer}
-      />
+      <AlbumReviewsScroll query={query} />
       <ErrorsList errors={action?.fetcherErrors} />
     </TabsContent>
   );

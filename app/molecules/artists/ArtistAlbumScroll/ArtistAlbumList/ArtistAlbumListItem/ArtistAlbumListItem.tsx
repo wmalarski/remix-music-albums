@@ -1,12 +1,12 @@
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
-import { AlbumWithArtistFragment } from "~/api/types.server";
+import { AlbumFragment } from "~/api/types.server";
 import { AlbumCover } from "~/components";
 import * as Styles from "./ArtistAlbumListItem.styles";
 
 type Props = {
   row: VirtualItem;
-  album: AlbumWithArtistFragment;
+  album: AlbumFragment;
 };
 
 export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {

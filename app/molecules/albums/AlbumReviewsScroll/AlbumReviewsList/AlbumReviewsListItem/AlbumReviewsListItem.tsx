@@ -5,7 +5,7 @@ import { ReviewFragment } from "~/api/types.server";
 import { Button, Flex, StyledLink } from "~/components";
 import { useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { useAlbumRoot } from "../../AlbumRoot/AlbumRoot";
+import { useAlbumRoot } from "../../../AlbumRoot/AlbumRoot";
 
 type Props = {
   row: VirtualItem;
