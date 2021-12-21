@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { useFetcher, useNavigate } from "remix";
 import { SearchQuery } from "~/api/types.server";
+import { useCallbackDebounce } from "~/utils/debounce";
 import { routes } from "~/utils/routes";
 import { SearchAutocomplete } from "./SearchAutocomplete/SearchAutocomplete";
 
@@ -9,6 +10,7 @@ export const Search = (): ReactElement => {
   const navigate = useNavigate();
 
   const handleInputValueChange = (inputValue?: string) => {
+    console.log({ inputValue });
     fetcher.submit(new URLSearchParams({ query: `%${inputValue}%` }), {
       method: "get",
       action: routes.search,
@@ -23,9 +25,14 @@ export const Search = (): ReactElement => {
     navigate(routes.artist(id));
   };
 
+  const debouncedHandleChange = useCallbackDebounce(
+    handleInputValueChange,
+    1000
+  );
+
   return (
     <SearchAutocomplete
-      onInputValueChange={handleInputValueChange}
+      onInputValueChange={debouncedHandleChange}
       onSelectedAlbumChange={handleSelectedAlbumChange}
       onSelectedArtistChange={handleSelectedArtistChange}
       data={fetcher.data}

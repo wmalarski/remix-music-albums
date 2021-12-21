@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Options, useVirtual, VirtualItem } from "react-virtual";
 import { useSearchParams } from "remix";
+import { useValueDebounce } from "./debounce";
 
 export const scrollConfig = {
   limit: 20,
@@ -69,10 +70,12 @@ export const useScrollNavigation = <T>(
     start,
   });
 
+  const debouncedStart = useValueDebounce(neededStart, 1000);
+
   useEffect(() => {
-    if (neededStart === start) return;
-    setSearchParams({ start: String(neededStart) });
-  }, [setSearchParams, start, neededStart]);
+    if (debouncedStart === start) return;
+    setSearchParams({ start: String(debouncedStart) });
+  }, [setSearchParams, start, debouncedStart]);
 
   return { start, virtualizer };
 };
