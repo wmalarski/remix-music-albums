@@ -10,7 +10,6 @@ export * from "./Flex/Flex";
 export * from "./Grid/Grid";
 export * from "./Heading/Heading";
 export * from "./IconButton/IconButton";
-export * from "./NavigationDialog/NavigationDialog";
 export * from "./Page/Page";
 export * from "./Scroll/Scroll";
 export * from "./StyledLink/StyledLink";

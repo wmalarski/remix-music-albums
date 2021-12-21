@@ -2,12 +2,13 @@ import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData } from "remix";
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
-import { ErrorsList, NavigationDialog } from "~/components";
+import { ErrorsList } from "~/components";
 import {
   NewArtistForm,
   NewArtistFormResult,
   validateNewArtist,
 } from "~/molecules/artists";
+import { NavigationDialog } from "~/molecules/layout";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 

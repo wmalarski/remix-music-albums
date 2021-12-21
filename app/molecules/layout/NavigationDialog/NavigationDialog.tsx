@@ -1,7 +1,11 @@
 import { ReactElement, ReactNode } from "react";
 import { useIsOpen } from "~/utils/remix";
-import { DialogContent, DialogHeader, DialogRoot } from "../Dialog/Dialog";
-import { Flex } from "../Flex/Flex";
+import {
+  DialogContent,
+  DialogHeader,
+  DialogRoot,
+} from "../../../components/Dialog/Dialog";
+import { Flex } from "../../../components/Flex/Flex";
 
 type Props = {
   children: ReactNode;

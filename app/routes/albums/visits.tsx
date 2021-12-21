@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData } from "remix";
 import { graphqlSdk } from "~/api/fetcher.server";
 import { SelectVisitsQuery } from "~/api/types.server";
-import { NavigationDialog } from "~/components";
+import { NavigationDialog } from "~/molecules/layout";
 import { VisitsScroll } from "~/molecules/visits";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
