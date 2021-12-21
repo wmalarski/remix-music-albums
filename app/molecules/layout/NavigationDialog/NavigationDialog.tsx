@@ -1,5 +1,5 @@
-import { ReactElement, ReactNode } from "react";
-import { useIsOpen } from "~/utils/remix";
+import { ReactElement, ReactNode, useState } from "react";
+import { useNavigate } from "remix";
 import {
   DialogContent,
   DialogHeader,
@@ -18,7 +18,12 @@ export const NavigationDialog = ({
   header,
   to,
 }: Props): ReactElement => {
-  const { isOpen, onClose, onOpen } = useIsOpen(to);
+  const navigate = useNavigate();
+
+  const [isOpen, setIsOpen] = useState(true);
+
+  const onClose = () => setIsOpen(false);
+  const onOpen = () => navigate(to);
 
   return (
     <DialogRoot open={isOpen} onOpenChange={onOpen}>

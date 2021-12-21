@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { Form } from "remix";
 import { Button, Flex, Heading } from "~/components";
 import { useRouteTransition } from "~/utils/remix";
-import { useArtistRoot } from "../..";
+import { useArtistRoot } from "..";
 
 export const ArtistDetails = (): ReactElement => {
   const transition = useRouteTransition();

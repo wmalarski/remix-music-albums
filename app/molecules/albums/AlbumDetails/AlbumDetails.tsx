@@ -5,7 +5,7 @@ import { Form } from "remix";
 import { frontCoverUrl } from "~/api/coverArt";
 import { Flex, Heading, IconButton, StyledLink } from "~/components";
 import { routes } from "~/utils/routes";
-import { useAlbumRoot } from "../..";
+import { useAlbumRoot } from "..";
 
 export const AlbumDetails = (): ReactElement => {
   const album = useAlbumRoot();

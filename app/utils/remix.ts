@@ -1,10 +1,8 @@
 import { Transition } from "@remix-run/react/transition";
-import { useState } from "react";
 import {
   FormMethod,
   json as remixJson,
   useFormAction,
-  useNavigate,
   useTransition,
 } from "remix";
 
@@ -27,21 +25,4 @@ export const useRouteTransition = (
         submission: undefined,
         location: undefined,
       };
-};
-
-type UseIsOpenRouteReturn = {
-  isOpen: boolean;
-  onClose: () => void;
-  onOpen: () => void;
-};
-
-export const useIsOpen = (redirect: string): UseIsOpenRouteReturn => {
-  const navigate = useNavigate();
-
-  const [isOpen, setIsOpen] = useState(true);
-
-  const onClose = () => setIsOpen(false);
-  const onOpen = () => navigate(redirect);
-
-  return { isOpen, onClose, onOpen };
 };

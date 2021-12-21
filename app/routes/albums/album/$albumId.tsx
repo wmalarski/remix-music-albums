@@ -10,8 +10,9 @@ import {
 import { authenticator, loginRedirect } from "~/api/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { AlbumWithArtistFragment } from "~/api/types.server";
-import { ErrorsList } from "~/components";
-import { AlbumDialog, AlbumRoot } from "~/molecules/albums";
+import { ErrorsList, Flex } from "~/components";
+import { AlbumDetails, AlbumRoot, AlbumTabs } from "~/molecules/albums";
+import { NavigationDialog } from "~/molecules/layout";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
@@ -62,9 +63,14 @@ const Album = (): ReactElement => {
 
   return (
     <AlbumRoot album={album}>
-      <AlbumDialog>
-        <Outlet />
-      </AlbumDialog>
+      <NavigationDialog to={routes.albums}>
+        <Flex direction="row" gap={2}>
+          <AlbumDetails />
+          <AlbumTabs>
+            <Outlet />
+          </AlbumTabs>
+        </Flex>
+      </NavigationDialog>
       <ErrorsList errors={action?.fetcherErrors} />
     </AlbumRoot>
   );
