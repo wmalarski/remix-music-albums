@@ -35,10 +35,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const AlbumReviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
-  const album = useAlbumRoot();
-
   const location = useLocation();
 
+  const album = useAlbumRoot();
   const reviews = useMemo<ReviewWithAlbumAndArtistFragment[]>(() => {
     if (!album) return [];
     const { reviews: albumReviews, ...albumByAlbum } = album;
@@ -46,7 +45,6 @@ const AlbumReviews = (): ReactElement => {
   }, [album]);
 
   const parentRef = useRef<HTMLDivElement>(null);
-
   const virtualizer = useVirtual({
     size: reviews.length,
     parentRef,

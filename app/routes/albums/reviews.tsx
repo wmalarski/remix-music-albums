@@ -8,15 +8,9 @@ import {
 } from "remix";
 import { FetcherActionData, graphqlSdk } from "~/api/fetcher.server";
 import { SelectReviewsQuery } from "~/api/types.server";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogRoot,
-  ErrorsList,
-  Flex,
-} from "~/components";
+import { ErrorsList, NavigationDialog } from "~/components";
 import { ReviewScroll } from "~/molecules/reviews";
-import { json, useIsOpen } from "~/utils/remix";
+import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { getRequestStart, scrollConfig } from "~/utils/scroll";
 import { isNumber } from "~/utils/validation";
@@ -55,18 +49,11 @@ const Reviews = (): ReactElement => {
   const action = useActionData<FetcherActionData>();
   const query = useLoaderData<SelectReviewsQuery>();
 
-  const { isOpen, onClose, onOpen } = useIsOpen(routes.albums);
-
   return (
     <>
-      <DialogRoot open={isOpen} onOpenChange={onOpen}>
-        <DialogContent>
-          <Flex direction="column">
-            <DialogHeader onClose={onClose}>Reviews</DialogHeader>
-            <ReviewScroll query={query} />
-          </Flex>
-        </DialogContent>
-      </DialogRoot>
+      <NavigationDialog to={routes.albums} header="Reviews">
+        <ReviewScroll query={query} />
+      </NavigationDialog>
       <ErrorsList errors={action?.fetcherErrors} />
     </>
   );

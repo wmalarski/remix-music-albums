@@ -62,7 +62,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 const EditReview = (): ReactElement => {
   const review = useLoaderData<ReviewWithAlbumAndArtistFragment>();
   const action = useActionData<ActionData>();
-
   const location = useLocation();
 
   return (

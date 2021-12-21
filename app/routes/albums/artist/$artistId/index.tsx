@@ -17,7 +17,6 @@ const ArtistAlbums = (): ReactElement => {
   }, [artist]);
 
   const parentRef = useRef<HTMLDivElement>(null);
-
   const virtualizer = useVirtual({
     size: albums.length,
     parentRef,
