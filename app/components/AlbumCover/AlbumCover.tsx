@@ -7,10 +7,9 @@ import * as Styles from "./AlbumCover.styles";
 
 type Props = {
   album: RandomAlbumWithArtistFragment;
-  text?: string;
 };
 
-export const AlbumCover = ({ album, text }: Props): ReactElement | null => {
+export const AlbumCover = ({ album }: Props): ReactElement | null => {
   const [isHovering, setIsHovering] = useState(false);
 
   if (!album.id || !album.sid) return null;
@@ -35,7 +34,6 @@ export const AlbumCover = ({ album, text }: Props): ReactElement | null => {
             {label}
           </Text>
           {!!album.year && <Text size="small">{album.year}</Text>}
-          {!!text && <Text size="small">{text}</Text>}
         </Styles.Overlay>
       )}
     </Styles.Container>

@@ -19,7 +19,7 @@ export const ArtistAlbumScroll = ({ query }: Props): ReactElement => {
   const { start, virtualizer } = useScrollNavigation({
     size,
     parentRef,
-    estimateSize: useCallback(() => 300, []),
+    estimateSize: useCallback(() => 250, []),
     initialRect: { width: 100, height: 40 },
     route: (offset) => routes.artist(artist.id, offset),
   });

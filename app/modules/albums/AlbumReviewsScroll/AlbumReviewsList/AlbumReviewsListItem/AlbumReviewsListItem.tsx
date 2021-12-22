@@ -1,9 +1,10 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
-import { Button, Flex, StyledLink } from "~/components";
+import { Flex, IconButton, IconLink, Text } from "~/components";
 import { ReviewFragment } from "~/services/types.server";
-import { useRouteTransition } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { useAlbumRoot } from "../../../AlbumRoot/AlbumRoot";
 
@@ -15,26 +16,30 @@ type Props = {
 export const AlbumReviewsListItem = ({ row, review }: Props): ReactElement => {
   const album = useAlbumRoot();
 
-  const transition = useRouteTransition();
-
   return (
     <Flex
       ref={row.measureRef}
       direction="column"
       css={{ listRow: `${row.size} ${row.start}` }}
     >
-      <p>{review.rate}</p>
-      <p>{review.text}</p>
-      <p>{review.createdAt}</p>
-      <StyledLink to={routes.editReview(album.id, review.id)}>
-        Edit review
-      </StyledLink>
-      <Form method="delete">
-        <input type="hidden" defaultValue={review.id} name="reviewId" />
-        <Button type="submit">
-          {transition.submission ? "Deleting..." : "Delete"}
-        </Button>
-      </Form>
+      <Text size="small">{`Rate: ${review.rate}`}</Text>
+      <Text size="small">{`Text: ${review.text}`}</Text>
+      <Text size="small">{`Date: ${review.createdAt}`}</Text>
+      <Flex direction="row">
+        <IconLink to={routes.editReview(album.id, review.id)}>
+          <AccessibleIcon label="Edit review">
+            <Pencil1Icon />
+          </AccessibleIcon>
+        </IconLink>
+        <Form method="delete">
+          <input type="hidden" defaultValue={review.id} name="reviewId" />
+          <IconButton type="submit">
+            <AccessibleIcon label="Remove review">
+              <TrashIcon />
+            </AccessibleIcon>
+          </IconButton>
+        </Form>
+      </Flex>
     </Flex>
   );
 };

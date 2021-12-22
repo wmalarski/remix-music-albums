@@ -51,9 +51,8 @@ const Artist = (): ReactElement => {
 
   return (
     <ArtistRoot artist={artist}>
-      <NavigationDialog to={routes.albums}>
+      <NavigationDialog to={routes.albums} header={<ArtistDetails />}>
         <Flex direction="row">
-          <ArtistDetails />
           <ArtistTabs>
             <Outlet />
           </ArtistTabs>

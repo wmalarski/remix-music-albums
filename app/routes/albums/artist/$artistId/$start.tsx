@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData, useLocation } from "remix";
-import { Flex, Heading, TabsContent } from "~/components";
+import { TabsContent } from "~/components";
 import { ArtistAlbumScroll } from "~/modules/artists";
 import { graphqlSdk } from "~/services/fetcher.server";
 import { SelectAlbumsQuery } from "~/services/types.server";
@@ -32,10 +32,7 @@ const ArtistAlbums = (): ReactElement => {
 
   return (
     <TabsContent value={location.pathname}>
-      <Flex direction="column">
-        <Heading>Albums</Heading>
-        <ArtistAlbumScroll query={query} />
-      </Flex>
+      <ArtistAlbumScroll query={query} />
     </TabsContent>
   );
 };

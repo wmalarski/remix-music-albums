@@ -1,20 +1,22 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
+import { TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { Button, Flex, Heading } from "~/components";
-import { useRouteTransition } from "~/utils/remix";
+import { Flex, Heading, IconButton } from "~/components";
 import { useArtistRoot } from "..";
 
 export const ArtistDetails = (): ReactElement => {
-  const transition = useRouteTransition();
   const artist = useArtistRoot();
 
   return (
-    <Flex direction="column">
+    <Flex direction="row">
       <Heading size="small">{artist.name}</Heading>
       <Form method="delete">
-        <Button type="submit">
-          {transition.submission ? "Deleting..." : "Delete"}
-        </Button>
+        <IconButton type="submit">
+          <AccessibleIcon label="Remove review">
+            <TrashIcon />
+          </AccessibleIcon>
+        </IconButton>
       </Form>
     </Flex>
   );
