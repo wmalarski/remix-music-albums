@@ -51,6 +51,9 @@ export const {
       1: "1rem",
       2: "2rem",
     },
+    zIndices: {
+      header: 1000,
+    },
   },
   media: {
     bp1: "(min-width: 480px)",

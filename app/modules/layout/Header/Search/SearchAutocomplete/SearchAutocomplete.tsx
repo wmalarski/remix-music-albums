@@ -38,18 +38,25 @@ export const SearchAutocomplete = ({
   } = useCombobox({
     items: inputItems,
     onInputValueChange: ({ inputValue }) => onInputValueChange(inputValue),
+    itemToString: (item) => {
+      switch (item?.__typename) {
+        case "album":
+          return `${item.title} - ${item.artistByArtist.name}`;
+        case "artist":
+          return item.name;
+        default:
+          return "";
+      }
+    },
     onSelectedItemChange: (changes) => {
       const item = changes.selectedItem;
       if (!item) return;
 
       switch (item.__typename) {
-        case "album": {
-          onSelectedAlbumChange(item.id);
-          return;
-        }
+        case "album":
+          return onSelectedAlbumChange(item.id);
         case "artist": {
-          onSelectedArtistChange(item.id);
-          return;
+          return onSelectedArtistChange(item.id);
         }
       }
     },
