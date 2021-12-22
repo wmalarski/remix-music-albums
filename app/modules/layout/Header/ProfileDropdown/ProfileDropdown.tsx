@@ -40,7 +40,7 @@ export const ProfileDropdown = ({ user }: Props): ReactElement => {
           <Link to={routes.visits}>Your visits</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to={routes.reviews}>Your reviews</Link>
+          <Link to={routes.reviews()}>Your reviews</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

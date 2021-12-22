@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { Options, useVirtual, VirtualItem } from "react-virtual";
-import { useSearchParams } from "remix";
-import { useValueDebounce } from "./debounce";
+import { useNavigate, useParams, useSearchParams } from "remix";
+import { useCallbackDebounce, useValueDebounce } from "./debounce";
+import { useCallbackRef } from "./useCallbackRef";
+import { toNumber } from "./validation";
 
 export const scrollConfig = {
   limit: 20,
@@ -74,8 +76,44 @@ export const useScrollNavigation = <T>(
 
   useEffect(() => {
     if (debouncedStart === start) return;
-    setSearchParams({ start: String(debouncedStart) });
+    setSearchParams({ start: String(debouncedStart) }, { replace: true });
   }, [setSearchParams, start, debouncedStart]);
+
+  return { start, virtualizer };
+};
+
+export const useScrollNavigation2 = <T>({
+  route,
+  size,
+  ...args
+}: UseScrollNavigationArgs<T> & {
+  route: (page: number) => string;
+}): UseScrollNavigationReturn => {
+  const navigate = useNavigate();
+
+  const start = toNumber(useParams().start, 0);
+
+  const routeRef = useCallbackRef(route);
+
+  const virtualizer = useVirtual({
+    size,
+    ...args,
+  });
+
+  const neededStart = getScrollStart({
+    items: virtualizer.virtualItems,
+    start,
+  });
+
+  const debouncedNavigate = useCallbackDebounce(
+    (route: string) => navigate(route),
+    500
+  );
+
+  useEffect(() => {
+    if (neededStart === start) return;
+    debouncedNavigate(routeRef(neededStart));
+  }, [debouncedNavigate, neededStart, routeRef, start]);
 
   return { start, virtualizer };
 };

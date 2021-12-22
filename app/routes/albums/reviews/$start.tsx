@@ -13,8 +13,8 @@ import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { SelectReviewsWithInfoQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { getRequestStart, scrollConfig } from "~/utils/scroll";
-import { isNumber } from "~/utils/validation";
+import { scrollConfig } from "~/utils/scroll";
+import { isNumber, toNumber } from "~/utils/validation";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -30,12 +30,10 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect(routes.album(album));
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const start = getRequestStart(request);
-
+export const loader: LoaderFunction = async ({ params }) => {
   const result = await graphqlSdk.SelectReviewsWithInfo({
     limit: scrollConfig.limit,
-    offset: start,
+    offset: toNumber(params.start, 0),
   });
 
   if (result.errors)

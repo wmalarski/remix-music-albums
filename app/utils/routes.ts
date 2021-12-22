@@ -4,7 +4,7 @@ export const routes = {
   login: "/login",
   logout: "/logout",
   albums: "/albums",
-  reviews: "/albums/reviews",
+  reviews: (start = 0) => `/albums/reviews/${start}`,
   visits: "/albums/visits",
   search: "/albums/search",
   artist: (artistId: number): string => `/albums/artist/${artistId}`,
