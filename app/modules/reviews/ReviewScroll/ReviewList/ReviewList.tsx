@@ -1,6 +1,6 @@
 import { ForwardedRef, forwardRef, ReactElement } from "react";
 import { useVirtual } from "react-virtual";
-import { Divider, Flex } from "~/components";
+import { Flex } from "~/components";
 import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";
 import * as Styles from "./ReviewList.styles";
 import { ReviewListItem } from "./ReviewListItem/ReviewListItem";
@@ -18,12 +18,7 @@ export const ReviewList = forwardRef(
   ): ReactElement => {
     return (
       <Styles.StyledScroll ref={ref}>
-        <Flex
-          direction="column"
-          gap={0.5}
-          divider={<Divider />}
-          css={{ listContainer: virtualizer.totalSize }}
-        >
+        <Flex direction="column" css={{ listContainer: virtualizer.totalSize }}>
           {virtualizer.virtualItems.map((row) => {
             const review = reviews?.[row.index - start];
             if (!review) return null;

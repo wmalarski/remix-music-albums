@@ -1,7 +1,8 @@
+import { Link } from "remix";
 import { styled } from "~/styles/stitches.config";
 
-export const IconButton = styled("button", {
-  all: "unset",
+export const IconLink = styled(Link, {
+  textDecoration: "unset",
   borderRadius: "100%",
   height: 35,
   width: 35,

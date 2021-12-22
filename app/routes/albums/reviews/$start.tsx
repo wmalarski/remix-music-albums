@@ -6,7 +6,7 @@ import {
   useActionData,
   useLoaderData,
 } from "remix";
-import { ErrorsList } from "~/components";
+import { ErrorsList, Heading } from "~/components";
 import { NavigationDialog } from "~/modules/layout";
 import { ReviewScroll } from "~/modules/reviews";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
@@ -50,7 +50,7 @@ const Reviews = (): ReactElement => {
 
   return (
     <>
-      <NavigationDialog to={routes.albums} header="Reviews">
+      <NavigationDialog to={routes.albums} header={<Heading>Reviews</Heading>}>
         <ReviewScroll query={query} />
       </NavigationDialog>
       <ErrorsList errors={action?.fetcherErrors} />

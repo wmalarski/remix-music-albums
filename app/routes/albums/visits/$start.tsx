@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData } from "remix";
+import { Heading } from "~/components";
 import { NavigationDialog } from "~/modules/layout";
 import { VisitsScroll } from "~/modules/visits";
 import { graphqlSdk } from "~/services/fetcher.server";
@@ -27,7 +28,7 @@ const Visits = (): ReactElement => {
   const query = useLoaderData<SelectVisitsQuery>();
 
   return (
-    <NavigationDialog to={routes.albums} header="Visits">
+    <NavigationDialog to={routes.albums} header={<Heading>Visits</Heading>}>
       <VisitsScroll query={query} />
     </NavigationDialog>
   );

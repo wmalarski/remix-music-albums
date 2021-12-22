@@ -1,15 +1,16 @@
 import { ReactElement, useState } from "react";
-import { Text } from "~/components";
-import { frontCoverUrl } from "~/services/coverArt";
 import { RandomAlbumWithArtistFragment } from "~/services/types.server";
 import { routes } from "~/utils/routes";
+import { AlbumImage } from "../AlbumImage/AlbumImage";
+import { Text } from "../Text/Text";
 import * as Styles from "./AlbumCover.styles";
 
 type Props = {
   album: RandomAlbumWithArtistFragment;
+  text?: string;
 };
 
-export const AlbumCover = ({ album }: Props): ReactElement | null => {
+export const AlbumCover = ({ album, text }: Props): ReactElement | null => {
   const [isHovering, setIsHovering] = useState(false);
 
   if (!album.id || !album.sid) return null;
@@ -17,7 +18,9 @@ export const AlbumCover = ({ album }: Props): ReactElement | null => {
   const handleMouseEnter = () => setIsHovering(true);
   const handleMouseLeave = () => setIsHovering(false);
 
-  const label = `${album.title} - ${album.artistByArtist?.name}`;
+  const label = `${album.title}${
+    album.artistByArtist ? `- ${album.artistByArtist.name}` : ""
+  }`;
 
   return (
     <Styles.Container
@@ -25,17 +28,14 @@ export const AlbumCover = ({ album }: Props): ReactElement | null => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <img
-        src={frontCoverUrl({ mBid: album.sid })}
-        alt={label ?? "cover"}
-        aria-label={label}
-      />
+      <AlbumImage album={album} />
       {isHovering && (
         <Styles.Overlay>
           <Text size="medium" fontWeight="bold">
             {label}
           </Text>
           {!!album.year && <Text size="small">{album.year}</Text>}
+          {!!text && <Text size="small">{text}</Text>}
         </Styles.Overlay>
       )}
     </Styles.Container>

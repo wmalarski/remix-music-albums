@@ -18,10 +18,12 @@ export const Container = styled("div", {
     justifyContent: {
       flexStart: { justifyContent: "flex-start" },
       spaceBetween: { justifyContent: "space-between" },
+      end: { justifyContent: "end" },
     },
     alignItems: {
       center: { alignItems: "center" },
       stretch: { alignItems: "stretch" },
+      left: { alignItems: "left" },
     },
   },
 

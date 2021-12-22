@@ -6,8 +6,8 @@ import { useDebounce } from "../hooks/useDebounce";
 import { toNumber } from "./validation";
 
 export const scrollConfig = {
-  limit: 20,
-  overscan: 5,
+  limit: 40,
+  overscan: 10,
 };
 
 type GetScrollStartArgs = {

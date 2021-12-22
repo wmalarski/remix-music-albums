@@ -16,8 +16,8 @@ export const VisitsScroll = ({ query }: Props): ReactElement => {
   const { start, virtualizer } = useScrollNavigation({
     size,
     parentRef,
-    estimateSize: useCallback(() => 300, []),
-    initialRect: { width: 100, height: 40 },
+    estimateSize: useCallback(() => 250, []),
+    initialRect: { width: 250, height: 251 },
     route: routes.visits,
   });
 

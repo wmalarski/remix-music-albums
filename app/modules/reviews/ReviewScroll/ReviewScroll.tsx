@@ -16,8 +16,8 @@ export const ReviewScroll = ({ query }: Props): ReactElement => {
   const { virtualizer, start } = useScrollNavigation({
     size,
     parentRef,
-    estimateSize: useCallback(() => 300, []),
-    initialRect: { width: 100, height: 40 },
+    estimateSize: useCallback(() => 250, []),
+    initialRect: { width: 250, height: 250 },
     route: routes.reviews,
   });
 
