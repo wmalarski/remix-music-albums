@@ -5,20 +5,17 @@ import { ArtistAlbumScroll } from "~/modules/artists";
 import { graphqlSdk } from "~/services/fetcher.server";
 import { SelectAlbumsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
-import { getRequestStart, scrollConfig } from "~/utils/scroll";
-import { isNumber } from "~/utils/validation";
+import { scrollConfig } from "~/utils/scroll";
+import { isNumber, toNumber } from "~/utils/validation";
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   if (!isNumber(params.artistId))
     throw new Response("Not Found", { status: 404 });
 
-  const artistId = Number(params.artistId);
-  const start = getRequestStart(request);
-
   const result = await graphqlSdk.SelectAlbums({
     limit: scrollConfig.limit,
-    offset: start,
-    where: { artist: { _eq: artistId } },
+    offset: toNumber(params.start, 0),
+    where: { artist: { _eq: Number(params.artistId) } },
   });
 
   if (result.errors)

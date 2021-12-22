@@ -5,11 +5,13 @@ export const routes = {
   logout: "/logout",
   albums: "/albums",
   reviews: (start = 0) => `/albums/reviews/${start}`,
-  visits: "/albums/visits",
+  visits: (start = 0) => `/albums/visits/${start}`,
   search: "/albums/search",
-  artist: (artistId: number): string => `/albums/artist/${artistId}`,
+  artist: (artistId: number, start = 0): string =>
+    `/albums/artist/${artistId}/${start}`,
   editArtist: (artistId: number): string => `/albums/artist/${artistId}/edit`,
-  album: (albumId: number): string => `/albums/album/${albumId}`,
+  album: (albumId: number, start = 0): string =>
+    `/albums/album/${albumId}/${start}`,
   editAlbum: (albumId: number): string => `/albums/album/${albumId}/edit`,
   newArtist: "/albums/newArtist",
   newAlbum: (artistId: number): string => `/albums/artist/${artistId}/newAlbum`,

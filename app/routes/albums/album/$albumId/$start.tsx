@@ -14,8 +14,8 @@ import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { SelectReviewsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { getRequestStart, scrollConfig } from "~/utils/scroll";
-import { isNumber } from "~/utils/validation";
+import { scrollConfig } from "~/utils/scroll";
+import { isNumber, toNumber } from "~/utils/validation";
 
 export const action: ActionFunction = async ({ request, params }) => {
   if (!isNumber(params.albumId))
@@ -37,17 +37,14 @@ export const action: ActionFunction = async ({ request, params }) => {
   return redirect(routes.album(Number(params.albumId)));
 };
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   if (!isNumber(params.albumId))
     throw new Response("Not Found", { status: 404 });
 
-  const albumId = Number(params.albumId);
-  const start = getRequestStart(request);
-
   const result = await graphqlSdk.SelectReviews({
     limit: scrollConfig.limit,
-    offset: start,
-    where: { album: { _eq: albumId } },
+    offset: toNumber(params.start, 0),
+    where: { album: { _eq: Number(params.albumId) } },
   });
 
   if (result.errors)

@@ -6,14 +6,13 @@ import { graphqlSdk } from "~/services/fetcher.server";
 import { SelectVisitsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { getRequestStart, scrollConfig } from "~/utils/scroll";
+import { scrollConfig } from "~/utils/scroll";
+import { toNumber } from "~/utils/validation";
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const start = getRequestStart(request);
-
+export const loader: LoaderFunction = async ({ params }) => {
   const result = await graphqlSdk.SelectVisits({
     limit: scrollConfig.limit,
-    offset: start,
+    offset: toNumber(params.start, 0),
   });
 
   if (result.errors)

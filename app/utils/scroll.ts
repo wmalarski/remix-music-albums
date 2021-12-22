@@ -1,20 +1,14 @@
 import { useEffect } from "react";
 import { Options, useVirtual, VirtualItem } from "react-virtual";
-import { useNavigate, useParams, useSearchParams } from "remix";
-import { useCallbackDebounce, useValueDebounce } from "./debounce";
-import { useCallbackRef } from "./useCallbackRef";
+import { useNavigate, useParams } from "remix";
+import { useCallbackRef } from "../hooks/useCallbackRef";
+import { useDebounce } from "../hooks/useDebounce";
 import { toNumber } from "./validation";
 
 export const scrollConfig = {
   limit: 20,
   overscan: 5,
 };
-
-export const getSearchStart = (searchParams: URLSearchParams): number =>
-  Number(searchParams.get("start") || "0");
-
-export const getRequestStart = (request: Request): number =>
-  getSearchStart(new URL(request.url).searchParams);
 
 type GetScrollStartArgs = {
   start: number;
@@ -49,44 +43,16 @@ export const getScrollStart = ({
   return start;
 };
 
-type UseScrollNavigationArgs<T> = Options<T>;
-
 type UseScrollNavigationReturn = {
   start: number;
   virtualizer: ReturnType<typeof useVirtual>;
 };
 
-export const useScrollNavigation = <T>(
-  args: UseScrollNavigationArgs<T>
-): UseScrollNavigationReturn => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const start = getSearchStart(searchParams);
-
-  const virtualizer = useVirtual({
-    overscan: scrollConfig.overscan,
-    ...args,
-  });
-
-  const neededStart = getScrollStart({
-    items: virtualizer.virtualItems,
-    start,
-  });
-
-  const debouncedStart = useValueDebounce(neededStart, 1000);
-
-  useEffect(() => {
-    if (debouncedStart === start) return;
-    setSearchParams({ start: String(debouncedStart) }, { replace: true });
-  }, [setSearchParams, start, debouncedStart]);
-
-  return { start, virtualizer };
-};
-
-export const useScrollNavigation2 = <T>({
+export const useScrollNavigation = <T>({
   route,
   size,
   ...args
-}: UseScrollNavigationArgs<T> & {
+}: Options<T> & {
   route: (page: number) => string;
 }): UseScrollNavigationReturn => {
   const navigate = useNavigate();
@@ -105,7 +71,7 @@ export const useScrollNavigation2 = <T>({
     start,
   });
 
-  const debouncedNavigate = useCallbackDebounce(
+  const debouncedNavigate = useDebounce(
     (route: string) => navigate(route),
     500
   );
