@@ -5,7 +5,7 @@ schema:
         "x-hasura-admin-secret": ${GRAPHQL_API_ADMIN_SECRET}
 documents: "app/services/**/*.graphql"
 generates:
-  app/api/types.server.ts:
+  app/services/types.server.ts:
     plugins:
       - "typescript"
       - "typescript-operations"

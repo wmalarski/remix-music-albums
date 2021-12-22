@@ -2789,7 +2789,7 @@ export const SelectAlbums = gql`
   album(limit: $limit, offset: $offset, where: $where) {
     ...Album
   }
-  albumAggregate: album_aggregate {
+  albumAggregate: album_aggregate(where: $where) {
     aggregate {
       count
     }
@@ -2886,7 +2886,7 @@ export const SelectReviews = gql`
   review(limit: $limit, offset: $offset, where: $where) {
     ...Review
   }
-  reviewAggregate: review_aggregate {
+  reviewAggregate: review_aggregate(where: $where) {
     aggregate {
       count
     }
@@ -3055,7 +3055,7 @@ export const SelectAlbumsDocument = gql`
   album(limit: $limit, offset: $offset, where: $where) {
     ...Album
   }
-  albumAggregate: album_aggregate {
+  albumAggregate: album_aggregate(where: $where) {
     aggregate {
       count
     }
@@ -3152,7 +3152,7 @@ export const SelectReviewsDocument = gql`
   review(limit: $limit, offset: $offset, where: $where) {
     ...Review
   }
-  reviewAggregate: review_aggregate {
+  reviewAggregate: review_aggregate(where: $where) {
     aggregate {
       count
     }

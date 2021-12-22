@@ -26,7 +26,7 @@ export const getScrollStart = ({
   const lastVirtualItem = items.at(-1);
 
   if (!firstVirtualItem || !lastVirtualItem) {
-    throw new Error("this should never happen");
+    return start;
   }
 
   const first = firstVirtualItem.index;

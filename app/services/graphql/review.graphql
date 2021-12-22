@@ -22,7 +22,7 @@ query SelectReviews($limit: Int, $offset: Int, $where: review_bool_exp) {
   review(limit: $limit, offset: $offset, where: $where) {
     ...Review
   }
-  reviewAggregate: review_aggregate {
+  reviewAggregate: review_aggregate(where: $where) {
     aggregate {
       count
     }
