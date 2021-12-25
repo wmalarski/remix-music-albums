@@ -1,3 +1,4 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
@@ -13,7 +14,9 @@ export const ArtistDetails = (): ReactElement => {
       <Form method="delete">
         <TooltipText text="Remove artist" asChild>
           <IconButton type="submit" aria-label="Remove artist">
-            <TrashIcon />
+            <AccessibleIcon label="Trash">
+              <TrashIcon />
+            </AccessibleIcon>
           </IconButton>
         </TooltipText>
       </Form>

@@ -1,3 +1,4 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
@@ -79,7 +80,9 @@ export const DialogHeader = ({
     <DialogTitle {...props} />
     <DialogClose onClick={onClose} asChild>
       <IconButton onClick={onClose} aria-label="Close dialog">
-        <Cross1Icon />
+        <AccessibleIcon label="Close">
+          <Cross1Icon />
+        </AccessibleIcon>
       </IconButton>
     </DialogClose>
   </Flex>

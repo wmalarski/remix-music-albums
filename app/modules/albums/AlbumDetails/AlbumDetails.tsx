@@ -1,3 +1,4 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { TrashIcon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
@@ -19,13 +20,17 @@ export const AlbumDetails = (): ReactElement => {
       <Flex direction="row" gap="sm">
         <TooltipText text="Open youtube" asChild>
           <IconButton onClick={handleYtClick} aria-label="Youtube">
-            <VideoIcon />
+            <AccessibleIcon label="Video">
+              <VideoIcon />
+            </AccessibleIcon>
           </IconButton>
         </TooltipText>
         <Form method="delete">
           <TooltipText text="Delete album" asChild>
             <IconButton type="submit" aria-label="Delete album">
-              <TrashIcon />
+              <AccessibleIcon label="Trash">
+                <TrashIcon />
+              </AccessibleIcon>
             </IconButton>
           </TooltipText>
         </Form>

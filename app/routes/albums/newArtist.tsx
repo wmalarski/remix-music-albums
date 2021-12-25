@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { ActionFunction, redirect, useActionData } from "remix";
-import { ErrorsList } from "~/components";
+import { ErrorsList, Heading } from "~/components";
 import {
   NewArtistForm,
   NewArtistFormResult,
@@ -39,7 +39,10 @@ const NewArtist = (): ReactElement => {
 
   return (
     <>
-      <NavigationDialog to={routes.albums} header="New artists">
+      <NavigationDialog
+        to={routes.albums}
+        header={<Heading>New Artist</Heading>}
+      >
         <NewArtistForm errors={action?.errors} />
       </NavigationDialog>
       <ErrorsList errors={action?.fetcherErrors} />

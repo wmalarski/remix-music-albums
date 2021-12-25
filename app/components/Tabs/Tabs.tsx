@@ -4,14 +4,12 @@ import { styled } from "~/styles/stitches.config";
 export const Tabs = styled(TabsPrimitive.Root, {
   display: "flex",
   flexDirection: "column",
-  // width: 300,
-  boxShadow: `0 2px 10px $white4`,
 });
 
 export const TabsList = styled(TabsPrimitive.List, {
   flexShrink: 0,
   display: "flex",
-  borderBottom: `1px solid $brand7`,
+  borderBottom: `1px solid $brand8`,
 });
 
 export const TabsTrigger = styled(TabsPrimitive.Trigger, {
@@ -26,21 +24,21 @@ export const TabsTrigger = styled(TabsPrimitive.Trigger, {
   fontSize: 15,
   lineHeight: 1,
   userSelect: "none",
+  color: "$brand9",
   "&:first-child": { borderTopLeftRadius: 6 },
   "&:last-child": { borderTopRightRadius: 6 },
-  "&:hover": { color: "$brand11" },
+  "&:hover": { color: "$brand8", backgroundColor: "$white3" },
   '&[data-state="active"]': {
-    color: "$brand11",
+    color: "$brand8",
+    backgroundColor: "$white1",
     boxShadow: "inset 0 -1px 0 0 currentColor, 0 1px 0 0 currentColor",
   },
-  "&:focus": { position: "relative", boxShadow: `0 0 0 2px black` },
+  "&:focus": { position: "relative", outline: `1px solid $brand9` },
 });
 
 export const TabsContent = styled(TabsPrimitive.Content, {
   flexGrow: 1,
   padding: 20,
-  borderBottomLeftRadius: 6,
-  borderBottomRightRadius: 6,
   outline: "none",
-  "&:focus": { boxShadow: `0 0 0 2px black` },
+  "&:focus": { outline: `1px solid $brand9` },
 });

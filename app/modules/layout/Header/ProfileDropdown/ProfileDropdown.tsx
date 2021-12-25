@@ -1,3 +1,4 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Link, useSubmit } from "remix";
@@ -28,7 +29,9 @@ export const ProfileDropdown = ({ user }: Props): ReactElement => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <IconButton aria-label="Profile menu">
-          <HamburgerMenuIcon />
+          <AccessibleIcon label="Menu">
+            <HamburgerMenuIcon />
+          </AccessibleIcon>
         </IconButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent sideOffset={5}>

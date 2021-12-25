@@ -1,3 +1,4 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { Pencil1Icon, TrashIcon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
@@ -67,7 +68,9 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
           <Flex direction="row" gap="sm">
             <TooltipText text="Open youtube" asChild>
               <IconButton onClick={handleYtClick} aria-label="Youtube">
-                <VideoIcon />
+                <AccessibleIcon label="Video">
+                  <VideoIcon />
+                </AccessibleIcon>
               </IconButton>
             </TooltipText>
             <TooltipText text="Edit review" asChild>
@@ -75,14 +78,27 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
                 to={routes.editReview(review.albumByAlbum.id, review.id)}
                 aria-label="Edit review"
               >
-                <Pencil1Icon />
+                <AccessibleIcon label="Edit">
+                  <Pencil1Icon />
+                </AccessibleIcon>
               </IconLink>
             </TooltipText>
             <Form method="delete">
-              <input type="hidden" defaultValue={review.id} name="reviewId" />
+              <input
+                type="hidden"
+                defaultValue={review.id}
+                name="reviewId"
+                aria-hidden
+              />
               <TooltipText text="Remove review" asChild>
-                <IconButton type="submit" aria-label="Remove review">
-                  <TrashIcon />
+                <IconButton
+                  type="submit"
+                  aria-label="Remove review"
+                  tabIndex={0}
+                >
+                  <AccessibleIcon label="Trash">
+                    <TrashIcon />
+                  </AccessibleIcon>
                 </IconButton>
               </TooltipText>
             </Form>

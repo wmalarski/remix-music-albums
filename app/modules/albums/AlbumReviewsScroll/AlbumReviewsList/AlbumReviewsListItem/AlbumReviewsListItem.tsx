@@ -1,3 +1,4 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
@@ -43,14 +44,23 @@ export const AlbumReviewsListItem = ({ row, review }: Props): ReactElement => {
             to={routes.editReview(album.id, review.id)}
             aria-label="Edit review"
           >
-            <Pencil1Icon />
+            <AccessibleIcon label="Edit">
+              <Pencil1Icon />
+            </AccessibleIcon>
           </IconLink>
         </TooltipText>
         <Form method="delete">
-          <input type="hidden" defaultValue={review.id} name="reviewId" />
+          <input
+            type="hidden"
+            defaultValue={review.id}
+            name="reviewId"
+            aria-hidden
+          />
           <TooltipText text="Remove review" asChild>
             <IconButton type="submit" aria-label="Remove review">
-              <TrashIcon />
+              <AccessibleIcon label="Trash">
+                <TrashIcon />
+              </AccessibleIcon>
             </IconButton>
           </TooltipText>
         </Form>

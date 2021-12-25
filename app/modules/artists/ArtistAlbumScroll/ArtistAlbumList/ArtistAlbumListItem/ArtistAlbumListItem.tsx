@@ -1,3 +1,4 @@
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { Pencil1Icon, Pencil2Icon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
@@ -49,12 +50,16 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
           <Flex direction="row" gap="sm">
             <TooltipText text="Open youtube" asChild>
               <IconButton onClick={handleYtClick} aria-label="Youtube">
-                <VideoIcon />
+                <AccessibleIcon label="Video">
+                  <VideoIcon />
+                </AccessibleIcon>
               </IconButton>
             </TooltipText>
             <TooltipText text="Edit album" asChild>
               <IconLink to={routes.editAlbum(album.id)} aria-label="Edit album">
-                <Pencil1Icon />
+                <AccessibleIcon label="Edit">
+                  <Pencil1Icon />
+                </AccessibleIcon>
               </IconLink>
             </TooltipText>
             <TooltipText text="Review album" asChild>
@@ -62,7 +67,9 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
                 to={routes.newReview(album.id)}
                 aria-label="Review album"
               >
-                <Pencil2Icon />
+                <AccessibleIcon label="Review">
+                  <Pencil2Icon />
+                </AccessibleIcon>
               </IconLink>
             </TooltipText>
           </Flex>
