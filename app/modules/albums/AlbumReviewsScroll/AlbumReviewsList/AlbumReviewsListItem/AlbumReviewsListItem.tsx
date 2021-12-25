@@ -2,7 +2,14 @@ import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
-import { Flex, IconButton, IconLink, Text, TooltipText } from "~/components";
+import {
+  Divider,
+  Flex,
+  IconButton,
+  IconLink,
+  Text,
+  TooltipText,
+} from "~/components";
 import { ReviewFragment } from "~/services/types.server";
 import { routes } from "~/utils/routes";
 import { useAlbumRoot } from "../../../AlbumRoot/AlbumRoot";
@@ -19,12 +26,18 @@ export const AlbumReviewsListItem = ({ row, review }: Props): ReactElement => {
     <Flex
       ref={row.measureRef}
       direction="column"
+      gap="sm"
       css={{ listRow: `${row.size} ${row.start}` }}
     >
-      <Text size="small">{`Rate: ${review.rate}`}</Text>
-      <Text size="small">{`Text: ${review.text}`}</Text>
-      <Text size="small">{`Date: ${review.createdAt}`}</Text>
-      <Flex direction="row">
+      <Flex direction="column">
+        <Text size="small">{`Rate: ${review.rate}`}</Text>
+        <Text size="small">{`Text: ${review.text}`}</Text>
+        <Text size="small">{`Date: ${new Intl.DateTimeFormat().format(
+          new Date(review.createdAt)
+        )}`}</Text>
+      </Flex>
+      <Divider />
+      <Flex direction="row" gap="sm">
         <TooltipText text="Edit review" asChild>
           <IconLink
             to={routes.editReview(album.id, review.id)}
@@ -42,6 +55,7 @@ export const AlbumReviewsListItem = ({ row, review }: Props): ReactElement => {
           </TooltipText>
         </Form>
       </Flex>
+      <Divider />
     </Flex>
   );
 };

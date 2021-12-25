@@ -2,6 +2,7 @@ import { styled } from "~/styles/stitches.config";
 
 export const IconButton = styled("button", {
   all: "unset",
+  cursor: "pointer",
   borderRadius: "100%",
   height: 35,
   width: 35,

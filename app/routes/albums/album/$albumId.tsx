@@ -8,7 +8,12 @@ import {
   useLoaderData,
 } from "remix";
 import { ErrorsList, Flex } from "~/components";
-import { AlbumDetails, AlbumRoot, AlbumTabs } from "~/modules/albums";
+import {
+  AlbumDetails,
+  AlbumHeader,
+  AlbumRoot,
+  AlbumTabs,
+} from "~/modules/albums";
 import { NavigationDialog } from "~/modules/layout";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
@@ -63,8 +68,8 @@ const Album = (): ReactElement => {
 
   return (
     <AlbumRoot album={album}>
-      <NavigationDialog to={routes.albums}>
-        <Flex direction="row" gap={2}>
+      <NavigationDialog to={routes.albums} header={<AlbumHeader />}>
+        <Flex direction="row" gap="md">
           <AlbumDetails />
           <AlbumTabs>
             <Outlet />

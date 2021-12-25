@@ -1,10 +1,20 @@
+import { Pencil1Icon, Pencil2Icon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
-import { AlbumImage, Flex, StyledLink, Text } from "~/components";
+import {
+  AlbumImage,
+  Divider,
+  Flex,
+  IconButton,
+  IconLink,
+  StyledLink,
+  Text,
+  TooltipText,
+} from "~/components";
 import { useArtistRoot } from "~/modules/artists";
 import { AlbumFragment } from "~/services/types.server";
+import { redirectToYt } from "~/services/youtube";
 import { routes } from "~/utils/routes";
-import * as Styles from "./ArtistAlbumListItem.styles";
 
 type Props = {
   row: VirtualItem;
@@ -14,22 +24,51 @@ type Props = {
 export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
   const artist = useArtistRoot();
 
+  const handleYtClick = () => redirectToYt(album.title, artist.name);
+
   return (
-    <Styles.Container
+    <Flex
       ref={row.measureRef}
-      direction="row"
+      direction="column"
+      gap="xs"
       css={{ listRow: `${row.size} ${row.start}` }}
     >
-      <AlbumImage album={album} />
-      <Flex direction="column">
-        <StyledLink to={routes.album(album.id)}>
-          <Text size="medium" fontWeight="bold">
-            {album.title}
-          </Text>
-        </StyledLink>
-        <Text size="medium">{artist.name}</Text>
-        {!!album.year && <Text size="small">{album.year}</Text>}
+      <Flex direction="row" gap="sm">
+        <AlbumImage album={album} />
+        <Flex direction="column" gap="sm" css={{ padding: "$sm", flexGrow: 1 }}>
+          <Flex direction="column">
+            <StyledLink to={routes.album(album.id)}>
+              <Text size="medium" fontWeight="bold">
+                {album.title}
+              </Text>
+            </StyledLink>
+            <Text size="medium">{artist.name}</Text>
+            {!!album.year && <Text size="small">{album.year}</Text>}
+          </Flex>
+          <Divider />
+          <Flex direction="row" gap="sm">
+            <TooltipText text="Open youtube" asChild>
+              <IconButton onClick={handleYtClick} aria-label="Youtube">
+                <VideoIcon />
+              </IconButton>
+            </TooltipText>
+            <TooltipText text="Edit album" asChild>
+              <IconLink to={routes.editAlbum(album.id)} aria-label="Edit album">
+                <Pencil1Icon />
+              </IconLink>
+            </TooltipText>
+            <TooltipText text="Review album" asChild>
+              <IconLink
+                to={routes.newReview(album.id)}
+                aria-label="Review album"
+              >
+                <Pencil2Icon />
+              </IconLink>
+            </TooltipText>
+          </Flex>
+        </Flex>
       </Flex>
-    </Styles.Container>
+      <Divider />
+    </Flex>
   );
 };

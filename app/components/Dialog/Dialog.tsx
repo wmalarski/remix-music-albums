@@ -70,7 +70,12 @@ export const DialogHeader = ({
 }: DialogPrimitive.DialogTitleProps & {
   onClose: DialogPrimitive.DialogCloseProps["onClick"];
 }): ReactElement => (
-  <Flex direction="row" justifyContent="spaceBetween" alignItems="center">
+  <Flex
+    direction="row"
+    justifyContent="spaceBetween"
+    alignItems="start"
+    gap="md"
+  >
     <DialogTitle {...props} />
     <DialogClose onClick={onClose} asChild>
       <IconButton onClick={onClose} aria-label="Close dialog">

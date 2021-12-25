@@ -28,7 +28,7 @@ export const NavigationDialog = ({
   return (
     <DialogRoot open={isOpen} onOpenChange={onOpen}>
       <DialogContent>
-        <Flex direction="column">
+        <Flex direction="column" gap="md">
           <DialogHeader onClose={onClose}>{header}</DialogHeader>
           {children}
         </Flex>

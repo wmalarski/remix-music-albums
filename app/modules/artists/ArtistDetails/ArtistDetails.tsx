@@ -8,7 +8,7 @@ export const ArtistDetails = (): ReactElement => {
   const artist = useArtistRoot();
 
   return (
-    <Flex direction="row">
+    <Flex direction="row" gap="sm">
       <Heading size="small">{artist.name}</Heading>
       <Form method="delete">
         <TooltipText text="Remove artist" asChild>

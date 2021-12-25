@@ -4,7 +4,7 @@ import { styled } from "~/styles/stitches.config";
 export const Tabs = styled(TabsPrimitive.Root, {
   display: "flex",
   flexDirection: "column",
-  width: 300,
+  // width: 300,
   boxShadow: `0 2px 10px $white4`,
 });
 

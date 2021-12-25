@@ -15,10 +15,15 @@ export const Text = styled("p", {
       regular: { fontWeight: "$regular" },
       bold: { fontWeight: "$bold" },
     },
+    opacity: {
+      0.8: { opacity: 0.8 },
+      1: { opacity: 1 },
+    },
   },
 
   defaultVariants: {
     size: "medium",
     fontWeight: "regular",
+    opacity: "1",
   },
 });

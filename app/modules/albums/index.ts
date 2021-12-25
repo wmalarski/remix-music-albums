@@ -1,4 +1,5 @@
 export * from "./AlbumDetails/AlbumDetails";
+export * from "./AlbumHeader/AlbumHeader";
 export * from "./AlbumReviewsScroll/AlbumReviewsScroll";
 export * from "./AlbumRoot/AlbumRoot";
 export * from "./AlbumsGrid/AlbumsGrid";

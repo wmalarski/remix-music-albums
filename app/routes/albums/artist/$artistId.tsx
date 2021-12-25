@@ -7,7 +7,7 @@ import {
   useActionData,
   useLoaderData,
 } from "remix";
-import { ErrorsList, Flex } from "~/components";
+import { ErrorsList } from "~/components";
 import { ArtistDetails, ArtistRoot, ArtistTabs } from "~/modules/artists";
 import { NavigationDialog } from "~/modules/layout";
 import { authenticator, loginRedirect } from "~/services/auth.server";
@@ -52,11 +52,9 @@ const Artist = (): ReactElement => {
   return (
     <ArtistRoot artist={artist}>
       <NavigationDialog to={routes.albums} header={<ArtistDetails />}>
-        <Flex direction="row">
-          <ArtistTabs>
-            <Outlet />
-          </ArtistTabs>
-        </Flex>
+        <ArtistTabs>
+          <Outlet />
+        </ArtistTabs>
       </NavigationDialog>
       <ErrorsList errors={action?.fetcherErrors} />
     </ArtistRoot>

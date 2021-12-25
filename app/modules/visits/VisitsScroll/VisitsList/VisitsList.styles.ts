@@ -3,5 +3,5 @@ import { styled } from "~/styles/stitches.config";
 
 export const StyledScroll = styled(Scroll, {
   height: "60vh",
-  width: "400px",
+  width: 500,
 });
