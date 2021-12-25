@@ -1,7 +1,13 @@
 import { TrashIcon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { Flex, Heading, IconButton, StyledLink } from "~/components";
+import {
+  Flex,
+  Heading,
+  IconButton,
+  StyledLink,
+  TooltipText,
+} from "~/components";
 import { frontCoverUrl } from "~/services/coverArt";
 import { redirectToYt } from "~/services/youtube";
 import { routes } from "~/utils/routes";
@@ -22,13 +28,17 @@ export const AlbumDetails = (): ReactElement => {
       </StyledLink>
       <Flex direction="row" gap="0.5">
         <Form method="delete">
-          <IconButton type="submit" aria-label="Delete album">
-            <TrashIcon />
-          </IconButton>
+          <TooltipText text="Delete album" asChild>
+            <IconButton type="submit" aria-label="Delete album">
+              <TrashIcon />
+            </IconButton>
+          </TooltipText>
         </Form>
-        <IconButton onClick={handleYtClick} aria-label="Youtube">
-          <VideoIcon />
-        </IconButton>
+        <TooltipText text="Open youtube" asChild>
+          <IconButton onClick={handleYtClick} aria-label="Youtube">
+            <VideoIcon />
+          </IconButton>
+        </TooltipText>
       </Flex>
     </Flex>
   );

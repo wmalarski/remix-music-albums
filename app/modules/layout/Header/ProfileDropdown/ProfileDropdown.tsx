@@ -27,7 +27,7 @@ export const ProfileDropdown = ({ user }: Props): ReactElement => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <IconButton aria-label="Customise options">
+        <IconButton aria-label="Profile menu">
           <HamburgerMenuIcon />
         </IconButton>
       </DropdownMenuTrigger>

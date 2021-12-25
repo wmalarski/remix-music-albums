@@ -1,8 +1,7 @@
-import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { Flex, Heading, IconButton } from "~/components";
+import { Flex, Heading, IconButton, TooltipText } from "~/components";
 import { useArtistRoot } from "..";
 
 export const ArtistDetails = (): ReactElement => {
@@ -12,11 +11,11 @@ export const ArtistDetails = (): ReactElement => {
     <Flex direction="row">
       <Heading size="small">{artist.name}</Heading>
       <Form method="delete">
-        <IconButton type="submit">
-          <AccessibleIcon label="Remove review">
+        <TooltipText text="Remove artist" asChild>
+          <IconButton type="submit" aria-label="Remove artist">
             <TrashIcon />
-          </AccessibleIcon>
-        </IconButton>
+          </IconButton>
+        </TooltipText>
       </Form>
     </Flex>
   );

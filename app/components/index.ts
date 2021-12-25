@@ -18,3 +18,4 @@ export * from "./StyledLink/StyledLink";
 export * from "./Tabs/Tabs";
 export * from "./Text/Text";
 export * from "./TextInput/TextInput";
+export * from "./Tooltip/Tooltip";

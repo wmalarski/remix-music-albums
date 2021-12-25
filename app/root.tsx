@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
   useCatch,
 } from "remix";
-import { Divider, Flex } from "./components";
+import { Divider, Flex, TooltipProvider } from "./components";
 import { Footer, Layout } from "./modules/layout";
 import { darkTheme, globalStyles } from "./styles/stitches.config";
 
@@ -18,7 +18,9 @@ const App = (): ReactElement => {
   globalStyles();
   return (
     <Document>
-      <Outlet />
+      <TooltipProvider>
+        <Outlet />
+      </TooltipProvider>
     </Document>
   );
 };

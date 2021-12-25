@@ -1,9 +1,8 @@
-import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
-import { Flex, IconButton, IconLink, Text } from "~/components";
+import { Flex, IconButton, IconLink, Text, TooltipText } from "~/components";
 import { ReviewFragment } from "~/services/types.server";
 import { routes } from "~/utils/routes";
 import { useAlbumRoot } from "../../../AlbumRoot/AlbumRoot";
@@ -26,18 +25,21 @@ export const AlbumReviewsListItem = ({ row, review }: Props): ReactElement => {
       <Text size="small">{`Text: ${review.text}`}</Text>
       <Text size="small">{`Date: ${review.createdAt}`}</Text>
       <Flex direction="row">
-        <IconLink to={routes.editReview(album.id, review.id)}>
-          <AccessibleIcon label="Edit review">
+        <TooltipText text="Edit review" asChild>
+          <IconLink
+            to={routes.editReview(album.id, review.id)}
+            aria-label="Edit review"
+          >
             <Pencil1Icon />
-          </AccessibleIcon>
-        </IconLink>
+          </IconLink>
+        </TooltipText>
         <Form method="delete">
           <input type="hidden" defaultValue={review.id} name="reviewId" />
-          <IconButton type="submit">
-            <AccessibleIcon label="Remove review">
+          <TooltipText text="Remove review" asChild>
+            <IconButton type="submit" aria-label="Remove review">
               <TrashIcon />
-            </AccessibleIcon>
-          </IconButton>
+            </IconButton>
+          </TooltipText>
         </Form>
       </Flex>
     </Flex>
