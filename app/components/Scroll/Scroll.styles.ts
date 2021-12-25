@@ -1,5 +1,5 @@
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import { styled } from "@stitches/react";
+import { styled } from "~/styles/stitches.config";
 
 export const StyledScrollArea = styled(ScrollArea.Root, {
   overflow: "hidden",

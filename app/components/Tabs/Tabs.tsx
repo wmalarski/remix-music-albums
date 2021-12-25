@@ -1,5 +1,5 @@
 import * as TabsPrimitive from "@radix-ui/react-tabs";
-import { styled } from "@stitches/react";
+import { styled } from "~/styles/stitches.config";
 
 export const Tabs = styled(TabsPrimitive.Root, {
   display: "flex",

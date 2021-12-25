@@ -1,8 +1,8 @@
 import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { keyframes, styled } from "@stitches/react";
 import { ReactElement } from "react";
+import { keyframes, styled } from "~/styles/stitches.config";
 import { Flex } from "../Flex/Flex";
 import { IconButton } from "../IconButton/IconButton";
 
@@ -17,7 +17,7 @@ const contentShow = keyframes({
 });
 
 const StyledOverlay = styled(DialogPrimitive.Overlay, {
-  backgroundColor: "$overlay",
+  backgroundColor: "$white1A9",
   position: "fixed",
   inset: 0,
   "@media (prefers-reduced-motion: no-preference)": {
@@ -55,13 +55,12 @@ export const DialogContent = styled(DialogPrimitive.Content, {
 export const DialogTitle = styled(DialogPrimitive.Title, {
   margin: 0,
   fontWeight: 500,
-  color: "mauve",
+  color: "$heading",
   fontSize: 17,
 });
 
 export const DialogDescription = styled(DialogPrimitive.Description, {
   margin: "10px 0 20px",
-  color: "mauve",
   fontSize: 15,
   lineHeight: 1.5,
 });

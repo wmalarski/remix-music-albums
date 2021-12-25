@@ -9,6 +9,6 @@ export const TextInput = styled("input", {
   height: "calc(1ch + 1.5em)",
   paddingRight: "0.5em",
   paddingLeft: "0.5em",
-  backgroundColor: "hsl(0 0% 100% / 20%)",
+  backgroundColor: "$white1",
   color: "$foreground",
 });
