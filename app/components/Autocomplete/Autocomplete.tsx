@@ -1,64 +1,95 @@
 import { styled } from "~/styles/stitches.config";
+import * as Primitives from "./Autocomplete.primitives";
 
-export const Autocomplete = styled("div", {
+export const Autocomplete = Primitives.Autocomplete;
+
+export const AutocompleteContent = styled("div", {
   position: "relative",
   display: "flex",
   flexDirection: "column",
 });
 
-export const AutocompleteTrigger = styled("div", {
+export const AutocompleteTrigger = styled(Primitives.AutocompleteTrigger, {
   display: "flex",
   flexDirection: "row",
-  marginLeft: "5px",
+  alignItems: "stretch",
+  height: "calc(1ch + 1.5em)",
 });
 
-export const AutocompleteContent = styled("ul", {
-  maxHeight: "80vh",
-  maxWidth: 300,
-  overflowY: "scroll",
-  backgroundColor: "$dialogBackground",
-  listStyle: "none",
+export const AutocompleteMenu = styled(Primitives.AutocompleteMenu, {
   position: "absolute",
-  minWidth: 220,
-  borderRadius: 6,
-  padding: 5,
+  top: 35,
+  display: "flex",
+  flexDirection: "column",
+  gap: "$sm",
+  maxHeight: "80vh",
+  width: "100%",
+  overflowY: "auto",
+  overflowX: "hidden",
+  backgroundColor: "$white2",
+  padding: "$sm",
   zIndex: "$header",
-  boxShadow:
-    "0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)",
+  boxShadow: "$regular",
 });
 
-export const AutocompleteItem = styled("li", {
-  fontSize: "$sm",
+export const AutocompleteInput = styled(Primitives.AutocompleteInput, {
+  display: "block",
+  border: "1px solid $white3",
+  borderRadius: "$md 0 0 $md",
+  width: "100%",
+  font: "inherit",
   lineHeight: 1,
-  borderRadius: 3,
+  paddingRight: "0.5em",
+  paddingLeft: "0.5em",
+  backgroundColor: "$white1",
+  color: "$foreground",
+});
+
+export const AutocompleteToggleButton = styled(
+  Primitives.AutocompleteToggleButton,
+  {
+    all: "unset",
+    cursor: "pointer",
+    border: "1px solid $white3",
+    borderLeft: "unset",
+    borderRadius: "0 $md $md 0",
+    width: 35,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "$white9",
+    backgroundColor: "$white1",
+    boxShadow: `0 2px 10px $overlay`,
+    "&:hover": { backgroundColor: "$white3", color: "$brand8" },
+    "&:focus": { boxShadow: `0 0 0 2px $white9`, outline: "2px solid $brand8" },
+  }
+);
+
+export const AutocompleteItem = styled(Primitives.AutocompleteItem, {
+  position: "relative",
+  fontSize: "$md",
+  borderRadius: "$md",
   display: "flex",
   alignItems: "center",
-  height: 25,
-  padding: "0 5px",
-  position: "relative",
-  paddingLeft: 25,
+  padding: "$xs $xs $xs $md",
   userSelect: "none",
 
   "&[data-disabled]": {
     pointerEvents: "none",
   },
+  "&:hover": {
+    backgroundColor: "$white1",
+  },
   "&:focus": {
-    backgroundColor: "$white9",
+    backgroundColor: "$white1",
   },
-
-  variants: {
-    active: {
-      true: { backgroundColor: "$background" },
-    },
-  },
-
-  defaultVariants: {
-    active: false,
+  "&[data-isSelected]": {
+    backgroundColor: "$white1",
   },
 });
 
-export const AutocompleteLabel = styled("p", {
-  paddingLeft: 25,
-  fontSize: 12,
-  lineHeight: "25px",
+export const AutocompleteLabel = styled(Primitives.AutocompleteLabel, {
+  padding: "$xs",
+  fontSize: "$lg",
+  color: "$white8",
 });

@@ -1,13 +1,18 @@
-import { useCombobox } from "downshift";
+import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
+import { ArrowDownIcon } from "@radix-ui/react-icons";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { UseComboboxProps } from "downshift";
 import { ReactElement } from "react";
 import {
   Autocomplete,
   AutocompleteContent,
+  AutocompleteInput,
   AutocompleteItem,
   AutocompleteLabel,
+  AutocompleteMenu,
+  AutocompleteToggleButton,
   AutocompleteTrigger,
-  IconButton,
-  TextInput,
+  Divider,
 } from "~/components";
 import { SearchQuery } from "~/services/types.server";
 
@@ -18,6 +23,8 @@ type Props = {
   onSelectedArtistChange: (id: number) => void;
 };
 
+type SearchItem = SearchQuery["album"][0] | SearchQuery["artist"][0];
+
 export const SearchAutocomplete = ({
   data,
   onInputValueChange,
@@ -27,15 +34,7 @@ export const SearchAutocomplete = ({
   const artistShift = data?.album.length ?? 0;
   const inputItems = [...(data?.album ?? []), ...(data?.artist ?? [])];
 
-  const {
-    isOpen,
-    getToggleButtonProps,
-    getMenuProps,
-    getInputProps,
-    getComboboxProps,
-    highlightedIndex,
-    getItemProps,
-  } = useCombobox({
+  const options: UseComboboxProps<SearchItem> = {
     items: inputItems,
     onInputValueChange: ({ inputValue }) => onInputValueChange(inputValue),
     itemToString: (item) => {
@@ -60,45 +59,45 @@ export const SearchAutocomplete = ({
         }
       }
     },
-  });
+  };
 
   return (
-    <Autocomplete>
-      <AutocompleteTrigger {...getComboboxProps()}>
-        <TextInput {...getInputProps()} />
-        <IconButton
-          type="button"
-          {...getToggleButtonProps()}
-          aria-label="toggle menu"
-        >
-          &#8595;
-        </IconButton>
-      </AutocompleteTrigger>
-      <AutocompleteContent {...getMenuProps()}>
-        {isOpen && (
-          <>
-            <AutocompleteLabel>Albums</AutocompleteLabel>
-            {data?.album.map((item, index) => (
-              <AutocompleteItem
-                active={highlightedIndex === index}
-                key={`album-${item.id}`}
-                {...getItemProps({ item, index })}
-              >
-                {`${item.title} - ${item.artistByArtist.name}`}
-              </AutocompleteItem>
-            ))}
-            <AutocompleteLabel>Artists</AutocompleteLabel>
-            {data?.artist.map((item, index) => (
-              <AutocompleteItem
-                active={highlightedIndex === index + artistShift}
-                key={`artist-${item.id}`}
-                {...getItemProps({ item, index: index + artistShift })}
-              >
-                {item.name}
-              </AutocompleteItem>
-            ))}
-          </>
-        )}
+    <Autocomplete<SearchItem> options={options}>
+      <AutocompleteContent>
+        <AutocompleteTrigger aria-label="Search form">
+          <VisuallyHidden>
+            <AutocompleteLabel>Search</AutocompleteLabel>
+          </VisuallyHidden>
+          <AutocompleteInput id="search" />
+          <AutocompleteToggleButton aria-label="toggle autocomplete">
+            <AccessibleIcon label="Arrow down">
+              <ArrowDownIcon />
+            </AccessibleIcon>
+          </AutocompleteToggleButton>
+        </AutocompleteTrigger>
+        <AutocompleteMenu>
+          <AutocompleteLabel>Albums</AutocompleteLabel>
+          {data?.album.map((item, index) => (
+            <AutocompleteItem
+              key={`album-${item.id}`}
+              item={item}
+              index={index}
+            >
+              {`${item.title} - ${item.artistByArtist.name}`}
+            </AutocompleteItem>
+          ))}
+          <Divider />
+          <AutocompleteLabel>Artists</AutocompleteLabel>
+          {data?.artist.map((item, index) => (
+            <AutocompleteItem
+              key={`artist-${item.id}`}
+              item={item}
+              index={index + artistShift}
+            >
+              {item.name}
+            </AutocompleteItem>
+          ))}
+        </AutocompleteMenu>
       </AutocompleteContent>
     </Autocomplete>
   );
