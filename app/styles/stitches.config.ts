@@ -52,7 +52,7 @@ export const {
     radii: {
       scroll: "10px",
       sm: 3,
-      md: 6,
+      md: "6px",
     },
     sizes: {
       scroll: "10px",

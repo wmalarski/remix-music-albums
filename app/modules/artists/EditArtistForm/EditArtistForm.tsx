@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { Button, Heading, TextInput } from "~/components";
+import { Button, Flex, Grid, TextInput } from "~/components";
 import { useRouteTransition } from "~/utils/remix";
 import { useArtistRoot } from "../ArtistRoot/ArtistRoot";
 import { EditArtistFormResult } from "./EditArtistForm.utils";
@@ -16,14 +16,21 @@ export const EditArtistForm = ({ errors }: Props): ReactElement => {
 
   return (
     <Form method="post">
-      <Heading>Edit Artist</Heading>
-      <label>
-        Name: {errors?.name && <em>Name is required</em>}
-        <TextInput type="text" name="name" defaultValue={artist.name} />
-      </label>
-      <Button type="submit">
-        {transition.submission ? "Saving..." : "Save Artist"}
-      </Button>
+      <Flex direction="column" gap="md">
+        <Grid form>
+          <label htmlFor="name">Name:</label>
+          <TextInput
+            id="name"
+            type="text"
+            name="name"
+            defaultValue={artist.name}
+          />
+        </Grid>
+        {errors?.name && <em>Name is required</em>}
+        <Button type="submit">
+          {transition.submission ? "Saving..." : "Save Artist"}
+        </Button>
+      </Flex>
     </Form>
   );
 };

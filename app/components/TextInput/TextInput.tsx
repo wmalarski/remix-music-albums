@@ -2,7 +2,7 @@ import { styled } from "~/styles/stitches.config";
 
 export const TextInput = styled("input", {
   display: "block",
-  border: "1px solid $border",
+  border: "1px solid $white3",
   width: "100%",
   font: "inherit",
   lineHeight: 1,
