@@ -1,10 +1,10 @@
 import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
-import { TrashIcon, VideoIcon } from "@radix-ui/react-icons";
+import { GlobeIcon, TrashIcon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { Divider, Flex, IconButton, TooltipText } from "~/components";
 import { frontCoverUrl } from "~/services/coverArt";
-import { redirectToYt } from "~/services/youtube";
+import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { useAlbumRoot } from "..";
 
 export const AlbumDetails = (): ReactElement => {
@@ -12,6 +12,9 @@ export const AlbumDetails = (): ReactElement => {
 
   const handleYtClick = () =>
     redirectToYt(album.title, album.artistByArtist.name);
+
+  const handleGoogleClick = () =>
+    redirectToGoogle(album.title, album.artistByArtist.name);
 
   return (
     <Flex direction="column" gap="sm">
@@ -22,6 +25,13 @@ export const AlbumDetails = (): ReactElement => {
           <IconButton onClick={handleYtClick} aria-label="Youtube">
             <AccessibleIcon label="Video">
               <VideoIcon />
+            </AccessibleIcon>
+          </IconButton>
+        </TooltipText>
+        <TooltipText text="Open google" asChild>
+          <IconButton onClick={handleGoogleClick} aria-label="Google">
+            <AccessibleIcon label="Globe">
+              <GlobeIcon />
             </AccessibleIcon>
           </IconButton>
         </TooltipText>

@@ -29,5 +29,5 @@ export const Content = styled(Container, {
 export const Header = styled("header", {
   paddingTop: "1rem",
   paddingBottom: "1rem",
-  borderBottom: "1px solid $border",
+  borderBottom: "1px solid $white3",
 });

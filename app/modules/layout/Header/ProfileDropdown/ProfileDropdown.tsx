@@ -51,7 +51,7 @@ export const ProfileDropdown = ({ user }: Props): ReactElement => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogoutClick}>Logout</DropdownMenuItem>
-        <DropdownMenuArrow />
+        <DropdownMenuArrow offset={10} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

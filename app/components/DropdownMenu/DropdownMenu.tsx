@@ -1,20 +1,19 @@
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
-import { slideAnimation, styled } from "~/styles/stitches.config";
+import { styled } from "~/styles/stitches.config";
 
 export const DropdownMenuContent = styled(DropdownMenuPrimitive.Content, {
   minWidth: 220,
-  backgroundColor: "$dialogBackground",
+  backgroundColor: "$white2",
   borderRadius: "$md",
-  padding: "$sm",
+  padding: "$md",
   boxShadow: "$regular",
-  ...slideAnimation,
 });
 
 const itemStyles = {
   all: "unset",
   fontSize: "$md",
   lineHeight: 1,
-  borderRadius: "$sm",
+  borderRadius: "$md",
   display: "flex",
   alignItems: "center",
   height: "$xl",
@@ -28,8 +27,8 @@ const itemStyles = {
   },
 
   "&:focus": {
-    backgroundColor: "$white9",
-    color: "$white1",
+    backgroundColor: "$white3",
+    color: "$brand8",
   },
 };
 
@@ -52,18 +51,17 @@ export const DropdownMenuTriggerItem = styled(
   DropdownMenuPrimitive.TriggerItem,
   {
     '&[data-state="open"]': {
-      backgroundColor: "$white4",
-      color: "$white9",
+      backgroundColor: "$white1",
+      color: "$brand8",
     },
     ...itemStyles,
   }
 );
 
 export const DropdownMenuLabel = styled(DropdownMenuPrimitive.Label, {
-  paddingLeft: 25,
-  fontSize: 12,
-  lineHeight: "25px",
-  color: "$brand11",
+  padding: "0 $sm",
+  fontSize: "$md",
+  color: "$white6",
 });
 
 export const DropdownMenuSeparator = styled(DropdownMenuPrimitive.Separator, {
@@ -85,7 +83,7 @@ export const DropdownMenuItemIndicator = styled(
 );
 
 export const DropdownMenuArrow = styled(DropdownMenuPrimitive.Arrow, {
-  fill: "$dialogBackground",
+  fill: "$white2",
 });
 
 export const DropdownMenu = DropdownMenuPrimitive.Root;

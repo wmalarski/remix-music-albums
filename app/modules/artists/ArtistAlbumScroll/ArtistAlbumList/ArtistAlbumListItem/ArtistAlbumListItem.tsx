@@ -1,5 +1,10 @@
 import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
-import { Pencil1Icon, Pencil2Icon, VideoIcon } from "@radix-ui/react-icons";
+import {
+  GlobeIcon,
+  Pencil1Icon,
+  Pencil2Icon,
+  VideoIcon,
+} from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import {
@@ -13,8 +18,8 @@ import {
   TooltipText,
 } from "~/components";
 import { useArtistRoot } from "~/modules/artists";
+import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { AlbumFragment } from "~/services/types.server";
-import { redirectToYt } from "~/services/youtube";
 import { routes } from "~/utils/routes";
 
 type Props = {
@@ -26,6 +31,8 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
   const artist = useArtistRoot();
 
   const handleYtClick = () => redirectToYt(album.title, artist.name);
+
+  const handleGoogleClick = () => redirectToGoogle(album.title, artist.name);
 
   return (
     <Flex
@@ -52,6 +59,13 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
               <IconButton onClick={handleYtClick} aria-label="Youtube">
                 <AccessibleIcon label="Video">
                   <VideoIcon />
+                </AccessibleIcon>
+              </IconButton>
+            </TooltipText>
+            <TooltipText text="Open google" asChild>
+              <IconButton onClick={handleGoogleClick} aria-label="Google">
+                <AccessibleIcon label="Globe">
+                  <GlobeIcon />
                 </AccessibleIcon>
               </IconButton>
             </TooltipText>

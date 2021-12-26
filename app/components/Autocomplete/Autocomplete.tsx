@@ -90,6 +90,6 @@ export const AutocompleteItem = styled(Primitives.AutocompleteItem, {
 
 export const AutocompleteLabel = styled(Primitives.AutocompleteLabel, {
   padding: "$xs",
-  fontSize: "$lg",
+  fontSize: "$sm",
   color: "$white8",
 });

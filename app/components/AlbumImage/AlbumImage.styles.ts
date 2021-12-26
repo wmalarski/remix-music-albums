@@ -6,4 +6,6 @@ export const Image = styled("img", {
   overflow: "hidden",
   width: 250,
   height: 250,
+  backgroundColor: "$white1",
+  border: "1px solid $white3",
 });

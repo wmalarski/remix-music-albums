@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { LoaderFunction, MetaFunction, Outlet, useLoaderData } from "remix";
-import { Page } from "~/components";
+import { Container, Page } from "~/components";
 import { AlbumsGrid } from "~/modules/albums";
 import { Footer, Header, Layout } from "~/modules/layout";
 import { authenticator, User } from "~/services/auth.server";
@@ -43,10 +43,10 @@ const Albums = (): ReactElement => {
     <Layout>
       <Header user={data.user} />
       <Page>
-        <main>
+        <Container>
           <AlbumsGrid albums={data.albums.randomAlbums} />
           <Outlet />
-        </main>
+        </Container>
       </Page>
       <Footer />
     </Layout>

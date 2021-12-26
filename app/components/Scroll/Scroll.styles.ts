@@ -20,7 +20,7 @@ export const StyledScrollbar = styled(ScrollArea.Scrollbar, {
 
 export const StyledThumb = styled(ScrollArea.Thumb, {
   flex: 1,
-  background: "$brand4",
+  background: "$white4",
   borderRadius: "$scroll",
   position: "relative",
   "&::before": {
@@ -36,4 +36,4 @@ export const StyledThumb = styled(ScrollArea.Thumb, {
   },
 });
 
-export const Corner = styled(ScrollArea.Corner, {});
+export const Corner = ScrollArea.Corner;

@@ -1,6 +1,7 @@
 import { styled } from "~/styles/stitches.config";
+import { Container } from "../Container/Container";
 
-export const Page = styled("div", {
+export const Page = styled(Container, {
   "--gap": "1rem",
   "--space": "2rem",
   gap: "var(--gap)",
