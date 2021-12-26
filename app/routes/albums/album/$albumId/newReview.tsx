@@ -5,7 +5,7 @@ import {
   NewReviewForm,
   NewReviewFormResult,
   validateNewReview,
-} from "~/modules/reviews";
+} from "~/modules/album";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { json } from "~/utils/remix";

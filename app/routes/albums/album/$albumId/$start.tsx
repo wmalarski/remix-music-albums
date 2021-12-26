@@ -8,7 +8,7 @@ import {
   useLocation,
 } from "remix";
 import { ErrorsList, TabsContent } from "~/components";
-import { AlbumReviewsScroll } from "~/modules/albums";
+import { AlbumReviewsScroll } from "~/modules/album";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { SelectReviewsQuery } from "~/services/types.server";

@@ -5,7 +5,7 @@ import {
   EditAlbumForm,
   EditAlbumFormResult,
   validateEditAlbum,
-} from "~/modules/albums";
+} from "~/modules/album";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { json } from "~/utils/remix";

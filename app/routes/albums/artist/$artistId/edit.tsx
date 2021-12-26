@@ -5,7 +5,7 @@ import {
   EditArtistForm,
   EditArtistFormResult,
   validateEditArtist,
-} from "~/modules/artists";
+} from "~/modules/artist";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { json } from "~/utils/remix";

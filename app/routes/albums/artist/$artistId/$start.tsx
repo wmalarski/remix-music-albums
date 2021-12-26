@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData, useLocation } from "remix";
 import { TabsContent } from "~/components";
-import { ArtistAlbumScroll } from "~/modules/artists";
+import { ArtistAlbumScroll } from "~/modules/artist";
 import { graphqlSdk } from "~/services/fetcher.server";
 import { SelectAlbumsQuery } from "~/services/types.server";
 import { json } from "~/utils/remix";

@@ -8,7 +8,7 @@ import {
   useLoaderData,
 } from "remix";
 import { ErrorsList } from "~/components";
-import { ArtistDetails, ArtistRoot, ArtistTabs } from "~/modules/artists";
+import { ArtistDetails, ArtistRoot, ArtistTabs } from "~/modules/artist";
 import { NavigationDialog } from "~/modules/layout";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";

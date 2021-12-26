@@ -13,7 +13,7 @@ import {
   AlbumHeader,
   AlbumRoot,
   AlbumTabs,
-} from "~/modules/albums";
+} from "~/modules/album";
 import { NavigationDialog } from "~/modules/layout";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";

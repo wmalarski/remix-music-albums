@@ -12,7 +12,7 @@ import {
   EditReviewForm,
   EditReviewFormResult,
   validateEditReview,
-} from "~/modules/reviews";
+} from "~/modules/review";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";

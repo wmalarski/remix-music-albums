@@ -5,5 +5,5 @@ export * from "./ArtistRoot/ArtistRoot";
 export * from "./ArtistTabs/ArtistTabs";
 export * from "./EditArtistForm/EditArtistForm";
 export * from "./EditArtistForm/EditArtistForm.utils";
-export * from "./NewArtistForm/NewArtistForm";
-export * from "./NewArtistForm/NewArtistForm.utils";
+export * from "./NewAlbumForm/NewAlbumForm";
+export * from "./NewAlbumForm/NewAlbumForm.utils";

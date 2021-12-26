@@ -17,7 +17,7 @@ import {
   Text,
   TooltipText,
 } from "~/components";
-import { useArtistRoot } from "~/modules/artists";
+import { useArtistRoot } from "~/modules/artist";
 import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { AlbumFragment } from "~/services/types.server";
 import { formatAlbum } from "~/utils/formatters";

@@ -5,7 +5,7 @@ import {
   NewArtistForm,
   NewArtistFormResult,
   validateNewArtist,
-} from "~/modules/artists";
+} from "~/modules/albums";
 import { NavigationDialog } from "~/modules/layout";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
