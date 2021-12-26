@@ -4,13 +4,12 @@ import { TabsContent } from "~/components";
 import { ArtistAlbumScroll } from "~/modules/artist";
 import { graphqlSdk } from "~/services/fetcher.server";
 import { SelectAlbumsQuery } from "~/services/types.server";
-import { json } from "~/utils/remix";
+import { json, notFound } from "~/utils/remix";
 import { scrollConfig } from "~/utils/scroll";
 import { isNumber, toNumber } from "~/utils/validation";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  if (!isNumber(params.artistId))
-    throw new Response("Not Found", { status: 404 });
+  if (!isNumber(params.artistId)) throw notFound();
 
   const result = await graphqlSdk.SelectAlbums({
     limit: scrollConfig.limit,

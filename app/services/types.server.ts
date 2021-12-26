@@ -69,6 +69,7 @@ export type Album = {
   artistByArtist: Artist;
   createdAt: Scalars['timestamptz'];
   id: Scalars['Int'];
+  profile: Scalars['Int'];
   /** An array relationship */
   reviews: Array<Review>;
   /** An aggregate relationship */
@@ -177,6 +178,7 @@ export type AlbumArrRelInsertInput = {
 export type AlbumAvgFields = {
   artist?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
 };
 
@@ -184,6 +186,7 @@ export type AlbumAvgFields = {
 export type AlbumAvgOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -196,6 +199,7 @@ export type AlbumBoolExp = {
   artistByArtist?: InputMaybe<ArtistBoolExp>;
   createdAt?: InputMaybe<TimestamptzComparisonExp>;
   id?: InputMaybe<IntComparisonExp>;
+  profile?: InputMaybe<IntComparisonExp>;
   reviews?: InputMaybe<ReviewBoolExp>;
   sid?: InputMaybe<StringComparisonExp>;
   title?: InputMaybe<StringComparisonExp>;
@@ -214,6 +218,7 @@ export enum AlbumConstraint {
 export type AlbumIncInput = {
   artist?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
   year?: InputMaybe<Scalars['Int']>;
 };
 
@@ -223,6 +228,7 @@ export type AlbumInsertInput = {
   artistByArtist?: InputMaybe<ArtistObjRelInsertInput>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
   reviews?: InputMaybe<ReviewArrRelInsertInput>;
   sid?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
@@ -236,6 +242,7 @@ export type AlbumMaxFields = {
   artist?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
+  profile?: Maybe<Scalars['Int']>;
   sid?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -247,6 +254,7 @@ export type AlbumMaxOrderBy = {
   artist?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   sid?: InputMaybe<OrderBy>;
   title?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
@@ -258,6 +266,7 @@ export type AlbumMinFields = {
   artist?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
+  profile?: Maybe<Scalars['Int']>;
   sid?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
@@ -269,6 +278,7 @@ export type AlbumMinOrderBy = {
   artist?: InputMaybe<OrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   sid?: InputMaybe<OrderBy>;
   title?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
@@ -303,6 +313,7 @@ export type AlbumOrderBy = {
   artistByArtist?: InputMaybe<ArtistOrderBy>;
   createdAt?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   reviews_aggregate?: InputMaybe<ReviewAggregateOrderBy>;
   sid?: InputMaybe<OrderBy>;
   title?: InputMaybe<OrderBy>;
@@ -325,6 +336,8 @@ export enum AlbumSelectColumn {
   /** column name */
   Id = 'id',
   /** column name */
+  Profile = 'profile',
+  /** column name */
   Sid = 'sid',
   /** column name */
   Title = 'title',
@@ -339,6 +352,7 @@ export type AlbumSetInput = {
   artist?: InputMaybe<Scalars['Int']>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
   sid?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
@@ -349,6 +363,7 @@ export type AlbumSetInput = {
 export type AlbumStddevFields = {
   artist?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
 };
 
@@ -356,6 +371,7 @@ export type AlbumStddevFields = {
 export type AlbumStddevOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -363,6 +379,7 @@ export type AlbumStddevOrderBy = {
 export type AlbumStddevPopFields = {
   artist?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
 };
 
@@ -370,6 +387,7 @@ export type AlbumStddevPopFields = {
 export type AlbumStddevPopOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -377,6 +395,7 @@ export type AlbumStddevPopOrderBy = {
 export type AlbumStddevSampFields = {
   artist?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
 };
 
@@ -384,6 +403,7 @@ export type AlbumStddevSampFields = {
 export type AlbumStddevSampOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -391,6 +411,7 @@ export type AlbumStddevSampOrderBy = {
 export type AlbumSumFields = {
   artist?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
+  profile?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -398,6 +419,7 @@ export type AlbumSumFields = {
 export type AlbumSumOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -409,6 +431,8 @@ export enum AlbumUpdateColumn {
   CreatedAt = 'createdAt',
   /** column name */
   Id = 'id',
+  /** column name */
+  Profile = 'profile',
   /** column name */
   Sid = 'sid',
   /** column name */
@@ -423,6 +447,7 @@ export enum AlbumUpdateColumn {
 export type AlbumVarPopFields = {
   artist?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
 };
 
@@ -430,6 +455,7 @@ export type AlbumVarPopFields = {
 export type AlbumVarPopOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -437,6 +463,7 @@ export type AlbumVarPopOrderBy = {
 export type AlbumVarSampFields = {
   artist?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
 };
 
@@ -444,6 +471,7 @@ export type AlbumVarSampFields = {
 export type AlbumVarSampOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -451,6 +479,7 @@ export type AlbumVarSampOrderBy = {
 export type AlbumVarianceFields = {
   artist?: Maybe<Scalars['Float']>;
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
 };
 
@@ -458,6 +487,7 @@ export type AlbumVarianceFields = {
 export type AlbumVarianceOrderBy = {
   artist?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   year?: InputMaybe<OrderBy>;
 };
 
@@ -470,6 +500,7 @@ export type Artist = {
   createdAt: Scalars['timestamptz'];
   id: Scalars['Int'];
   name: Scalars['String'];
+  profile: Scalars['Int'];
   sid?: Maybe<Scalars['String']>;
   updatedAt: Scalars['timestamptz'];
 };
@@ -525,6 +556,7 @@ export type ArtistAggregateFieldsCountArgs = {
 /** aggregate avg on columns */
 export type ArtistAvgFields = {
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
 };
 
 /** Boolean expression to filter rows from the table "artist". All fields are combined with a logical 'AND'. */
@@ -536,6 +568,7 @@ export type ArtistBoolExp = {
   createdAt?: InputMaybe<TimestamptzComparisonExp>;
   id?: InputMaybe<IntComparisonExp>;
   name?: InputMaybe<StringComparisonExp>;
+  profile?: InputMaybe<IntComparisonExp>;
   sid?: InputMaybe<StringComparisonExp>;
   updatedAt?: InputMaybe<TimestamptzComparisonExp>;
 };
@@ -549,6 +582,7 @@ export enum ArtistConstraint {
 /** input type for incrementing numeric columns in table "artist" */
 export type ArtistIncInput = {
   id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "artist" */
@@ -557,6 +591,7 @@ export type ArtistInsertInput = {
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
+  profile?: InputMaybe<Scalars['Int']>;
   sid?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
@@ -566,6 +601,7 @@ export type ArtistMaxFields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
+  profile?: Maybe<Scalars['Int']>;
   sid?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
@@ -575,6 +611,7 @@ export type ArtistMinFields = {
   createdAt?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
+  profile?: Maybe<Scalars['Int']>;
   sid?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
 };
@@ -607,6 +644,7 @@ export type ArtistOrderBy = {
   createdAt?: InputMaybe<OrderBy>;
   id?: InputMaybe<OrderBy>;
   name?: InputMaybe<OrderBy>;
+  profile?: InputMaybe<OrderBy>;
   sid?: InputMaybe<OrderBy>;
   updatedAt?: InputMaybe<OrderBy>;
 };
@@ -625,6 +663,8 @@ export enum ArtistSelectColumn {
   /** column name */
   Name = 'name',
   /** column name */
+  Profile = 'profile',
+  /** column name */
   Sid = 'sid',
   /** column name */
   UpdatedAt = 'updatedAt'
@@ -635,6 +675,7 @@ export type ArtistSetInput = {
   createdAt?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
+  profile?: InputMaybe<Scalars['Int']>;
   sid?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
 };
@@ -642,21 +683,25 @@ export type ArtistSetInput = {
 /** aggregate stddev on columns */
 export type ArtistStddevFields = {
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type ArtistStddevPopFields = {
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type ArtistStddevSampFields = {
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate sum on columns */
 export type ArtistSumFields = {
   id?: Maybe<Scalars['Int']>;
+  profile?: Maybe<Scalars['Int']>;
 };
 
 /** update columns of table "artist" */
@@ -668,6 +713,8 @@ export enum ArtistUpdateColumn {
   /** column name */
   Name = 'name',
   /** column name */
+  Profile = 'profile',
+  /** column name */
   Sid = 'sid',
   /** column name */
   UpdatedAt = 'updatedAt'
@@ -676,16 +723,19 @@ export enum ArtistUpdateColumn {
 /** aggregate var_pop on columns */
 export type ArtistVarPopFields = {
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate var_samp on columns */
 export type ArtistVarSampFields = {
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate variance on columns */
 export type ArtistVarianceFields = {
   id?: Maybe<Scalars['Float']>;
+  profile?: Maybe<Scalars['Float']>;
 };
 
 /** mutation root */
@@ -2480,19 +2530,21 @@ export type SelectAlbumQueryVariables = Exact<{
 export type SelectAlbumQuery = { albumByPk?: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } | null | undefined };
 
 export type DeleteAlbumMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type DeleteAlbumMutation = { deleteAlbumByPk?: { artist: number } | null | undefined };
+export type DeleteAlbumMutation = { deleteAlbum?: { returning: Array<{ artist: number, profile: number }> } | null | undefined };
 
 export type UpdateAlbumMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
   input?: InputMaybe<AlbumSetInput>;
 }>;
 
 
-export type UpdateAlbumMutation = { updateAlbumByPk?: { id: number } | null | undefined };
+export type UpdateAlbumMutation = { updateAlbum?: { returning: Array<{ id: number, profile: number }> } | null | undefined };
 
 export type ArtistFragment = { id: number, sid?: string | null | undefined, name: string };
 
@@ -2519,19 +2571,21 @@ export type SelectArtistQueryVariables = Exact<{
 export type SelectArtistQuery = { artistByPk?: { id: number, sid?: string | null | undefined, name: string } | null | undefined };
 
 export type DeleteArtistMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type DeleteArtistMutation = { deleteArtistByPk?: { id: number } | null | undefined };
+export type DeleteArtistMutation = { deleteArtist?: { returning: Array<{ id: number, profile: number }> } | null | undefined };
 
 export type UpdateArtistMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
   input?: InputMaybe<ArtistSetInput>;
 }>;
 
 
-export type UpdateArtistMutation = { updateArtistByPk?: { id: number } | null | undefined };
+export type UpdateArtistMutation = { updateArtist?: { returning: Array<{ id: number, profile: number }> } | null | undefined };
 
 export type InsertProfileMutationVariables = Exact<{
   profile: ProfileInsertInput;
@@ -2576,19 +2630,21 @@ export type SelectReviewQueryVariables = Exact<{
 export type SelectReviewQuery = { reviewByPk?: { id: number, rate: any, text: string, createdAt: any, albumByAlbum: { id: number, sid: string, title: string, year: number, artistByArtist: { id: number, sid?: string | null | undefined, name: string } } } | null | undefined };
 
 export type DeleteReviewMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type DeleteReviewMutation = { deleteReviewByPk?: { album: number } | null | undefined };
+export type DeleteReviewMutation = { deleteReview?: { returning: Array<{ album: number, profile: number }> } | null | undefined };
 
 export type UpdateReviewMutationVariables = Exact<{
-  id: Scalars['Int'];
+  id?: InputMaybe<Scalars['Int']>;
+  profile?: InputMaybe<Scalars['Int']>;
   input?: InputMaybe<ReviewSetInput>;
 }>;
 
 
-export type UpdateReviewMutation = { updateReviewByPk?: { id: number } | null | undefined };
+export type UpdateReviewMutation = { updateReview?: { returning: Array<{ id: number, profile: number }> } | null | undefined };
 
 export type SearchAlbumFragment = { __typename: 'album', id: number, title: string, artistByArtist: { name: string } };
 
@@ -2739,16 +2795,27 @@ export const SelectAlbum = gql`
 }
     ${AlbumWithArtist}`;
 export const DeleteAlbum = gql`
-    mutation DeleteAlbum($id: Int!) {
-  deleteAlbumByPk: delete_album_by_pk(id: $id) {
-    artist
+    mutation DeleteAlbum($id: Int, $profile: Int) {
+  deleteAlbum: delete_album(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+  ) {
+    returning {
+      artist
+      profile
+    }
   }
 }
     `;
 export const UpdateAlbum = gql`
-    mutation UpdateAlbum($id: Int!, $input: album_set_input) {
-  updateAlbumByPk: update_album_by_pk(pk_columns: {id: $id}, _set: $input) {
-    id
+    mutation UpdateAlbum($id: Int, $profile: Int, $input: album_set_input) {
+  updateAlbum: update_album(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
@@ -2779,16 +2846,27 @@ export const SelectArtist = gql`
 }
     ${Artist}`;
 export const DeleteArtist = gql`
-    mutation DeleteArtist($id: Int!) {
-  deleteArtistByPk: delete_artist_by_pk(id: $id) {
-    id
+    mutation DeleteArtist($id: Int, $profile: Int) {
+  deleteArtist: delete_artist(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
 export const UpdateArtist = gql`
-    mutation UpdateArtist($id: Int!, $input: artist_set_input) {
-  updateArtistByPk: update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
-    id
+    mutation UpdateArtist($id: Int, $profile: Int, $input: artist_set_input) {
+  updateArtist: update_artist(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
@@ -2846,16 +2924,27 @@ export const SelectReview = gql`
 }
     ${ReviewWithAlbumAndArtist}`;
 export const DeleteReview = gql`
-    mutation DeleteReview($id: Int!) {
-  deleteReviewByPk: delete_review_by_pk(id: $id) {
-    album
+    mutation DeleteReview($id: Int, $profile: Int) {
+  deleteReview: delete_review(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+  ) {
+    returning {
+      album
+      profile
+    }
   }
 }
     `;
 export const UpdateReview = gql`
-    mutation UpdateReview($id: Int!, $input: review_set_input) {
-  updateReviewByPk: update_review_by_pk(pk_columns: {id: $id}, _set: $input) {
-    id
+    mutation UpdateReview($id: Int, $profile: Int, $input: review_set_input) {
+  updateReview: update_review(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
@@ -3010,16 +3099,27 @@ export const SelectAlbumDocument = gql`
 }
     ${AlbumWithArtistFragmentDoc}`;
 export const DeleteAlbumDocument = gql`
-    mutation DeleteAlbum($id: Int!) {
-  deleteAlbumByPk: delete_album_by_pk(id: $id) {
-    artist
+    mutation DeleteAlbum($id: Int, $profile: Int) {
+  deleteAlbum: delete_album(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+  ) {
+    returning {
+      artist
+      profile
+    }
   }
 }
     `;
 export const UpdateAlbumDocument = gql`
-    mutation UpdateAlbum($id: Int!, $input: album_set_input) {
-  updateAlbumByPk: update_album_by_pk(pk_columns: {id: $id}, _set: $input) {
-    id
+    mutation UpdateAlbum($id: Int, $profile: Int, $input: album_set_input) {
+  updateAlbum: update_album(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
@@ -3050,16 +3150,27 @@ export const SelectArtistDocument = gql`
 }
     ${ArtistFragmentDoc}`;
 export const DeleteArtistDocument = gql`
-    mutation DeleteArtist($id: Int!) {
-  deleteArtistByPk: delete_artist_by_pk(id: $id) {
-    id
+    mutation DeleteArtist($id: Int, $profile: Int) {
+  deleteArtist: delete_artist(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
 export const UpdateArtistDocument = gql`
-    mutation UpdateArtist($id: Int!, $input: artist_set_input) {
-  updateArtistByPk: update_artist_by_pk(pk_columns: {id: $id}, _set: $input) {
-    id
+    mutation UpdateArtist($id: Int, $profile: Int, $input: artist_set_input) {
+  updateArtist: update_artist(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
@@ -3117,16 +3228,27 @@ export const SelectReviewDocument = gql`
 }
     ${ReviewWithAlbumAndArtistFragmentDoc}`;
 export const DeleteReviewDocument = gql`
-    mutation DeleteReview($id: Int!) {
-  deleteReviewByPk: delete_review_by_pk(id: $id) {
-    album
+    mutation DeleteReview($id: Int, $profile: Int) {
+  deleteReview: delete_review(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+  ) {
+    returning {
+      album
+      profile
+    }
   }
 }
     `;
 export const UpdateReviewDocument = gql`
-    mutation UpdateReview($id: Int!, $input: review_set_input) {
-  updateReviewByPk: update_review_by_pk(pk_columns: {id: $id}, _set: $input) {
-    id
+    mutation UpdateReview($id: Int, $profile: Int, $input: review_set_input) {
+  updateReview: update_review(
+    where: {_and: [{profile: {_eq: $profile}}, {id: {_eq: $id}}]}
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
     `;
@@ -3178,10 +3300,10 @@ export function getSdk<C>(requester: Requester<C>) {
     SelectAlbum(variables: SelectAlbumQueryVariables, options?: C): Promise<{ data?: SelectAlbumQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<SelectAlbumQuery, SelectAlbumQueryVariables>(SelectAlbumDocument, variables, options);
     },
-    DeleteAlbum(variables: DeleteAlbumMutationVariables, options?: C): Promise<{ data?: DeleteAlbumMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+    DeleteAlbum(variables?: DeleteAlbumMutationVariables, options?: C): Promise<{ data?: DeleteAlbumMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<DeleteAlbumMutation, DeleteAlbumMutationVariables>(DeleteAlbumDocument, variables, options);
     },
-    UpdateAlbum(variables: UpdateAlbumMutationVariables, options?: C): Promise<{ data?: UpdateAlbumMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+    UpdateAlbum(variables?: UpdateAlbumMutationVariables, options?: C): Promise<{ data?: UpdateAlbumMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdateAlbumMutation, UpdateAlbumMutationVariables>(UpdateAlbumDocument, variables, options);
     },
     SelectArtists(variables?: SelectArtistsQueryVariables, options?: C): Promise<{ data?: SelectArtistsQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
@@ -3193,10 +3315,10 @@ export function getSdk<C>(requester: Requester<C>) {
     SelectArtist(variables: SelectArtistQueryVariables, options?: C): Promise<{ data?: SelectArtistQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<SelectArtistQuery, SelectArtistQueryVariables>(SelectArtistDocument, variables, options);
     },
-    DeleteArtist(variables: DeleteArtistMutationVariables, options?: C): Promise<{ data?: DeleteArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+    DeleteArtist(variables?: DeleteArtistMutationVariables, options?: C): Promise<{ data?: DeleteArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<DeleteArtistMutation, DeleteArtistMutationVariables>(DeleteArtistDocument, variables, options);
     },
-    UpdateArtist(variables: UpdateArtistMutationVariables, options?: C): Promise<{ data?: UpdateArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+    UpdateArtist(variables?: UpdateArtistMutationVariables, options?: C): Promise<{ data?: UpdateArtistMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdateArtistMutation, UpdateArtistMutationVariables>(UpdateArtistDocument, variables, options);
     },
     InsertProfile(variables: InsertProfileMutationVariables, options?: C): Promise<{ data?: InsertProfileMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
@@ -3214,10 +3336,10 @@ export function getSdk<C>(requester: Requester<C>) {
     SelectReview(variables: SelectReviewQueryVariables, options?: C): Promise<{ data?: SelectReviewQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<SelectReviewQuery, SelectReviewQueryVariables>(SelectReviewDocument, variables, options);
     },
-    DeleteReview(variables: DeleteReviewMutationVariables, options?: C): Promise<{ data?: DeleteReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+    DeleteReview(variables?: DeleteReviewMutationVariables, options?: C): Promise<{ data?: DeleteReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<DeleteReviewMutation, DeleteReviewMutationVariables>(DeleteReviewDocument, variables, options);
     },
-    UpdateReview(variables: UpdateReviewMutationVariables, options?: C): Promise<{ data?: UpdateReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
+    UpdateReview(variables?: UpdateReviewMutationVariables, options?: C): Promise<{ data?: UpdateReviewMutation, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {
       return requester<UpdateReviewMutation, UpdateReviewMutationVariables>(UpdateReviewDocument, variables, options);
     },
     Search(variables?: SearchQueryVariables, options?: C): Promise<{ data?: SearchQuery, errors?: Array<{ message: string; extensions?: unknown }>, extensions?: unknown }> {

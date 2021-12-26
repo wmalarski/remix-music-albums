@@ -27,14 +27,25 @@ query SelectArtist($id: Int!) {
   }
 }
 
-mutation DeleteArtist($id: Int!) {
-  deleteArtistByPk: delete_artist_by_pk(id: $id) {
-    id
+mutation DeleteArtist($id: Int, $profile: Int) {
+  deleteArtist: delete_artist(
+    where: { _and: [{ profile: { _eq: $profile } }, { id: { _eq: $id } }] }
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
 
-mutation UpdateArtist($id: Int!, $input: artist_set_input) {
-  updateArtistByPk: update_artist_by_pk(pk_columns: { id: $id }, _set: $input) {
-    id
+mutation UpdateArtist($id: Int, $profile: Int, $input: artist_set_input) {
+  updateArtist: update_artist(
+    where: { _and: [{ profile: { _eq: $profile } }, { id: { _eq: $id } }] }
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }

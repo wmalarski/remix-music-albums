@@ -51,14 +51,25 @@ query SelectReview($id: Int!) {
   }
 }
 
-mutation DeleteReview($id: Int!) {
-  deleteReviewByPk: delete_review_by_pk(id: $id) {
-    album
+mutation DeleteReview($id: Int, $profile: Int) {
+  deleteReview: delete_review(
+    where: { _and: [{ profile: { _eq: $profile } }, { id: { _eq: $id } }] }
+  ) {
+    returning {
+      album
+      profile
+    }
   }
 }
 
-mutation UpdateReview($id: Int!, $input: review_set_input) {
-  updateReviewByPk: update_review_by_pk(pk_columns: { id: $id }, _set: $input) {
-    id
+mutation UpdateReview($id: Int, $profile: Int, $input: review_set_input) {
+  updateReview: update_review(
+    where: { _and: [{ profile: { _eq: $profile } }, { id: { _eq: $id } }] }
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }

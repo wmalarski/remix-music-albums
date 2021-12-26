@@ -18,7 +18,6 @@ export const Search = (): ReactElement => {
   };
 
   const handleInputValueChange = useDebounce((inputValue?: string) => {
-    console.log({ inputValue });
     fetcher.submit(new URLSearchParams({ query: `%${inputValue}%` }), {
       method: "get",
       action: routes.search,

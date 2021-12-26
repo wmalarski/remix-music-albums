@@ -9,9 +9,10 @@ import {
 import { ErrorsList, Heading } from "~/components";
 import { NavigationDialog } from "~/modules/layout";
 import { ReviewScroll } from "~/modules/reviews";
+import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { SelectReviewsWithInfoQuery } from "~/services/types.server";
-import { json } from "~/utils/remix";
+import { json, notAuthorized, notFound } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { scrollConfig } from "~/utils/scroll";
 import { isNumber, toNumber } from "~/utils/validation";
@@ -20,11 +21,18 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const reviewId = formData.get("reviewId")?.toString();
 
-  if (!isNumber(reviewId)) throw new Response("Not Found", { status: 404 });
+  if (!isNumber(reviewId)) throw notFound();
 
-  const result = await graphqlSdk.DeleteReview({ id: Number(reviewId) });
+  const user = await authenticator.isAuthenticated(request);
+  if (!user) return loginRedirect(request);
 
-  const album = result.data?.deleteReviewByPk?.album;
+  const result = await graphqlSdk.DeleteReview({
+    id: Number(reviewId),
+    profile: user.profileId,
+  });
+
+  if (!result.data?.deleteReview?.returning.length) return notAuthorized();
+  const album = result.data?.deleteReview?.returning?.[0]?.album;
   if (!album || result.errors)
     return json<FetcherActionData>({ fetcherErrors: result.errors });
   return redirect(routes.album(album));

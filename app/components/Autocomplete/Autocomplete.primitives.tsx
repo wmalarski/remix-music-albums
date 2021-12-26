@@ -49,7 +49,7 @@ export const AutocompleteTrigger = forwardRef(
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     const { getComboboxProps } = useAutocompleteContext();
-    return <div {...props} {...getComboboxProps()} ref={ref} />;
+    return <div {...props} ref={ref} {...getComboboxProps()} />;
   }
 );
 
@@ -64,7 +64,7 @@ export const AutocompleteInput = forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ): ReactElement => {
     const { getInputProps } = useAutocompleteContext();
-    return <input {...props} {...getInputProps()} ref={ref} />;
+    return <input {...props} ref={ref} {...getInputProps()} />;
   }
 );
 
@@ -79,7 +79,7 @@ export const AutocompleteToggleButton = forwardRef(
     ref: ForwardedRef<HTMLButtonElement>
   ): ReactElement => {
     const { getToggleButtonProps } = useAutocompleteContext();
-    return <button {...props} {...getToggleButtonProps()} ref={ref} />;
+    return <button {...props} ref={ref} {...getToggleButtonProps()} />;
   }
 );
 
@@ -95,7 +95,7 @@ export const AutocompleteLabel = forwardRef(
   ): ReactElement => {
     const { getLabelProps } = useAutocompleteContext();
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    return <label {...props} {...getLabelProps()} ref={ref} />;
+    return <label {...props} ref={ref} {...getLabelProps()} />;
   }
 );
 
@@ -103,12 +103,18 @@ AutocompleteLabel.displayName = "AutocompleteLabel";
 
 export const AutocompleteMenu = forwardRef(
   (
-    props: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
+    {
+      children,
+      ...props
+    }: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
     ref: ForwardedRef<HTMLElement>
   ): ReactElement | null => {
     const { getMenuProps, isOpen } = useAutocompleteContext();
-    if (!isOpen) return null;
-    return <div {...props} {...getMenuProps()} ref={ref} />;
+    return (
+      <div {...props} ref={ref} {...getMenuProps()}>
+        {isOpen ? children : null}
+      </div>
+    );
   }
 );
 
@@ -131,13 +137,13 @@ function AutocompleteItemInner<TItem>(
   return (
     <div
       {...props}
+      ref={ref}
       {...getItemProps({
         index,
         item,
         isSelected: highlightedIndex === index,
         disabled,
       })}
-      ref={ref}
     />
   );
 }

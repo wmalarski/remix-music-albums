@@ -8,7 +8,7 @@ import {
 } from "~/modules/album";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
-import { json } from "~/utils/remix";
+import { json, notAuthorized, notFound } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -17,8 +17,7 @@ type ActionData = FetcherActionData & {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  if (!isNumber(params.albumId))
-    throw new Response("Not Found", { status: 404 });
+  if (!isNumber(params.albumId)) throw notFound();
 
   const albumId = Number(params.albumId);
   const formData = await request.formData();
@@ -29,7 +28,11 @@ export const action: ActionFunction = async ({ request, params }) => {
   const user = await authenticator.isAuthenticated(request);
   if (!user) return loginRedirect(request);
 
-  const result = await graphqlSdk.UpdateAlbum(validation.variables);
+  const result = await graphqlSdk.UpdateAlbum({
+    ...validation.variables,
+    profile: user.profileId,
+  });
+  if (!result.data?.updateAlbum?.returning.length) return notAuthorized();
   if (result.errors) return json<ActionData>({ fetcherErrors: result.errors });
   return redirect(routes.album(albumId));
 };

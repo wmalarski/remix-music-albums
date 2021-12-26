@@ -8,7 +8,7 @@ import {
 } from "~/modules/artist";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
-import { json } from "~/utils/remix";
+import { json, notFound } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -17,8 +17,7 @@ type ActionData = FetcherActionData & {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  if (!isNumber(params.artistId))
-    throw new Response("Not Found", { status: 404 });
+  if (!isNumber(params.artistId)) throw notFound();
 
   const artistId = Number(params.artistId);
   const formData = await request.formData();

@@ -16,7 +16,7 @@ import {
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";
-import { json } from "~/utils/remix";
+import { json, notAuthorized, notFound } from "~/utils/remix";
 import { routes } from "~/utils/routes";
 import { isNumber } from "~/utils/validation";
 
@@ -25,8 +25,7 @@ type ActionData = FetcherActionData & {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
-  if (!isNumber(params.reviewId) || !isNumber(params.albumId))
-    throw new Response("Not Found", { status: 404 });
+  if (!isNumber(params.reviewId) || !isNumber(params.albumId)) throw notFound();
 
   const albumId = Number(params.albumId);
   const reviewId = Number(params.reviewId);
@@ -38,14 +37,17 @@ export const action: ActionFunction = async ({ request, params }) => {
   const user = await authenticator.isAuthenticated(request);
   if (!user) return loginRedirect(request);
 
-  const result = await graphqlSdk.UpdateReview(validation.variables);
+  const result = await graphqlSdk.UpdateReview({
+    ...validation.variables,
+    profile: user.profileId,
+  });
+  if (!result.data?.updateReview?.returning.length) return notAuthorized();
   if (result.errors) return json<ActionData>({ fetcherErrors: result.errors });
   return redirect(routes.album(albumId));
 };
 
 export const loader: LoaderFunction = async ({ params }) => {
-  if (!isNumber(params.reviewId))
-    throw new Response("Review Not Found", { status: 404 });
+  if (!isNumber(params.reviewId)) throw notFound();
 
   const reviewId = Number(params.reviewId);
   const result = await graphqlSdk.SelectReview({ id: reviewId });
@@ -54,7 +56,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw new Response(JSON.stringify(result.errors), { status: 500 });
 
   const reviewFragment = result.data?.reviewByPk;
-  if (!reviewFragment) throw new Response("Review Not Found", { status: 404 });
+  if (!reviewFragment) throw notFound();
 
   return json<ReviewWithAlbumAndArtistFragment>(reviewFragment);
 };

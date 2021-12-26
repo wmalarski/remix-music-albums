@@ -51,14 +51,25 @@ query SelectAlbum($id: Int!) {
   }
 }
 
-mutation DeleteAlbum($id: Int!) {
-  deleteAlbumByPk: delete_album_by_pk(id: $id) {
-    artist
+mutation DeleteAlbum($id: Int, $profile: Int) {
+  deleteAlbum: delete_album(
+    where: { _and: [{ profile: { _eq: $profile } }, { id: { _eq: $id } }] }
+  ) {
+    returning {
+      artist
+      profile
+    }
   }
 }
 
-mutation UpdateAlbum($id: Int!, $input: album_set_input) {
-  updateAlbumByPk: update_album_by_pk(pk_columns: { id: $id }, _set: $input) {
-    id
+mutation UpdateAlbum($id: Int, $profile: Int, $input: album_set_input) {
+  updateAlbum: update_album(
+    where: { _and: [{ profile: { _eq: $profile } }, { id: { _eq: $id } }] }
+    _set: $input
+  ) {
+    returning {
+      id
+      profile
+    }
   }
 }
