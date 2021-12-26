@@ -24,7 +24,7 @@ mutation InsertVisit($visit: visit_insert_input!) {
 }
 
 query SelectVisits($limit: Int, $offset: Int) {
-  visit(limit: $limit, offset: $offset) {
+  visit(limit: $limit, offset: $offset, order_by: { createdAt: desc }) {
     ...VisitWithAlbumAndArtist
   }
   visitAggregate: visit_aggregate {

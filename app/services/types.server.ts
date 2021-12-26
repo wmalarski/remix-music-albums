@@ -702,8 +702,6 @@ export type MutationRoot = {
   delete_profile?: Maybe<ProfileMutationResponse>;
   /** delete single row from the table: "profile" */
   delete_profile_by_pk?: Maybe<Profile>;
-  /** delete data from the table: "random_albums" */
-  delete_random_albums?: Maybe<RandomAlbumsMutationResponse>;
   /** delete data from the table: "review" */
   delete_review?: Maybe<ReviewMutationResponse>;
   /** delete single row from the table: "review" */
@@ -724,10 +722,6 @@ export type MutationRoot = {
   insert_profile?: Maybe<ProfileMutationResponse>;
   /** insert a single row into the table: "profile" */
   insert_profile_one?: Maybe<Profile>;
-  /** insert data into the table: "random_albums" */
-  insert_random_albums?: Maybe<RandomAlbumsMutationResponse>;
-  /** insert a single row into the table: "random_albums" */
-  insert_random_albums_one?: Maybe<RandomAlbums>;
   /** insert data into the table: "review" */
   insert_review?: Maybe<ReviewMutationResponse>;
   /** insert a single row into the table: "review" */
@@ -748,8 +742,6 @@ export type MutationRoot = {
   update_profile?: Maybe<ProfileMutationResponse>;
   /** update single row of the table: "profile" */
   update_profile_by_pk?: Maybe<Profile>;
-  /** update data of the table: "random_albums" */
-  update_random_albums?: Maybe<RandomAlbumsMutationResponse>;
   /** update data of the table: "review" */
   update_review?: Maybe<ReviewMutationResponse>;
   /** update single row of the table: "review" */
@@ -794,12 +786,6 @@ export type MutationRootDeleteProfileArgs = {
 /** mutation root */
 export type MutationRootDeleteProfileByPkArgs = {
   id: Scalars['Int'];
-};
-
-
-/** mutation root */
-export type MutationRootDeleteRandomAlbumsArgs = {
-  where: RandomAlbumsBoolExp;
 };
 
 
@@ -866,18 +852,6 @@ export type MutationRootInsertProfileArgs = {
 export type MutationRootInsertProfileOneArgs = {
   object: ProfileInsertInput;
   on_conflict?: InputMaybe<ProfileOnConflict>;
-};
-
-
-/** mutation root */
-export type MutationRootInsertRandomAlbumsArgs = {
-  objects: Array<RandomAlbumsInsertInput>;
-};
-
-
-/** mutation root */
-export type MutationRootInsertRandomAlbumsOneArgs = {
-  object: RandomAlbumsInsertInput;
 };
 
 
@@ -954,14 +928,6 @@ export type MutationRootUpdateProfileByPkArgs = {
   _inc?: InputMaybe<ProfileIncInput>;
   _set?: InputMaybe<ProfileSetInput>;
   pk_columns: ProfilePkColumnsInput;
-};
-
-
-/** mutation root */
-export type MutationRootUpdateRandomAlbumsArgs = {
-  _inc?: InputMaybe<RandomAlbumsIncInput>;
-  _set?: InputMaybe<RandomAlbumsSetInput>;
-  where: RandomAlbumsBoolExp;
 };
 
 
@@ -1514,25 +1480,6 @@ export type RandomAlbumsBoolExp = {
   year?: InputMaybe<IntComparisonExp>;
 };
 
-/** input type for incrementing numeric columns in table "random_albums" */
-export type RandomAlbumsIncInput = {
-  artist?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['Int']>;
-  year?: InputMaybe<Scalars['Int']>;
-};
-
-/** input type for inserting data into table "random_albums" */
-export type RandomAlbumsInsertInput = {
-  artist?: InputMaybe<Scalars['Int']>;
-  artistByArtist?: InputMaybe<ArtistObjRelInsertInput>;
-  createdAt?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['Int']>;
-  sid?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
-  updatedAt?: InputMaybe<Scalars['timestamptz']>;
-  year?: InputMaybe<Scalars['Int']>;
-};
-
 /** aggregate max on columns */
 export type RandomAlbumsMaxFields = {
   artist?: Maybe<Scalars['Int']>;
@@ -1553,14 +1500,6 @@ export type RandomAlbumsMinFields = {
   title?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['timestamptz']>;
   year?: Maybe<Scalars['Int']>;
-};
-
-/** response of any mutation on the table "random_albums" */
-export type RandomAlbumsMutationResponse = {
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<RandomAlbums>;
 };
 
 /** Ordering options when selecting data from "random_albums". */
@@ -1592,17 +1531,6 @@ export enum RandomAlbumsSelectColumn {
   /** column name */
   Year = 'year'
 }
-
-/** input type for updating data in table "random_albums" */
-export type RandomAlbumsSetInput = {
-  artist?: InputMaybe<Scalars['Int']>;
-  createdAt?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['Int']>;
-  sid?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
-  updatedAt?: InputMaybe<Scalars['timestamptz']>;
-  year?: InputMaybe<Scalars['Int']>;
-};
 
 /** aggregate stddev on columns */
 export type RandomAlbumsStddevFields = {
@@ -2883,7 +2811,12 @@ export const InsertReview = gql`
     `;
 export const SelectReviews = gql`
     query SelectReviews($limit: Int, $offset: Int, $where: review_bool_exp) {
-  review(limit: $limit, offset: $offset, where: $where) {
+  review(
+    limit: $limit
+    offset: $offset
+    where: $where
+    order_by: {createdAt: desc}
+  ) {
     ...Review
   }
   reviewAggregate: review_aggregate(where: $where) {
@@ -2895,7 +2828,7 @@ export const SelectReviews = gql`
     ${Review}`;
 export const SelectReviewsWithInfo = gql`
     query SelectReviewsWithInfo($limit: Int, $offset: Int) {
-  review(limit: $limit, offset: $offset) {
+  review(limit: $limit, offset: $offset, order_by: {createdAt: desc}) {
     ...ReviewWithAlbumAndArtist
   }
   reviewAggregate: review_aggregate {
@@ -2949,7 +2882,7 @@ export const InsertVisit = gql`
     `;
 export const SelectVisits = gql`
     query SelectVisits($limit: Int, $offset: Int) {
-  visit(limit: $limit, offset: $offset) {
+  visit(limit: $limit, offset: $offset, order_by: {createdAt: desc}) {
     ...VisitWithAlbumAndArtist
   }
   visitAggregate: visit_aggregate {
@@ -3149,7 +3082,12 @@ export const InsertReviewDocument = gql`
     `;
 export const SelectReviewsDocument = gql`
     query SelectReviews($limit: Int, $offset: Int, $where: review_bool_exp) {
-  review(limit: $limit, offset: $offset, where: $where) {
+  review(
+    limit: $limit
+    offset: $offset
+    where: $where
+    order_by: {createdAt: desc}
+  ) {
     ...Review
   }
   reviewAggregate: review_aggregate(where: $where) {
@@ -3161,7 +3099,7 @@ export const SelectReviewsDocument = gql`
     ${ReviewFragmentDoc}`;
 export const SelectReviewsWithInfoDocument = gql`
     query SelectReviewsWithInfo($limit: Int, $offset: Int) {
-  review(limit: $limit, offset: $offset) {
+  review(limit: $limit, offset: $offset, order_by: {createdAt: desc}) {
     ...ReviewWithAlbumAndArtist
   }
   reviewAggregate: review_aggregate {
@@ -3215,7 +3153,7 @@ export const InsertVisitDocument = gql`
     `;
 export const SelectVisitsDocument = gql`
     query SelectVisits($limit: Int, $offset: Int) {
-  visit(limit: $limit, offset: $offset) {
+  visit(limit: $limit, offset: $offset, order_by: {createdAt: desc}) {
     ...VisitWithAlbumAndArtist
   }
   visitAggregate: visit_aggregate {
