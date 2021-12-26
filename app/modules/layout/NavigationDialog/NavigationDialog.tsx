@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode, useState } from "react";
 import { useNavigate } from "remix";
+import { ClientOnly } from "~/components";
 import {
   DialogContent,
   DialogHeader,
@@ -26,13 +27,15 @@ export const NavigationDialog = ({
   const onOpen = () => navigate(to);
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={onOpen}>
-      <DialogContent>
-        <Flex direction="column" gap="md">
-          <DialogHeader onClose={onClose}>{header}</DialogHeader>
-          {children}
-        </Flex>
-      </DialogContent>
-    </DialogRoot>
+    <ClientOnly>
+      <DialogRoot open={isOpen} onOpenChange={onOpen}>
+        <DialogContent>
+          <Flex direction="column" gap="md">
+            <DialogHeader onClose={onClose}>{header}</DialogHeader>
+            {children}
+          </Flex>
+        </DialogContent>
+      </DialogRoot>
+    </ClientOnly>
   );
 };

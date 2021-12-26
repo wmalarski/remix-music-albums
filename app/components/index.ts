@@ -2,6 +2,7 @@ export * from "./AlbumCover/AlbumCover";
 export * from "./AlbumImage/AlbumImage";
 export * from "./Autocomplete/Autocomplete";
 export * from "./Button/Button";
+export * from "./ClientOnly/ClientOnly";
 export * from "./Container/Container";
 export * from "./Dialog/Dialog";
 export * from "./Divider/Divider";
