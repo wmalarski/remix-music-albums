@@ -20,6 +20,7 @@ import {
 import { useArtistRoot } from "~/modules/artists";
 import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { AlbumFragment } from "~/services/types.server";
+import { formatAlbum } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
 
 type Props = {
@@ -42,7 +43,7 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
       css={{ listRow: `${row.size} ${row.start}` }}
     >
       <Flex direction="row" gap="sm">
-        <AlbumImage album={album} />
+        <AlbumImage label={formatAlbum(album)} mBid={album.sid} />
         <Flex direction="column" gap="sm" css={{ padding: "$sm", flexGrow: 1 }}>
           <Flex direction="column">
             <StyledLink to={routes.album(album.id)}>

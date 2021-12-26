@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { RandomAlbumWithArtistFragment } from "~/services/types.server";
-import { AlbumCover } from "../../../components/AlbumCover/AlbumCover";
+import { AlbumCover } from "./AlbumCover/AlbumCover";
 import * as Styles from "./AlbumsGrid.styles";
 
 type Props = {

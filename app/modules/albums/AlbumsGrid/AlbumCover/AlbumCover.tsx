@@ -1,8 +1,9 @@
 import { ReactElement, useState } from "react";
 import { RandomAlbumWithArtistFragment } from "~/services/types.server";
+import { formatAlbum } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
-import { AlbumImage } from "../AlbumImage/AlbumImage";
-import { Text } from "../Text/Text";
+import { AlbumImage } from "../../../../components/AlbumImage/AlbumImage";
+import { Text } from "../../../../components/Text/Text";
 import * as Styles from "./AlbumCover.styles";
 
 type Props = {
@@ -17,9 +18,7 @@ export const AlbumCover = ({ album }: Props): ReactElement | null => {
   const handleMouseEnter = () => setIsHovering(true);
   const handleMouseLeave = () => setIsHovering(false);
 
-  const label = `${album.title}${
-    album.artistByArtist ? `- ${album.artistByArtist.name}` : ""
-  }`;
+  const label = formatAlbum(album);
 
   return (
     <Styles.Container
@@ -27,7 +26,7 @@ export const AlbumCover = ({ album }: Props): ReactElement | null => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <AlbumImage album={album} />
+      <AlbumImage mBid={album.sid} label={label} />
       {isHovering && (
         <Styles.Overlay>
           <Text size="medium" fontWeight="bold">

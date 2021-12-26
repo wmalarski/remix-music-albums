@@ -20,6 +20,7 @@ import {
 } from "~/components";
 import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";
+import { formatAlbum, formatDate } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
 
 type Props = {
@@ -44,7 +45,7 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
       css={{ listRow: `${row.size} ${row.start}` }}
     >
       <Flex direction="row" gap="sm">
-        <AlbumImage album={review.albumByAlbum} />
+        <AlbumImage label={formatAlbum(album)} mBid={album.sid} />
         <Flex
           direction="column"
           gap="sm"
@@ -65,11 +66,8 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
           <Flex direction="column">
             <Text size="small" opacity="0.8">{`Rate: ${review.rate}`}</Text>
             <Text size="small" opacity="0.8">{`Text: ${review.text}`}</Text>
-            <Text
-              size="small"
-              opacity="0.8"
-            >{`Date: ${new Intl.DateTimeFormat().format(
-              new Date(review.createdAt)
+            <Text size="small" opacity="0.8">{`Date: ${formatDate(
+              review.createdAt
             )}`}</Text>
           </Flex>
           <Divider />

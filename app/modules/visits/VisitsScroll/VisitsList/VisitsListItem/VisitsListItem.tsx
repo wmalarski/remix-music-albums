@@ -14,6 +14,7 @@ import {
 } from "~/components";
 import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { VisitWithAlbumAndArtistFragment } from "~/services/types.server";
+import { formatAlbum, formatDate } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
 
 type Props = {
@@ -38,7 +39,7 @@ export const VisitsListItem = ({ visit, row }: Props): ReactElement => {
       css={{ listRow: `${row.size} ${row.start}` }}
     >
       <Flex direction="row" gap="sm">
-        <AlbumImage album={album} />
+        <AlbumImage label={formatAlbum(album)} mBid={album.sid} />
         <Flex direction="column" gap="sm" css={{ padding: "$sm", flexGrow: 1 }}>
           <Flex direction="column">
             <StyledLink to={routes.album(album.id)}>
@@ -52,11 +53,8 @@ export const VisitsListItem = ({ visit, row }: Props): ReactElement => {
             {!!album.year && <Text size="small">{album.year}</Text>}
           </Flex>
           <Divider />
-          <Text
-            size="small"
-            opacity="0.8"
-          >{`Date: ${new Intl.DateTimeFormat().format(
-            new Date(visit.createdAt)
+          <Text size="small" opacity="0.8">{`Date: ${formatDate(
+            visit.createdAt
           )}`}</Text>
           <Divider />
           <Flex direction="row" gap="sm">

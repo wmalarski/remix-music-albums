@@ -12,6 +12,7 @@ import {
   TooltipText,
 } from "~/components";
 import { ReviewFragment } from "~/services/types.server";
+import { formatDate } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
 import { useAlbumRoot } from "../../../AlbumRoot/AlbumRoot";
 
@@ -33,9 +34,7 @@ export const AlbumReviewsListItem = ({ row, review }: Props): ReactElement => {
       <Flex direction="column">
         <Text size="small">{`Rate: ${review.rate}`}</Text>
         <Text size="small">{`Text: ${review.text}`}</Text>
-        <Text size="small">{`Date: ${new Intl.DateTimeFormat().format(
-          new Date(review.createdAt)
-        )}`}</Text>
+        <Text size="small">{`Date: ${formatDate(review.createdAt)}`}</Text>
       </Flex>
       <Divider />
       <Flex direction="row" gap="sm">

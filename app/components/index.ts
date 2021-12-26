@@ -1,4 +1,3 @@
-export * from "./AlbumCover/AlbumCover";
 export * from "./AlbumImage/AlbumImage";
 export * from "./Autocomplete/Autocomplete";
 export * from "./Button/Button";
