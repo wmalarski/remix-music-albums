@@ -3,6 +3,7 @@ export * from "./Autocomplete/Autocomplete";
 export * from "./Button/Button";
 export * from "./ClientOnly/ClientOnly";
 export * from "./Container/Container";
+export * from "./ContextMenu/ContextMenu";
 export * from "./Dialog/Dialog";
 export * from "./Divider/Divider";
 export * from "./DropdownMenu/DropdownMenu";

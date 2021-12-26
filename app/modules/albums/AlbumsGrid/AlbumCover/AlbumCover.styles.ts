@@ -1,7 +1,7 @@
 import { StyledLink } from "~/components";
 import { styled } from "~/styles/stitches.config";
 
-export const Container = styled(StyledLink, {
+export const Container = styled("div", {
   height: 250,
   display: "flex",
   justifyContent: "center",
@@ -10,7 +10,7 @@ export const Container = styled(StyledLink, {
   position: "relative",
 });
 
-export const Overlay = styled("div", {
+export const Overlay = styled(StyledLink, {
   position: "absolute",
   width: "100%",
   height: "100%",

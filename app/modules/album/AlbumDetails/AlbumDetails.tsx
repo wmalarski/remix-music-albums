@@ -2,9 +2,15 @@ import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
 import { GlobeIcon, TrashIcon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
-import { Divider, Flex, IconButton, TooltipText } from "~/components";
-import { frontCoverUrl } from "~/services/coverArt";
+import {
+  AlbumImage,
+  Divider,
+  Flex,
+  IconButton,
+  TooltipText,
+} from "~/components";
 import { redirectToGoogle, redirectToYt } from "~/services/links";
+import { formatAlbum } from "~/utils/formatters";
 import { useAlbumRoot } from "..";
 
 export const AlbumDetails = (): ReactElement => {
@@ -18,7 +24,7 @@ export const AlbumDetails = (): ReactElement => {
 
   return (
     <Flex direction="column" gap="sm">
-      <img src={frontCoverUrl({ mBid: album.sid })} alt="" />
+      <AlbumImage mBid={album.sid} label={formatAlbum(album)} />
       <Divider />
       <Flex direction="row" gap="sm">
         <TooltipText text="Open youtube" asChild>

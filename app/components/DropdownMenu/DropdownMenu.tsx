@@ -23,6 +23,7 @@ const itemStyles = {
   userSelect: "none",
 
   "&[data-disabled]": {
+    color: "$white4",
     pointerEvents: "none",
   },
 
@@ -38,9 +39,7 @@ export const DropdownMenuItem = styled(DropdownMenuPrimitive.Item, {
 
 export const DropdownMenuCheckboxItem = styled(
   DropdownMenuPrimitive.CheckboxItem,
-  {
-    ...itemStyles,
-  }
+  { ...itemStyles }
 );
 
 export const DropdownMenuRadioItem = styled(DropdownMenuPrimitive.RadioItem, {
