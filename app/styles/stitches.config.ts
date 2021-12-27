@@ -37,11 +37,13 @@ export const {
       border2Brand8: "2px solid $brand8",
     },
     fontSizes: {
-      xs: "8px",
-      sm: "10px",
-      md: "15px",
-      lg: "20px",
-      xl: "35px",
+      xs: "0.5rem",
+      sm: "0.75rem",
+      md: "1rem",
+      lg: "1.25rem",
+      xl: "1.5rem",
+      xl2: "2rem",
+      xl3: "3rem",
     },
     fontWeights: {
       thin: 100,

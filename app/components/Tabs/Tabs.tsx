@@ -21,7 +21,7 @@ export const TabsTrigger = styled(TabsPrimitive.Trigger, {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: 15,
+  fontSize: "$sm",
   lineHeight: 1,
   userSelect: "none",
   color: "$brand9",

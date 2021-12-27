@@ -26,9 +26,11 @@ export const AutocompleteMenu = styled(Primitives.AutocompleteMenu, {
   overflowY: "auto",
   overflowX: "hidden",
   backgroundColor: "$white2",
-  padding: "$sm",
   zIndex: "$header",
   boxShadow: "$regular",
+  "&[data-isOpen=true]": {
+    padding: "$sm",
+  },
 });
 
 export const AutocompleteInput = styled(Primitives.AutocompleteInput, {

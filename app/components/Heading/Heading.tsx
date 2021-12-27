@@ -6,10 +6,10 @@ export const Heading = styled("h1", {
 
   variants: {
     size: {
-      small2: { fontSize: "1rem" },
-      small: { fontSize: "1.5rem" },
-      medium: { fontSize: "2rem" },
-      large: { fontSize: "3rem" },
+      small2: { fontSize: "$md" },
+      small: { fontSize: "$xl" },
+      medium: { fontSize: "$xl2" },
+      large: { fontSize: "$xl3" },
     },
     fontWeight: {
       thin: { fontWeight: "$thin" },

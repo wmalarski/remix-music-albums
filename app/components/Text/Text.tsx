@@ -5,10 +5,10 @@ export const Text = styled("p", {
 
   variants: {
     size: {
-      small2: { fontSize: "0.5rem" },
-      small: { fontSize: "0.75rem" },
-      medium: { fontSize: "1rem" },
-      large: { fontSize: "2rem" },
+      small2: { fontSize: "$xs" },
+      small: { fontSize: "$sm" },
+      medium: { fontSize: "$md" },
+      large: { fontSize: "$xl" },
     },
     fontWeight: {
       thin: { fontWeight: "$thin" },
