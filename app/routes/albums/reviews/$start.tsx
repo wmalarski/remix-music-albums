@@ -7,6 +7,7 @@ import {
   useLoaderData,
 } from "remix";
 import { ErrorsList, Heading } from "~/components";
+import { useScrollNavigation } from "~/hooks/useScrollNavigation";
 import { NavigationDialog } from "~/modules/layout";
 import { ReviewScroll } from "~/modules/reviews";
 import { authenticator, loginRedirect } from "~/services/auth.server";
@@ -14,7 +15,6 @@ import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { SelectReviewsWithInfoQuery } from "~/services/types.server";
 import { json, notAuthorized, notFound } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { scrollConfig } from "~/utils/scroll";
 import { isNumber, toNumber } from "~/utils/validation";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -40,7 +40,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ params }) => {
   const result = await graphqlSdk.SelectReviewsWithInfo({
-    limit: scrollConfig.limit,
+    limit: useScrollNavigation.config.limit,
     offset: toNumber(params.start, 0),
   });
 

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Options, useVirtual, VirtualItem } from "react-virtual";
 import { useNavigate, useParams } from "remix";
-import { useCallbackRef } from "../hooks/useCallbackRef";
-import { useDebounce } from "../hooks/useDebounce";
-import { toNumber } from "./validation";
+import { toNumber } from "../utils/validation";
+import { useCallbackRef } from "./useCallbackRef";
+import { useDebounce } from "./useDebounce";
 
-export const scrollConfig = {
+const scrollConfig = {
   limit: 40,
   overscan: 10,
 };
@@ -15,10 +15,7 @@ type GetScrollStartArgs = {
   items: VirtualItem[];
 };
 
-export const getScrollStart = ({
-  start,
-  items,
-}: GetScrollStartArgs): number => {
+const getScrollStart = ({ start, items }: GetScrollStartArgs): number => {
   const { limit, overscan } = scrollConfig;
   const middleCount = Math.ceil(limit / 2);
 
@@ -83,3 +80,5 @@ export const useScrollNavigation = <T>({
 
   return { start, virtualizer };
 };
+
+useScrollNavigation.config = scrollConfig;

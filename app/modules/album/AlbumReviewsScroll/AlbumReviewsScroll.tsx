@@ -1,7 +1,7 @@
 import { ReactElement, useCallback, useRef } from "react";
+import { useScrollNavigation } from "~/hooks/useScrollNavigation";
 import { SelectReviewsQuery } from "~/services/types.server";
 import { routes } from "~/utils/routes";
-import { useScrollNavigation } from "~/utils/scroll";
 import { useAlbumRoot } from "..";
 import { AlbumReviewsList } from "./AlbumReviewsList/AlbumReviewsList";
 

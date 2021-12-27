@@ -1,8 +1,8 @@
 import { ReactElement, useCallback, useRef } from "react";
 import { useMediaQuery } from "~/hooks/useMediaQuery";
+import { useScrollNavigation } from "~/hooks/useScrollNavigation";
 import { SelectVisitsQuery } from "~/services/types.server";
 import { routes } from "~/utils/routes";
-import { useScrollNavigation } from "~/utils/scroll";
 import { VisitsList } from "./VisitsList/VisitsList";
 
 type Props = {

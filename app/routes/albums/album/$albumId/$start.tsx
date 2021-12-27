@@ -8,13 +8,13 @@ import {
   useLocation,
 } from "remix";
 import { ErrorsList, TabsContent } from "~/components";
+import { useScrollNavigation } from "~/hooks/useScrollNavigation";
 import { AlbumReviewsScroll } from "~/modules/album";
 import { authenticator, loginRedirect } from "~/services/auth.server";
 import { FetcherActionData, graphqlSdk } from "~/services/fetcher.server";
 import { SelectReviewsQuery } from "~/services/types.server";
 import { json, notAuthorized, notFound } from "~/utils/remix";
 import { routes } from "~/utils/routes";
-import { scrollConfig } from "~/utils/scroll";
 import { isNumber, toNumber } from "~/utils/validation";
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -43,7 +43,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!isNumber(params.albumId)) throw notFound();
 
   const result = await graphqlSdk.SelectReviews({
-    limit: scrollConfig.limit,
+    limit: useScrollNavigation.config.limit,
     offset: toNumber(params.start, 0),
     where: { album: { _eq: Number(params.albumId) } },
   });

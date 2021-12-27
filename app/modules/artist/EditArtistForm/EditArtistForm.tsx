@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Form } from "remix";
 import { Button, Flex, Grid, TextInput } from "~/components";
-import { useRouteTransition } from "~/utils/remix";
+import { useRouteTransition } from "~/hooks/useRouteTransition";
 import { useArtistRoot } from "../ArtistRoot/ArtistRoot";
 import { EditArtistFormResult } from "./EditArtistForm.utils";
 

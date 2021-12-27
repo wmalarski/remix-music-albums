@@ -1,18 +1,18 @@
 import { ReactElement } from "react";
 import { LoaderFunction, useLoaderData, useLocation } from "remix";
 import { TabsContent } from "~/components";
+import { useScrollNavigation } from "~/hooks/useScrollNavigation";
 import { ArtistAlbumScroll } from "~/modules/artist";
 import { graphqlSdk } from "~/services/fetcher.server";
 import { SelectAlbumsQuery } from "~/services/types.server";
 import { json, notFound } from "~/utils/remix";
-import { scrollConfig } from "~/utils/scroll";
 import { isNumber, toNumber } from "~/utils/validation";
 
 export const loader: LoaderFunction = async ({ params }) => {
   if (!isNumber(params.artistId)) throw notFound();
 
   const result = await graphqlSdk.SelectAlbums({
-    limit: scrollConfig.limit,
+    limit: useScrollNavigation.config.limit,
     offset: toNumber(params.start, 0),
     where: { artist: { _eq: Number(params.artistId) } },
   });
