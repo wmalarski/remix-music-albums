@@ -5,8 +5,7 @@ export const Page = styled(Container, {
   "--gap": "1rem",
   "--space": "2rem",
   gap: "var(--gap)",
-  paddingTop: "var(--space)",
-  paddingBottom: "var(--space)",
+  padding: "var(--space) 0",
   "@media print, screen and (min-width: 640px)": {
     "--gap": "2rem",
     gridAutoRows: "unset",

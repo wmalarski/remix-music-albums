@@ -9,13 +9,13 @@ export const Tabs = styled(TabsPrimitive.Root, {
 export const TabsList = styled(TabsPrimitive.List, {
   flexShrink: 0,
   display: "flex",
-  borderBottom: `1px solid $brand8`,
+  borderBottom: `$border2Brand8`,
 });
 
 export const TabsTrigger = styled(TabsPrimitive.Trigger, {
   all: "unset",
   fontFamily: "inherit",
-  padding: "0 20px",
+  padding: "0 $lg",
   height: 45,
   flex: 1,
   display: "flex",
@@ -25,20 +25,19 @@ export const TabsTrigger = styled(TabsPrimitive.Trigger, {
   lineHeight: 1,
   userSelect: "none",
   color: "$brand9",
-  "&:first-child": { borderTopLeftRadius: 6 },
-  "&:last-child": { borderTopRightRadius: 6 },
+  "&:first-child": { borderTopLeftRadius: "$md" },
+  "&:last-child": { borderTopRightRadius: "$md" },
   "&:hover": { color: "$brand8", backgroundColor: "$white3" },
   '&[data-state="active"]': {
     color: "$brand8",
     backgroundColor: "$white1",
-    boxShadow: "inset 0 -1px 0 0 currentColor, 0 1px 0 0 currentColor",
   },
-  "&:focus": { position: "relative", outline: `1px solid $brand9` },
+  "&:focus": { position: "relative", outline: `$border2Brand8` },
 });
 
 export const TabsContent = styled(TabsPrimitive.Content, {
   flexGrow: 1,
-  padding: 20,
+  padding: "$lg",
   outline: "none",
-  "&:focus": { outline: `1px solid $brand9` },
+  "&:focus": { outline: `$border2Brand8` },
 });

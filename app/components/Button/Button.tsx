@@ -10,10 +10,10 @@ export const Button = styled("button", {
   justifyContent: "center",
   color: "$white9",
   backgroundColor: "$white1",
-  boxShadow: `0 2px 10px $overlay`,
+  boxShadow: "$small",
   padding: "0 $md",
   "&:hover": { backgroundColor: "$white1", color: "$brand8" },
-  "&:focus": { boxShadow: `0 0 0 2px $white9`, outline: "2px solid $brand8" },
+  "&:focus": { outline: "$border2Brand8" },
 
   variants: {
     primary: {
@@ -22,7 +22,7 @@ export const Button = styled("button", {
         backgroundColor: "$white9",
         "&:hover": { backgroundColor: "$brand9", color: "$white1" },
         "&:focus": {
-          outline: "2px solid $brand8",
+          outline: "$border2Brand8",
         },
       },
     },

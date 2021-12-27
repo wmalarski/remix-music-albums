@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import { frontCoverUrl } from "~/services/coverArt";
-import * as Styles from "./AlbumImage.styles";
+import * as Styles from "./AlbumCover.styles";
 
 type Props = {
   label: string;
   mBid?: string;
 };
 
-export const AlbumImage = ({ label, mBid }: Props): ReactElement | null => {
+export const AlbumCover = ({ label, mBid }: Props): ReactElement | null => {
   if (!mBid) return null;
 
   return (

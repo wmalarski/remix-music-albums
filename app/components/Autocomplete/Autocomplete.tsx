@@ -1,12 +1,11 @@
 import { styled } from "~/styles/stitches.config";
+import { Flex } from "../Flex/Flex";
 import * as Primitives from "./Autocomplete.primitives";
 
 export const Autocomplete = Primitives.Autocomplete;
 
-export const AutocompleteContent = styled("div", {
+export const AutocompleteContent = styled(Flex, {
   position: "relative",
-  display: "flex",
-  flexDirection: "column",
 });
 
 export const AutocompleteTrigger = styled(Primitives.AutocompleteTrigger, {
@@ -34,13 +33,12 @@ export const AutocompleteMenu = styled(Primitives.AutocompleteMenu, {
 
 export const AutocompleteInput = styled(Primitives.AutocompleteInput, {
   display: "block",
-  border: "1px solid $white3",
+  border: "$border1White3",
   borderRadius: "$md 0 0 $md",
   width: "100%",
   font: "inherit",
   lineHeight: 1,
-  paddingRight: "0.5em",
-  paddingLeft: "0.5em",
+  padding: "0 $sm",
   backgroundColor: "$white1",
   color: "$foreground",
 });
@@ -50,7 +48,7 @@ export const AutocompleteToggleButton = styled(
   {
     all: "unset",
     cursor: "pointer",
-    border: "1px solid $white3",
+    border: "$border1White3",
     borderLeft: "unset",
     borderRadius: "0 $md $md 0",
     width: 35,
@@ -59,9 +57,9 @@ export const AutocompleteToggleButton = styled(
     justifyContent: "center",
     color: "$white9",
     backgroundColor: "$white1",
-    boxShadow: `0 2px 10px $overlay`,
+    boxShadow: "$small",
     "&:hover": { backgroundColor: "$white3", color: "$brand8" },
-    "&:focus": { boxShadow: `0 0 0 2px $white9`, outline: "2px solid $brand8" },
+    "&:focus": { outline: "$border2Brand8" },
   }
 );
 

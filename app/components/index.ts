@@ -1,4 +1,4 @@
-export * from "./AlbumImage/AlbumImage";
+export * from "./AlbumCover/AlbumCover";
 export * from "./Autocomplete/Autocomplete";
 export * from "./Button/Button";
 export * from "./ClientOnly/ClientOnly";

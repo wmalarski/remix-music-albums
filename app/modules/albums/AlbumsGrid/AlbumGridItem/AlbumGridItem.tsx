@@ -12,15 +12,15 @@ import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { RandomAlbumWithArtistFragment } from "~/services/types.server";
 import { formatAlbum } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
-import { AlbumImage } from "../../../../components/AlbumImage/AlbumImage";
+import { AlbumCover } from "../../../../components/AlbumCover/AlbumCover";
 import { Text } from "../../../../components/Text/Text";
-import * as Styles from "./AlbumCover.styles";
+import * as Styles from "./AlbumGridItem.styles";
 
 type Props = {
   album: RandomAlbumWithArtistFragment;
 };
 
-export const AlbumCover = ({ album }: Props): ReactElement | null => {
+export const AlbumGridItem = ({ album }: Props): ReactElement | null => {
   const [isHovering, setIsHovering] = useState(false);
 
   if (!album.id || !album.sid) return null;
@@ -38,10 +38,12 @@ export const AlbumCover = ({ album }: Props): ReactElement | null => {
     <ContextMenu>
       <ContextMenuTrigger>
         <Styles.Container
+          justifyContent="center"
+          alignItems="center"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <AlbumImage mBid={album.sid} label={label} />
+          <AlbumCover mBid={album.sid} label={label} />
           {isHovering && (
             <Styles.Overlay to={routes.album(album.id)}>
               <Text size="medium" fontWeight="bold">

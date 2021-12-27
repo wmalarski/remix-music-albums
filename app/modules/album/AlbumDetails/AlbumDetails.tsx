@@ -3,7 +3,7 @@ import { GlobeIcon, TrashIcon, VideoIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { Form } from "remix";
 import {
-  AlbumImage,
+  AlbumCover,
   Divider,
   Flex,
   IconButton,
@@ -24,7 +24,7 @@ export const AlbumDetails = (): ReactElement => {
 
   return (
     <Flex direction="column" gap="sm">
-      <AlbumImage mBid={album.sid} label={formatAlbum(album)} />
+      <AlbumCover mBid={album.sid} label={formatAlbum(album)} />
       <Divider />
       <Flex direction="row" gap="sm">
         <TooltipText text="Open youtube" asChild>

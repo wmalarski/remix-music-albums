@@ -8,7 +8,7 @@ import {
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import {
-  AlbumImage,
+  AlbumCover,
   Divider,
   Flex,
   IconButton,
@@ -22,6 +22,7 @@ import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { AlbumFragment } from "~/services/types.server";
 import { formatAlbum } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
+import * as Styles from "./ArtistAlbumListItem.styles";
 
 type Props = {
   row: VirtualItem;
@@ -43,8 +44,8 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
       css={{ listRow: `${row.size} ${row.start}` }}
     >
       <Flex direction="row" gap="sm">
-        <AlbumImage label={formatAlbum(album)} mBid={album.sid} />
-        <Flex direction="column" gap="sm" css={{ padding: "$sm", flexGrow: 1 }}>
+        <AlbumCover label={formatAlbum(album)} mBid={album.sid} />
+        <Styles.Wrapper direction="column" gap="sm">
           <Flex direction="column">
             <StyledLink to={routes.album(album.id)}>
               <Text size="medium" fontWeight="bold">
@@ -88,7 +89,7 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
               </IconLink>
             </TooltipText>
           </Flex>
-        </Flex>
+        </Styles.Wrapper>
       </Flex>
       <Divider />
     </Flex>

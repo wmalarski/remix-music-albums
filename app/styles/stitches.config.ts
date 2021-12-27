@@ -13,10 +13,7 @@ export const {
   theme: {
     colors: {
       foreground: "hsl(0, 0%, 100%)",
-      dialogBackground: "hsl(0, 0%, 20%)",
       background: "hsl(0, 0%, 15%)",
-      border: "hsl(0, 0%, 25%)",
-      overlay: "hsl(0, 0%, 10%, 0.9)",
       brand1: "hsl(0, 100%, 10%)",
       brand2: "hsl(0, 100%, 20%)",
       brand3: "hsl(0, 100%, 30%)",
@@ -36,6 +33,8 @@ export const {
       white8: "hsl(0, 0%, 85%)",
       white9: "hsl(0, 0%, 90%)",
       white1A9: "hsl(0, 0%, 10%, 0.9)",
+      border1White3: "1px solid $white3",
+      border2Brand8: "2px solid $brand8",
     },
     fontSizes: {
       xs: "8px",
@@ -56,7 +55,7 @@ export const {
     },
     sizes: {
       scroll: "10px",
-      review: "40px",
+      cover: "250px",
       xs: "0.25rem",
       sm: "0.5rem",
       md: "1rem",
@@ -74,8 +73,11 @@ export const {
       header: 1000,
     },
     shadows: {
+      small: "0 2px 10px $white1A9",
       regular:
         "0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)",
+      large:
+        "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
     },
   },
   media: {
@@ -129,39 +131,5 @@ export const globalStyles = globalCss({
   ":focus": {
     outline: "$brand8 solid 2px",
     outlineOffset: "2px",
-  },
-});
-
-export const slideAnimation = css({
-  "@media (prefers-reduced-motion: no-preference)": {
-    animationDuration: "400ms",
-    animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-    willChange: "transform, opacity",
-    '&[data-state="open"]': {
-      '&[data-side="top"]': {
-        animationName: keyframes({
-          "0%": { opacity: 0, transform: "translateY(-2px)" },
-          "100%": { opacity: 1, transform: "translateY(0)" },
-        }),
-      },
-      '&[data-side="right"]': {
-        animationName: keyframes({
-          "0%": { opacity: 0, transform: "translateX(2px)" },
-          "100%": { opacity: 1, transform: "translateX(0)" },
-        }),
-      },
-      '&[data-side="bottom"]': {
-        animationName: keyframes({
-          "0%": { opacity: 0, transform: "translateY(2px)" },
-          "100%": { opacity: 1, transform: "translateY(0)" },
-        }),
-      },
-      '&[data-side="left"]': {
-        animationName: keyframes({
-          "0%": { opacity: 0, transform: "translateX(-2px)" },
-          "100%": { opacity: 1, transform: "translateX(0)" },
-        }),
-      },
-    },
   },
 });

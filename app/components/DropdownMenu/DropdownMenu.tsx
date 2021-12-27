@@ -17,9 +17,8 @@ const itemStyles = {
   display: "flex",
   alignItems: "center",
   height: "$xl",
-  padding: "0 $xs",
+  padding: "0 $xs 0 $md",
   position: "relative",
-  paddingLeft: "$md",
   userSelect: "none",
 
   "&[data-disabled]": {

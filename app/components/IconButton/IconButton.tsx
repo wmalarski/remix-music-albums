@@ -11,7 +11,7 @@ export const IconButton = styled("button", {
   justifyContent: "center",
   color: "$white9",
   backgroundColor: "$white1",
-  boxShadow: `0 2px 10px $overlay`,
+  boxShadow: "$small",
   "&:hover": { backgroundColor: "$white3", color: "$brand8" },
-  "&:focus": { boxShadow: `0 0 0 2px $white9`, outline: "2px solid $brand8" },
+  "&:focus": { outline: "$border2Brand8" },
 });

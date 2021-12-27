@@ -63,7 +63,7 @@ export const SearchAutocomplete = ({
 
   return (
     <Autocomplete<SearchItem> options={options}>
-      <AutocompleteContent>
+      <AutocompleteContent direction="column">
         <AutocompleteTrigger aria-label="Search form">
           <VisuallyHidden>
             <AutocompleteLabel>Search</AutocompleteLabel>

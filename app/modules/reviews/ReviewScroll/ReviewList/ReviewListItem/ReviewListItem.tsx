@@ -9,7 +9,7 @@ import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
 import {
-  AlbumImage,
+  AlbumCover,
   Divider,
   Flex,
   IconButton,
@@ -22,6 +22,7 @@ import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";
 import { formatAlbum, formatDate } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
+import * as Styles from "./ReviewListItem.styles";
 
 type Props = {
   row: VirtualItem;
@@ -45,12 +46,8 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
       css={{ listRow: `${row.size} ${row.start}` }}
     >
       <Flex direction="row" gap="sm">
-        <AlbumImage label={formatAlbum(album)} mBid={album.sid} />
-        <Flex
-          direction="column"
-          gap="sm"
-          css={{ padding: "$sm", flexGrow: "1" }}
-        >
+        <AlbumCover label={formatAlbum(album)} mBid={album.sid} />
+        <Styles.Wrapper direction="column" gap="sm">
           <Flex direction="column">
             <StyledLink to={routes.album(album.id)}>
               <Text size="medium" fontWeight="bold">
@@ -116,7 +113,7 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
               </TooltipText>
             </Form>
           </Flex>
-        </Flex>
+        </Styles.Wrapper>
       </Flex>
       <Divider />
     </Flex>

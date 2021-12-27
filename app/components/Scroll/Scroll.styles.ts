@@ -14,7 +14,7 @@ export const StyledScrollbar = styled(ScrollArea.Scrollbar, {
   display: "flex",
   userSelect: "none",
   touchAction: "none",
-  padding: 2,
+  padding: "$xs",
   width: "$scroll",
 });
 

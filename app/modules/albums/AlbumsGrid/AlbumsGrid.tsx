@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { RandomAlbumWithArtistFragment } from "~/services/types.server";
-import { AlbumCover } from "./AlbumCover/AlbumCover";
+import { AlbumGridItem } from "./AlbumGridItem/AlbumGridItem";
 import * as Styles from "./AlbumsGrid.styles";
 
 type Props = {
@@ -11,7 +11,7 @@ export const AlbumsGrid = ({ albums }: Props): ReactElement => {
   return (
     <Styles.Container>
       {albums?.map((album) => (
-        <AlbumCover key={album.id} album={album} />
+        <AlbumGridItem key={album.id} album={album} />
       ))}
     </Styles.Container>
   );
