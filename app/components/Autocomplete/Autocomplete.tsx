@@ -28,7 +28,7 @@ export const AutocompleteMenu = styled(Primitives.AutocompleteMenu, {
   backgroundColor: "$white2",
   zIndex: "$header",
   boxShadow: "$regular",
-  "&[data-isOpen=true]": {
+  "&[data-open=true]": {
     padding: "$sm",
   },
 });

@@ -32,21 +32,23 @@ const setupAuth0 = (): Authenticator<User> => {
     AUTH0_CLIENT_SECRET,
     AUTH0_DOMAIN,
     AUTH0_SCOPE,
-    AUTH0_CALLBACK_URL,
+    VERCEL_URL,
   } = process.env;
 
   invariant(AUTH0_DOMAIN, `AUTH0_DOMAIN has bad data!`);
   invariant(AUTH0_SCOPE, `AUTH0_SCOPE has bad data!`);
   invariant(AUTH0_CLIENT_ID, `AUTH0_CLIENT_ID has bad data!`);
   invariant(AUTH0_CLIENT_SECRET, `AUTH0_CLIENT_SECRET has bad data!`);
-  invariant(AUTH0_CALLBACK_URL, `AUTH0_CALLBACK_URL has bad data!`);
+  invariant(VERCEL_URL, `VERCEL_URL has bad data!`);
+
+  const callbackURL = `http://${VERCEL_URL}/auth/callback/`;
 
   const authenticator = new Authenticator<User>(sessionStorage);
 
   authenticator.use(
     new Auth0Strategy(
       {
-        callbackURL: AUTH0_CALLBACK_URL,
+        callbackURL,
         clientID: AUTH0_CLIENT_ID,
         clientSecret: AUTH0_CLIENT_SECRET,
         domain: AUTH0_DOMAIN,

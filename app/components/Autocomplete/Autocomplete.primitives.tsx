@@ -111,7 +111,7 @@ export const AutocompleteMenu = forwardRef(
   ): ReactElement | null => {
     const { getMenuProps, isOpen } = useAutocompleteContext();
     return (
-      <div {...props} ref={ref} {...getMenuProps()} data-isOpen={isOpen}>
+      <div {...props} ref={ref} {...getMenuProps()} data-open={isOpen}>
         {isOpen ? children : null}
       </div>
     );
