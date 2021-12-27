@@ -10,14 +10,14 @@ import React, {
 import { getValidChildren } from "../utils/getValidChildren";
 import * as Styles from "./Flex.styles";
 
-type FlexProps = ComponentProps<typeof Styles.Container> & {
+type Props = ComponentProps<typeof Styles.Container> & {
   divider?: ReactElement;
   children: ReactNode;
 };
 
-export const Flex = forwardRef<HTMLDivElement, FlexProps>(
+export const Flex = forwardRef<HTMLDivElement, Props>(
   (
-    { divider, children, ...props }: FlexProps,
+    { divider, children, ...props }: Props,
     ref: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     const hasDivider = !!divider;

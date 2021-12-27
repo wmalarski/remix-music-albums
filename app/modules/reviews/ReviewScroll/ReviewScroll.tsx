@@ -1,4 +1,5 @@
 import { ReactElement, useCallback, useRef } from "react";
+import { useMediaQuery } from "~/hooks/useMediaQuery";
 import { SelectReviewsWithInfoQuery } from "~/services/types.server";
 import { routes } from "~/utils/routes";
 import { useScrollNavigation } from "~/utils/scroll";
@@ -13,10 +14,12 @@ export const ReviewScroll = ({ query }: Props): ReactElement => {
 
   const size = query.reviewAggregate.aggregate?.count ?? 0;
 
+  const isDesktop = useMediaQuery("bp2");
+
   const { virtualizer, start } = useScrollNavigation({
     size,
     parentRef,
-    estimateSize: useCallback(() => 260, []),
+    estimateSize: useCallback(() => (isDesktop ? 260 : 510), [isDesktop]),
     initialRect: { width: 250, height: 250 },
     route: routes.reviews,
   });

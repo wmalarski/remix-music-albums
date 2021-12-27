@@ -1,5 +1,5 @@
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu";
-import { styled } from "@stitches/react";
+import { styled } from "~/styles/stitches.config";
 
 export const ContextMenuContent = styled(ContextMenuPrimitive.Content, {
   minWidth: 220,
@@ -63,7 +63,7 @@ export const ContextMenuLabel = styled(ContextMenuPrimitive.Label, {
 export const ContextMenuSeparator = styled(ContextMenuPrimitive.Separator, {
   height: 1,
   backgroundColor: "$white7",
-  margin: 5,
+  margin: "$xs",
 });
 
 export const ContextMenuItemIndicator = styled(

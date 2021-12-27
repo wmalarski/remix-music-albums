@@ -1,11 +1,11 @@
 import { ComponentProps, ForwardedRef, forwardRef, ReactElement } from "react";
 import * as Styles from "./Scroll.styles";
 
-type ScrollProps = ComponentProps<typeof Styles.StyledScrollArea>;
+type Props = ComponentProps<typeof Styles.StyledScrollArea>;
 
 export const Scroll = forwardRef(
   (
-    { children, ...props }: ScrollProps,
+    { children, ...props }: Props,
     ref?: ForwardedRef<HTMLDivElement>
   ): ReactElement => {
     return (

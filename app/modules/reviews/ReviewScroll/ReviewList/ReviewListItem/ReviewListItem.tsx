@@ -1,24 +1,18 @@
 import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
-import {
-  GlobeIcon,
-  Pencil1Icon,
-  TrashIcon,
-  VideoIcon,
-} from "@radix-ui/react-icons";
+import { TrashIcon } from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import { Form } from "remix";
 import {
+  AlbumActions,
   AlbumCover,
   Divider,
   Flex,
   IconButton,
-  IconLink,
   StyledLink,
   Text,
   TooltipText,
 } from "~/components";
-import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { ReviewWithAlbumAndArtistFragment } from "~/services/types.server";
 import { formatAlbum, formatDate } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
@@ -32,12 +26,6 @@ type Props = {
 export const ReviewListItem = ({ row, review }: Props): ReactElement => {
   const album = review.albumByAlbum;
 
-  const handleYtClick = () =>
-    redirectToYt(album.title, album.artistByArtist.name);
-
-  const handleGoogleClick = () =>
-    redirectToGoogle(album.title, album.artistByArtist.name);
-
   return (
     <Flex
       ref={row.measureRef}
@@ -45,7 +33,7 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
       gap="xs"
       css={{ listRow: `${row.size} ${row.start}` }}
     >
-      <Flex direction="row" gap="sm">
+      <Styles.Container>
         <AlbumCover label={formatAlbum(album)} mBid={album.sid} />
         <Styles.Wrapper direction="column" gap="sm">
           <Flex direction="column">
@@ -69,30 +57,11 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
           </Flex>
           <Divider />
           <Flex direction="row" gap="sm">
-            <TooltipText text="Open youtube" asChild>
-              <IconButton onClick={handleYtClick} aria-label="Youtube">
-                <AccessibleIcon label="Video">
-                  <VideoIcon />
-                </AccessibleIcon>
-              </IconButton>
-            </TooltipText>
-            <TooltipText text="Open google" asChild>
-              <IconButton onClick={handleGoogleClick} aria-label="Google">
-                <AccessibleIcon label="Globe">
-                  <GlobeIcon />
-                </AccessibleIcon>
-              </IconButton>
-            </TooltipText>
-            <TooltipText text="Edit review" asChild>
-              <IconLink
-                to={routes.editReview(review.albumByAlbum.id, review.id)}
-                aria-label="Edit review"
-              >
-                <AccessibleIcon label="Edit">
-                  <Pencil1Icon />
-                </AccessibleIcon>
-              </IconLink>
-            </TooltipText>
+            <AlbumActions
+              albumId={album.id}
+              title={album.title}
+              name={album.artistByArtist.name}
+            />
             <Form method="delete">
               <input
                 type="hidden"
@@ -114,7 +83,7 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
             </Form>
           </Flex>
         </Styles.Wrapper>
-      </Flex>
+      </Styles.Container>
       <Divider />
     </Flex>
   );

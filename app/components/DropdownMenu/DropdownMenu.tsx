@@ -65,7 +65,7 @@ export const DropdownMenuLabel = styled(DropdownMenuPrimitive.Label, {
 export const DropdownMenuSeparator = styled(DropdownMenuPrimitive.Separator, {
   height: 1,
   backgroundColor: "$white7",
-  margin: 5,
+  margin: "$xs",
 });
 
 export const DropdownMenuItemIndicator = styled(

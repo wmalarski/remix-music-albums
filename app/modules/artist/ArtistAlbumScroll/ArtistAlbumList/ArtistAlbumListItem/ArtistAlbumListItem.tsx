@@ -1,24 +1,14 @@
-import { AccessibleIcon } from "@radix-ui/react-accessible-icon";
-import {
-  GlobeIcon,
-  Pencil1Icon,
-  Pencil2Icon,
-  VideoIcon,
-} from "@radix-ui/react-icons";
 import { ReactElement } from "react";
 import { VirtualItem } from "react-virtual";
 import {
+  AlbumActions,
   AlbumCover,
   Divider,
   Flex,
-  IconButton,
-  IconLink,
   StyledLink,
   Text,
-  TooltipText,
 } from "~/components";
 import { useArtistRoot } from "~/modules/artist";
-import { redirectToGoogle, redirectToYt } from "~/services/links";
 import { AlbumFragment } from "~/services/types.server";
 import { formatAlbum } from "~/utils/formatters";
 import { routes } from "~/utils/routes";
@@ -31,10 +21,6 @@ type Props = {
 
 export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
   const artist = useArtistRoot();
-
-  const handleYtClick = () => redirectToYt(album.title, artist.name);
-
-  const handleGoogleClick = () => redirectToGoogle(album.title, artist.name);
 
   return (
     <Flex
@@ -56,39 +42,11 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
             {!!album.year && <Text size="small">{album.year}</Text>}
           </Flex>
           <Divider />
-          <Flex direction="row" gap="sm">
-            <TooltipText text="Open youtube" asChild>
-              <IconButton onClick={handleYtClick} aria-label="Youtube">
-                <AccessibleIcon label="Video">
-                  <VideoIcon />
-                </AccessibleIcon>
-              </IconButton>
-            </TooltipText>
-            <TooltipText text="Open google" asChild>
-              <IconButton onClick={handleGoogleClick} aria-label="Google">
-                <AccessibleIcon label="Globe">
-                  <GlobeIcon />
-                </AccessibleIcon>
-              </IconButton>
-            </TooltipText>
-            <TooltipText text="Edit album" asChild>
-              <IconLink to={routes.editAlbum(album.id)} aria-label="Edit album">
-                <AccessibleIcon label="Edit">
-                  <Pencil1Icon />
-                </AccessibleIcon>
-              </IconLink>
-            </TooltipText>
-            <TooltipText text="Review album" asChild>
-              <IconLink
-                to={routes.newReview(album.id)}
-                aria-label="Review album"
-              >
-                <AccessibleIcon label="Review">
-                  <Pencil2Icon />
-                </AccessibleIcon>
-              </IconLink>
-            </TooltipText>
-          </Flex>
+          <AlbumActions
+            albumId={album.id}
+            title={album.title}
+            name={artist.name}
+          />
         </Styles.Wrapper>
       </Flex>
       <Divider />

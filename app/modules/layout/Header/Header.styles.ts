@@ -10,10 +10,6 @@ export const Ul = styled("ul", {
   gap: "1.5em",
 });
 
-export const Li = styled("li", {
-  fontWeight: "bold",
-});
-
 export const HomeLink = styled(Link, {
   height: "$xl",
   color: "$foreground",

@@ -1,3 +1,4 @@
+export * from "./AlbumActions/AlbumActions";
 export * from "./AlbumCover/AlbumCover";
 export * from "./Autocomplete/Autocomplete";
 export * from "./Button/Button";

@@ -82,6 +82,7 @@ export const {
   },
   media: {
     bp1: "(min-width: 480px)",
+    bp2: "(min-width: 640px)",
   },
   utils: {
     listRow: (value: string) => {
