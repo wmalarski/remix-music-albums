@@ -30,13 +30,21 @@ export const validateNewReview = ({
 
   const errors = {
     text: !text,
-    rate: !rate || !/^\d+$/.test(rate.toString()),
+    rate: !rate || !/^\d(\.\d+)?$/.test(rate.toString()),
   };
+
   if (Object.values(errors).includes(true)) return { errors };
 
   invariant(typeof text === "string");
 
   return {
-    variables: { review: { album: albumId, profile: profileId, rate, text } },
+    variables: {
+      review: {
+        album: albumId,
+        profile: profileId,
+        rate: Number(rate),
+        text,
+      },
+    },
   };
 };

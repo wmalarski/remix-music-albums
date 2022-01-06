@@ -33,5 +33,14 @@ export const validateNewAlbum = (
   invariant(typeof title === "string");
   invariant(typeof sid === "string");
 
-  return { variables: { album: { title, artist, year: Number(year), sid } } };
+  return {
+    variables: {
+      album: {
+        title,
+        artist,
+        year: Number(year),
+        sid,
+      },
+    },
+  };
 };
