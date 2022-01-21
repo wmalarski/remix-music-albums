@@ -1,6 +1,7 @@
 import { styled } from "~/styles/stitches.config";
+import { Inset } from "../Inset/Inset";
 
-export const Container = styled("div", {
+export const Container = styled(Inset, {
   display: "flex",
 
   variants: {

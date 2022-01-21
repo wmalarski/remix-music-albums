@@ -11,6 +11,5 @@ export const Container = styled("div", {
 });
 
 export const Wrapper = styled(Flex, {
-  padding: "$sm",
   flexGrow: 1,
 });

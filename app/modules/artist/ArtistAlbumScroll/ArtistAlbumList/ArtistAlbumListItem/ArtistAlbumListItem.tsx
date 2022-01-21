@@ -31,7 +31,7 @@ export const ArtistAlbumListItem = ({ album, row }: Props): ReactElement => {
     >
       <Flex direction="row" gap="sm">
         <AlbumCover label={formatAlbum(album)} mBid={album.sid} />
-        <Styles.Wrapper direction="column" gap="sm">
+        <Styles.Wrapper direction="column" gap="sm" space="sm">
           <Flex direction="column">
             <StyledLink to={routes.album(album.id)}>
               <Text size="medium" fontWeight="bold">

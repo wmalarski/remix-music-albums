@@ -35,6 +35,8 @@ export const {
       white1A9: "hsl(0, 0%, 10%, 0.9)",
       border1White3: "1px solid $white3",
       border2Brand8: "2px solid $brand8",
+      overlay1:
+        "linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 20%, rgba(255,255,255,0) 100%)",
     },
     fontSizes: {
       xs: "0.5rem",
@@ -58,6 +60,7 @@ export const {
     sizes: {
       scroll: "10px",
       cover: "250px",
+      screen3: "1024px",
       xs: "0.25rem",
       sm: "0.5rem",
       md: "1rem",
@@ -83,8 +86,9 @@ export const {
     },
   },
   media: {
-    bp1: "(min-width: 480px)",
-    bp2: "(min-width: 640px)",
+    bp1: "print, screen and (min-width: 480px)",
+    bp2: "print, screen and (min-width: 640px)",
+    bp3: "print, screen and (min-width: 1024px)",
   },
   utils: {
     listRow: (value: string) => {

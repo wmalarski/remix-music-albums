@@ -8,7 +8,5 @@ export const Content = styled(Container, {
 });
 
 export const Footer = styled("footer", {
-  paddingTop: "$md",
-  paddingBottom: "$md",
   borderTop: "$border1White3",
 });

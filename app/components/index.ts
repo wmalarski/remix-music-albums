@@ -14,6 +14,7 @@ export * from "./Grid/Grid";
 export * from "./Heading/Heading";
 export * from "./IconButton/IconButton";
 export * from "./IconLink/IconLink";
+export * from "./Inset/Inset";
 export * from "./Page/Page";
 export * from "./Scroll/Scroll";
 export * from "./StyledLink/StyledLink";

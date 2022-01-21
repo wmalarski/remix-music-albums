@@ -6,12 +6,12 @@ export const Page = styled(Container, {
   "--space": "2rem",
   gap: "var(--gap)",
   padding: "var(--space) 0",
-  "@media print, screen and (min-width: 640px)": {
+  "@bp1": {
     "--gap": "2rem",
     gridAutoRows: "unset",
     gridTemplateColumns: "repeat(2, 1fr)",
   },
-  "@media screen and (min-width: 1024px)": {
+  "@bp2": {
     "--gap": "4rem",
   },
 });

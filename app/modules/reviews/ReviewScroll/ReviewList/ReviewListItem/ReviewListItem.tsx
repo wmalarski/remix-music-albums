@@ -35,7 +35,7 @@ export const ReviewListItem = ({ row, review }: Props): ReactElement => {
     >
       <Styles.Container>
         <AlbumCover label={formatAlbum(album)} mBid={album.sid} />
-        <Styles.Wrapper direction="column" gap="sm">
+        <Styles.Wrapper direction="column" gap="sm" space="sm">
           <Flex direction="column">
             <StyledLink to={routes.album(album.id)}>
               <Text size="medium" fontWeight="bold">
